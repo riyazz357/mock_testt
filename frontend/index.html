@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOE/CEE Prep Nepal - Engineering Entrance Exam Preparation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+        }
+        
+        .navbar {
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .navbar-nav .nav-item {
+            margin: 0 0.75rem;
+        }
+        
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 5rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section .lead {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-hero {
+            background-color: white;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .features-section {
+            padding: 5rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-section {
+            background-color: var(--light-color);
+            padding: 4rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-links h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section::before {
+                width: 100%;
+                opacity: 0.1;
+            }
+            
+            .navbar-nav .nav-item {
+                margin: 0.25rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-graduation-cap me-2"></i>Padhai Saathi
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mock-tests.html">Mock Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="study-materials.html">Study Materials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary" href="login.html">Login/Signup</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1>Ace Your IOE & CEE Exams With Confidence</h1>
+                    <p class="lead">Access free mock tests, comprehensive study materials, and expert guidance to secure your seat in Nepal's top engineering colleges.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="mock-tests.html" class="btn btn-hero">
+                            <i class="fas fa-bolt me-2"></i>Start Free Test
+                        </a>
+                        <a href="#features" class="btn btn-outline-light">
+                            <i class="fas fa-book-open me-2"></i>Explore Materials
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 stat-item">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Students Helped</div>
+                </div>
+                <div class="col-md-3 col-6 stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Practice Questions</div>
+                </div>
+                <div class="col-md-3 col-6 stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Mock Tests</div>
+                </div>
+                <div class="col-md-3 col-6 stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Everything You Need to Succeed</h2>
+                <p class="text-muted mx-auto" style="max-width: 700px;">Our comprehensive platform provides all the tools and resources to help you crack the IOE and CEE entrance exams.</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Timed Mock Tests</h3>
+                        <p class="text-muted">Simulate real exam conditions with our full-length practice tests that follow the exact IOE and CEE exam patterns.</p>
+                        <a href="mock-tests.html" class="btn btn-sm btn-outline-primary mt-3">Try Now</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Comprehensive Materials</h3>
+                        <p class="text-muted">Access complete study notes, formula sheets, and video lectures covering all subjects - Physics, Chemistry, Math, and English.</p>
+                        <a href="subject.html" class="btn btn-sm btn-outline-primary mt-3">Explore</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Performance Analytics</h3>
+                        <p class="text-muted">Track your progress with detailed analytics that identify your strengths and weaknesses across different subjects.</p>
+                        <a href="pa.html" class="btn btn-sm btn-outline-primary mt-3">View Dashboard</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Leaderboard Challenge</h3>
+                        <p class="text-muted">Compete with other aspirants and see where you stand in our ranking system that motivates you to improve.</p>
+                        <a href="leaderboard.html" class="btn btn-sm btn-outline-primary mt-3">View Rankings</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3>Doubt Solving</h3>
+                        <p class="text-muted">Get your questions answered by our community of experts and top-performing students.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary mt-3">Ask Question</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Friendly</h3>
+                        <p class="text-muted">Study anytime, anywhere with our fully responsive platform that works perfectly on all devices.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn On The Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Success Stories</h2>
+                <p class="text-muted mx-auto" style="max-width: 700px;">Hear from students who aced their exams with our platform</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" class="rounded-circle me-3" width="60" height="60" alt="Student">
+                                <div>
+                                    <h5 class="mb-0">Anjali Shrestha</h5>
+                                    <small class="text-muted">IOE Rank 24</small>
+                                </div>
+                            </div>
+                            <p class="mb-0">"The mock tests on this platform were identical to the actual IOE exam pattern. Practicing here helped me manage my time effectively during the real exam."</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" class="rounded-circle me-3" width="60" height="60" alt="Student">
+                                <div>
+                                    <h5 class="mb-0">Ramesh Kumar</h5>
+                                    <small class="text-muted">CEE Rank 15</small>
+                                </div>
+                            </div>
+                            <p class="mb-0">"The study materials condensed 2 years of my preparation into 6 months. The physics formulas sheet was especially helpful for quick revision."</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" class="rounded-circle me-3" width="60" height="60" alt="Student">
+                                <div>
+                                    <h5 class="mb-0">Sita Gurung</h5>
+                                    <small class="text-muted">IOE Rank 42</small>
+                                </div>
+                            </div>
+                            <p class="mb-0">"Being able to see where I stood compared to other students on the leaderboard pushed me to work harder. The community support was invaluable."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-4">Ready to Start Your Preparation?</h2>
+            <p class="lead mb-4">Join thousands of students who have successfully cracked their entrance exams with our help.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="signup.html" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-user-plus me-2"></i>Sign Up Free
+                </a>
+                <a href="mock-tests.html" class="btn btn-outline-light btn-lg px-4">
+                    <i class="fas fa-bolt me-2"></i>Try Demo Test
+                </a>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-white mb-4">
+                        <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+                    </h5>
+                    <p>The most comprehensive platform for engineering entrance exam preparation in Nepal.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="mock-testt.html">Mock Tests</a></li>
+                        <li><a href="study-materials.html">Study Materials</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Subjects</h5>
+                    <ul>
+                        <li><a href="subject.html?subject=physics">Physics</a></li>
+                        <li><a href="subject.html?subject=chemistry">Chemistry</a></li>
+                        <li><a href="subject.html?subject=mathematics">Mathematics</a></li>
+                        <li><a href="subject.html?subject=english">English</a></li>
+                        <li><a href="subject.html?subject=aptitude">Engineering Aptitude</a></li>
+                        <li><a href="subject.html?subject=Biology">Biology</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Kathmandu, Nepal</li>
+                        <li><i class="fas fa-phone me-2"></i> +977 9841XXXXXX</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@ioeceeprep.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2023 IOE/CEE Prep. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white-50 me-3">Privacy Policy</a>
+                        <a href="#" class="text-white-50">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
