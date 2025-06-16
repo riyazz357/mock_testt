@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard | IOE/CEE Prep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4f46e5; /* Vibrant indigo */
+            --secondary-color: #7c3aed; /* Purple */
+            --accent-color: #22d3ee; /* Cyan */
+            --light-color: #f9fafb;
+            --dark-color: #1f2937;
+            --dark-bg: #111827;
+            --dark-text: #d1d5db;
+            --dark-card: #1f2937;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe, #f3e8ff);
+            background-attachment: fixed;
+            color: var(--dark-color);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+
+        [data-theme="dark"] {
+            background: linear-gradient(135deg, #1e3a8a, #4b1c71);
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .navbar,
+        [data-theme="dark"] .card,
+        [data-theme="dark"] .table,
+        [data-theme="dark"] footer {
+            background: var(--dark-card) !important;
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        [data-theme="dark"] .table-striped tbody tr:nth-of-type(odd) {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .navbar {
+            background: var(--light-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 1rem 0;
+            transition: background-color 0.3s;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            padding: 0.5rem;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .nav-icon:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        [data-theme="dark"] .nav-icon {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .leaderboard-card {
+            background: var(--light-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .table {
+            background: var(--light-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .table thead th:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(79, 70, 229, 0.1);
+            transform: translateX(8px);
+        }
+
+        .rank-badge {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+        }
+
+        .rank-1 { background: #ffd700; color: #1f2937; }
+        .rank-2 { background: #c0c0c0; color: #1f2937; }
+        .rank-3 { background: #cd7f32; color: #1f2937; }
+
+        .progress {
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            background: var(--accent-color);
+            transition: width 0.5s ease;
+        }
+
+        [data-theme="dark"] .progress {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .search-container {
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.25);
+        }
+
+        .pagination {
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .page-link {
+            color: var(--primary-color);
+            border-radius: 8px;
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .page-item.active .page-link {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .loading-spinner, .error-message {
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        footer {
+            background: var(--dark-bg);
+            color: var(--dark-text);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-radius: 20px 20px 0 0;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--secondary-color);
+        }
+
+        footer .social-icons a {
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .leaderboard-card {
+                padding: 1.5rem;
+                margin: 2rem 1rem;
+            }
+
+            .table {
+                font-size: 0.85rem;
+            }
+
+            .table thead th, .table tbody td {
+                padding: 0.5rem;
+            }
+
+            .last-active {
+                display: none;
+            }
+
+            .search-container {
+                max-width: 100%;
+                margin: 1.5rem 1rem;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+
+            .navbar {
+                padding: 0.75rem 0;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .nav-link, .nav-icon {
+                padding: 0.5rem 0.75rem;
+            }
+
+            footer {
+                padding: 2rem 0;
+            }
+
+            footer a {
+                margin: 0 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-icon" href="profile.html" title="Profile">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Leaderboard Section -->
+    <div class="container my-5">
+        <div class="leaderboard-card">
+            <h1 class="text-center mb-4">Leaderboard</h1>
+            <div class="search-container">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search by name...">
+                </div>
+            </div>
+            <div id="loadingSpinner" class="loading-spinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading leaderboard...</p>
+            </div>
+            <div id="errorMessage" class="error-message d-none">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    Failed to load leaderboard. Please try again later.
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped" id="leaderboardTable">
+                    <thead>
+                        <tr>
+                            <th scope="col" data-sort="rank">Rank <i class="fas fa-sort"></i></th>
+                            <th scope="col" data-sort="name">Name <i class="fas fa-sort"></i></th>
+                            <th scope="col" data-sort="college">College <i class="fas fa-sort"></i></th>
+                            <th scope="col" data-sort="score">Score <i class="fas fa-sort"></i></th>
+                            <th scope="col" data-sort="last_active" class="last-active">Last Active <i class="fas fa-sort"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+            </div>
+            <nav aria-label="Leaderboard pagination">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="mb-3">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="social-icons mb-3">
+                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="mb-0">© 2025 IOE/CEE Prep. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Dark mode toggle
+        const htmlRoot = document.getElementById('htmlRoot');
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        htmlRoot.setAttribute('data-theme', currentTheme);
+        themeToggle.innerHTML = `<i class="fas fa-${currentTheme === 'dark' ? 'sun' : 'moon'}"></i>`;
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = htmlRoot.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            htmlRoot.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.innerHTML = `<i class="fas fa-${newTheme === 'dark' ? 'sun' : 'moon'}"></i>`;
+        });
+
+        // Supabase client (initialized in supabase.js)
+        const supabase = window.supabase;
+        const leaderboardBody = document.getElementById('leaderboard-body');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const errorMessage = document.getElementById('errorMessage');
+        const searchInput = document.getElementById('searchInput');
+        const pagination = document.getElementById('pagination');
+        const itemsPerPage = 10;
+        const maxScore = 1000;
+        let currentPage = 1;
+        let users = [];
+        let sortField = 'score';
+        let sortOrder = 'desc';
+
+        // Fetch and display leaderboard
+        async function fetchLeaderboard() {
+            loadingSpinner.classList.remove('d-none');
+            errorMessage.classList.add('d-none');
+            leaderboardBody.innerHTML = '';
+
+            try {
+                // Initial fetch
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('id, name, score, college, last_active');
+
+                if (error) throw error;
+
+                users = data.map(user => ({
+                    id: user.id,
+                    name: user.name || 'Anonymous',
+                    score: user.score || 0,
+                    college: user.college || 'N/A',
+                    last_active: user.last_active ? new Date(user.last_active).toLocaleString() : 'Never'
+                }));
+
+                applyFiltersAndRender();
+
+                // Subscribe to real-time changes
+                supabase
+                    .channel('users-changes')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'users' }, (payload) => {
+                        if (payload.eventType === 'INSERT') {
+                            users.push({
+                                id: payload.new.id,
+                                name: payload.new.name || 'Anonymous',
+                                score: payload.new.score || 0,
+                                college: payload.new.college || 'N/A',
+                                last_active: payload.new.last_active ? new Date(payload.new.last_active).toLocaleString() : 'Never'
+                            });
+                        } else if (payload.eventType === 'UPDATE') {
+                            const index = users.findIndex(u => u.id === payload.new.id);
+                            if (index !== -1) {
+                                users[index] = {
+                                    id: payload.new.id,
+                                    name: payload.new.name || 'Anonymous',
+                                    score: payload.new.score || 0,
+                                    college: payload.new.college || 'N/A',
+                                    last_active: payload.new.last_active ? new Date(payload.new.last_active).toLocaleString() : 'Never'
+                                };
+                            }
+                        } else if (payload.eventType === 'DELETE') {
+                            users = users.filter(u => u.id !== payload.old.id);
+                        }
+                        applyFiltersAndRender();
+                    })
+                    .subscribe();
+            } catch (error) {
+                console.error('Error fetching leaderboard:', error);
+                loadingSpinner.classList.add('d-none');
+                errorMessage.classList.remove('d-none');
+            }
+        }
+
+        // Apply search, sort, and pagination
+        function applyFiltersAndRender() {
+            let filteredUsers = users;
+
+            // Search filter
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm) {
+                filteredUsers = filteredUsers.filter(user => 
+                    user.name.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Sort
+            filteredUsers.sort((a, b) => {
+                if (sortField === 'name' || sortField === 'college') {
+                    return sortOrder === 'asc' 
+                        ? a[sortField].localeCompare(b[sortField]) 
+                        : b[sortField].localeCompare(a[sortField]);
+                } else if (sortField === 'last_active') {
+                    return sortOrder === 'asc'
+                        ? new Date(a[sortField] === 'Never' ? 0 : a[sortField]) - new Date(b[sortField] === 'Never' ? 0 : b[sortField])
+                        : new Date(b[sortField] === 'Never' ? 0 : b[sortField]) - new Date(a[sortField] === 'Never' ? 0 : a[sortField]);
+                } else {
+                    return sortOrder === 'asc' 
+                        ? a[sortField] - b[sortField] 
+                        : b[sortField] - a[sortField];
+                }
+            });
+
+            // Assign ranks
+            let currentRank = 1;
+            let previousScore = null;
+            filteredUsers = filteredUsers.map((user, index) => {
+                if (index > 0 && user.score !== previousScore) {
+                    currentRank = index + 1;
+                }
+                previousScore = user.score;
+                return { ...user, rank: currentRank };
+            });
+
+            // Pagination
+            const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedUsers = filteredUsers.slice(start, end);
+
+            // Render table
+            leaderboardBody.innerHTML = paginatedUsers.map(user => `
+                <tr>
+                    <td>
+                        <span class="rank-badge rank-${user.rank <= 3 ? user.rank : ''}">
+                            ${user.rank}
+                        </span>
+                    </td>
+                    <td title="${user.name}">${user.name}</td>
+                    <td title="${user.college}">${user.college}</td>
+                    <td>
+                        ${user.score}
+                        <div class="progress mt-1">
+                            <div class="progress-bar" style="width: ${(user.score / maxScore) * 100}%"></div>
+                        </div>
+                    </td>
+                    <td class="last-active" title="${user.last_active}">${user.last_active}</td>
+                </tr>
+            `).join('');
+
+            // Render pagination
+            pagination.innerHTML = '';
+            if (totalPages > 1) {
+                // First
+                pagination.innerHTML += `
+                    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="1">««</a>
+                    </li>
+                `;
+                // Previous
+                pagination.innerHTML += `
+                    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${currentPage - 1}">«</a>
+                    </li>
+                `;
+                // Pages
+                for (let i = 1; i <= totalPages; i++) {
+                    pagination.innerHTML += `
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `;
+                }
+                // Next
+                pagination.innerHTML += `
+                    <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${currentPage + 1}">»</a>
+                    </li>
+                `;
+                // Last
+                pagination.innerHTML += `
+                    <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" data-page="${totalPages}">»»</a>
+                    </li>
+                `;
+            }
+
+            loadingSpinner.classList.add('d-none');
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', () => {
+            currentPage = 1;
+            applyFiltersAndRender();
+        });
+
+        document.querySelectorAll('#leaderboardTable thead th').forEach(th => {
+            th.addEventListener('click', () => {
+                const field = th.getAttribute('data-sort');
+                if (field === sortField) {
+                    sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+                } else {
+                    sortField = field;
+                    sortOrder = field === 'name' || field === 'college' ? 'asc' : 'desc';
+                }
+                currentPage = 1;
+                applyFiltersAndRender();
+            });
+        });
+
+        pagination.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = e.target.getAttribute('data-page');
+            if (page && !e.target.parentElement.classList.contains('disabled')) {
+                currentPage = parseInt(page);
+                applyFiltersAndRender();
+            }
+        });
+
+        // Initialize
+        fetchLeaderboard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Materials - IOE/CEE Prep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4f46e5; /* Vibrant indigo */
+            --secondary-color: #7c3aed; /* Complementary purple */
+            --accent-color: #22d3ee; /* Cyan for highlights */
+            --light-color: #f9fafb;
+            --dark-color: #1f2937;
+            --dark-bg: #111827;
+            --dark-text: #d1d5db;
+            --dark-card: #1f2937;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe, #f3e8ff);
+            background-attachment: fixed;
+            color: var(--dark-color);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        [data-theme="dark"] {
+            background: linear-gradient(135deg, #1e3a8a, #4b1c71);
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .selection-card,
+        [data-theme="dark"] .nav-card,
+        [data-theme="dark"] .header,
+        [data-theme="dark"] .note-item {
+            background: var(--dark-card) !important;
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        [data-theme="dark"] .nav-card .card-header,
+        [data-theme="dark"] .note-item:hover {
+            background: rgba(79, 70, 229, 0.1) !important;
+        }
+
+        .header {
+            background: var(--light-color);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .header-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 0.75rem 0;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .breadcrumb-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--secondary-color);
+        }
+
+        .selection-card {
+            background: var(--light-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            animation: slideUp 0.6s ease-out;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .class-select {
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .class-select:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .nav-card {
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            background: var(--light-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-card .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 500;
+            padding: 1.25rem;
+            border-bottom: none;
+            transition: background 0.3s;
+        }
+
+        .nav-card:hover .card-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .note-item {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: var(--light-color);
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-item:hover {
+            background: rgba(79, 70, 229, 0.05);
+            transform: translateX(5px);
+        }
+
+        .note-item i {
+            transition: transform 0.3s;
+        }
+
+        .note-item:hover i {
+            transform: scale(1.2);
+        }
+
+        .btn-outline-danger, .btn-outline-primary {
+            font-weight: 500;
+            border-width: 2px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-danger:hover {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .spinner-border {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-width: 0.3rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .selection-card {
+                padding: 1.5rem;
+                margin: 1.5rem 1rem;
+                border-radius: 15px;
+            }
+
+            .class-select {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+
+            .nav-card {
+                margin-bottom: 1rem;
+            }
+
+            .nav-card .card-header {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .note-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                padding: 0.75rem;
+            }
+
+            .note-item a {
+                align-self: flex-end;
+            }
+
+            .breadcrumb {
+                font-size: 0.9rem;
+                padding: 0.5rem 0;
+            }
+
+            .back-button {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .header {
+                padding: 0.75rem 0;
+            }
+
+            .header-brand {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="header-brand">
+                <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+            </a>
+            <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="container py-4">
+        <!-- Breadcrumb Navigation -->
+        <nav id="breadcrumb" class="breadcrumb" style="display: none;">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#" id="bc-class">Class</a></li>
+            </ol>
+        </nav>
+        
+        <!-- Class Selection (Initial View) -->
+        <div id="classSelection" class="text-center">
+            <div class="selection-card">
+                <h3 class="mb-4"><i class="fas fa-graduation-cap me-2"></i>Select Your Class</h3>
+                <div class="d-grid gap-3">
+                    <button class="btn btn-primary btn-lg py-3 class-select" data-class="11">
+                        <i class="fas fa-arrow-circle-right me-2"></i>Class 11
+                    </button>
+                    <button class="btn btn-primary btn-lg py-3 class-select" data-class="12">
+                        <i class="fas fa-arrow-circle-right me-2"></i>Class 12
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Subject Selection -->
+        <div id="subjectSelection" style="display: none;">
+            <h3 class="mb-4 text-center" id="subjectSelectionTitle"></h3>
+            <div id="subjectsContainer" class="row"></div>
+        </div>
+        
+        <!-- Unit Selection -->
+        <div id="unitSelection" style="display: none;">
+            <h3 class="mb-4 text-center" id="unitSelectionTitle"></h3>
+            <div id="unitsContainer"></div>
+        </div>
+        
+        <!-- Chapter Selection -->
+        <div id="chapterSelection" style="display: none;">
+            <h3 class="mb-4 text-center" id="chapterSelectionTitle"></h3>
+            <div id="chaptersContainer"></div>
+        </div>
+        
+        <!-- Notes Display -->
+        <div id="notesDisplay" style="display: none;">
+            <h3 class="mb-4 text-center" id="notesDisplayTitle"></h3>
+            <div id="notesContainer"></div>
+        </div>
+        
+        <div id="loadingSpinner" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading content...</p>
+        </div>
+    </div>
+    
+    <a href="#" id="backButton" class="btn back-button rounded-circle shadow" style="display: none;">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark mode toggle
+        const htmlRoot = document.getElementById('htmlRoot');
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        htmlRoot.setAttribute('data-theme', currentTheme);
+        themeToggle.innerHTML = `<i class="fas fa-${currentTheme === 'dark' ? 'sun' : 'moon'}"></i>`;
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = htmlRoot.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            htmlRoot.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.innerHTML = `<i class="fas fa-${newTheme === 'dark' ? 'sun' : 'moon'}"></i>`;
+        });
+
+        // Original JavaScript code
+        const studyData = {
+            class11: {
+                subjects: [
+                    {
+                        name: "Physics",
+                        icon: "fa-atom",
+                        units: [
+                            {
+                                name: "Mechanics",
+                                chapters: [
+                                    {
+                                        name: "Motion in Straight Line",
+                                        notes: [
+                                            { title: "Kinematics Basics", type: "pdf", url: "#", size: "2.1 MB" },
+                                            { title: "Velocity-Time Graphs", type: "video", url: "#", duration: "12:45" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Newton's Laws",
+                                        notes: [
+                                            { title: "All Three Laws Explained", type: "pdf", url: "#", size: "3.4 MB" },
+                                            { title: "Problem Solving Techniques", type: "video", url: "#", duration: "18:20" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Rotational Dynamics",
+                                        notes: [
+                                            { title: "Rotational Motion Basics", type: "pdf", url: "#", size: "3.4 MB" },
+                                            { title: "Torque and Angular Momentum", type: "video", url: "#", duration: "18:20" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Fluid Statics",
+                                        notes: [
+                                            { title: "Pressure and Buoyancy", type: "pdf", url: "#", size: "3.4 MB" },
+                                            { title: "Archimedes' Principle", type: "video", url: "#", duration: "18:20" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Thermodynamics",
+                                chapters: [
+                                    {
+                                        name: "Heat Transfer",
+                                        notes: [
+                                            { title: "Conduction, Convection, Radiation", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "First Law of Thermodynamics",
+                                        notes: [
+                                            { title: "Work and Internal Energy", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Second Law of Thermodynamics",
+                                        notes: [
+                                            { title: "Entropy and Efficiency", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Wave and Optics",
+                                chapters: [
+                                    {
+                                        name: "Wave Motion",
+                                        notes: [
+                                            { title: "Wave Properties", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Mechanical Waves",
+                                        notes: [
+                                            { title: "Transverse and Longitudinal Waves", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Waves in Pipes and Strings",
+                                        notes: [
+                                            { title: "Standing Waves", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Acoustic Phenomena",
+                                        notes: [
+                                            { title: "Doppler Effect", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Nature and Propagation of Light",
+                                        notes: [
+                                            { title: "Light as a Wave", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Interference",
+                                        notes: [
+                                            { title: "Young's Double Slit", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Diffraction",
+                                        notes: [
+                                            { title: "Single Slit Diffraction", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Polarization",
+                                        notes: [
+                                            { title: "Polarized Light", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Chemistry",
+                        icon: "fa-flask",
+                        units: [
+                            {
+                                name: "Physical Chemistry",
+                                chapters: [
+                                    {
+                                        name: "Atomic Structure",
+                                        notes: [
+                                            { title: "Quantum Theory Basics", type: "pdf", url: "#", size: "2.5 MB" },
+                                            { title: "Atomic Orbitals", type: "video", url: "#", duration: "15:30" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Chemical Bonding",
+                                        notes: [
+                                            { title: "Ionic and Covalent Bonds", type: "pdf", url: "#", size: "2.2 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Organic Chemistry",
+                                chapters: [
+                                    {
+                                        name: "Hydrocarbons",
+                                        notes: [
+                                            { title: "Alkanes and Alkenes", type: "pdf", url: "#", size: "2.0 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Mathematics",
+                        icon: "fa-square-root-alt",
+                        units: [
+                            {
+                                name: "Algebra",
+                                chapters: [
+                                    {
+                                        name: "Sequences and Series",
+                                        notes: [
+                                            { title: "Arithmetic Progression", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Trigonometry",
+                                chapters: [
+                                    {
+                                        name: "Trigonometric Identities",
+                                        notes: [
+                                            { title: "Basic Identities", type: "pdf", url: "#", size: "1.7 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Biology",
+                        icon: "fa-dna",
+                        units: [
+                            {
+                                name: "Botany",
+                                chapters: [
+                                    {
+                                        name: "Plant Anatomy",
+                                        notes: [
+                                            { title: "Tissues and Structures", type: "pdf", url: "#", size: "2.3 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Zoology",
+                                chapters: [
+                                    {
+                                        name: "Animal Physiology",
+                                        notes: [
+                                            { title: "Digestive System", type: "pdf", url: "#", size: "2.1 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            class12: {
+                subjects: [
+                    {
+                        name: "Physics",
+                        icon: "fa-atom",
+                        units: [
+                            {
+                                name: "Electricity and Magnetism",
+                                chapters: [
+                                    {
+                                        name: "Electrical Circuits",
+                                        notes: [
+                                            { title: "Ohm's Law and Circuits", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Thermoelectric Effect",
+                                        notes: [
+                                            { title: "Seebeck Effect", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Magnetic Field",
+                                        notes: [
+                                            { title: "Biot-Savart Law", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Magnetic Properties of Materials",
+                                        notes: [
+                                            { title: "Ferromagnetism", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Electromagnetic Induction",
+                                        notes: [
+                                            { title: "Faraday's Law", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Alternating Current",
+                                        notes: [
+                                            { title: "AC Circuits", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Wave and Optics",
+                                chapters: [
+                                    {
+                                        name: "Wave Motion",
+                                        notes: [
+                                            { title: "Wave Equation", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Mechanical Waves",
+                                        notes: [
+                                            { title: "Wave Types", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Waves in Pipes and Strings",
+                                        notes: [
+                                            { title: "Harmonics", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Acoustic Phenomena",
+                                        notes: [
+                                            { title: "Sound Intensity", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Nature and Propagation of Light",
+                                        notes: [
+                                            { title: "Reflection and Refraction", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Interference",
+                                        notes: [
+                                            { title: "Wave Superposition", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Diffraction",
+                                        notes: [
+                                            { title: "Diffraction Patterns", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Polarization",
+                                        notes: [
+                                            { title: "Polarizers", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Modern Physics",
+                                chapters: [
+                                    {
+                                        name: "Electrons",
+                                        notes: [
+                                            { title: "Electron Properties", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Photons",
+                                        notes: [
+                                            { title: "Photoelectric Effect", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Semiconductor Devices",
+                                        notes: [
+                                            { title: "Diodes and Transistors", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Quantization of Energy",
+                                        notes: [
+                                            { title: "Quantum Mechanics", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Radioactivity and Nuclear Reaction",
+                                        notes: [
+                                            { title: "Nuclear Decay", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    },
+                                    {
+                                        name: "Recent Trends in Physics",
+                                        notes: [
+                                            { title: "Modern Applications", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Chemistry",
+                        icon: "fa-flask",
+                        units: [
+                            {
+                                name: "Physical Chemistry",
+                                chapters: [
+                                    {
+                                        name: "Electrochemistry",
+                                        notes: [
+                                            { title: "Redox Reactions", type: "pdf", url: "#", size: "2.5 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Organic Chemistry",
+                                chapters: [
+                                    {
+                                        name: "Haloalkanes",
+                                        notes: [
+                                            { title: "Nucleophilic Substitution", type: "pdf", url: "#", size: "2.0 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Mathematics",
+                        icon: "fa-square-root-alt",
+                        units: [
+                            {
+                                name: "Algebra",
+                                chapters: [
+                                    {
+                                        name: "Matrices",
+                                        notes: [
+                                            { title: "Matrix Operations", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Trigonometry",
+                                chapters: [
+                                    {
+                                        name: "Inverse Functions",
+                                        notes: [
+                                            { title: "Inverse Trig Functions", type: "pdf", url: "#", size: "1.7 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Analytical Geometry",
+                                chapters: [
+                                    {
+                                        name: "Conic Sections",
+                                        notes: [
+                                            { title: "Parabola and Ellipse", type: "pdf", url: "#", size: "2.0 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Vectors",
+                                chapters: [
+                                    {
+                                        name: "Vector Algebra",
+                                        notes: [
+                                            { title: "Dot and Cross Product", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Statistics and Probability",
+                                chapters: [
+                                    {
+                                        name: "Probability Distributions",
+                                        notes: [
+                                            { title: "Binomial Distribution", type: "pdf", url: "#", size: "1.9 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Calculus",
+                                chapters: [
+                                    {
+                                        name: "Integration",
+                                        notes: [
+                                            { title: "Definite Integrals", type: "pdf", url: "#", size: "2.1 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Computational Methods or Mechanics",
+                                chapters: [
+                                    {
+                                        name: "Numerical Methods",
+                                        notes: [
+                                            { title: "Newton-Raphson Method", type: "pdf", url: "#", size: "1.8 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Biology",
+                        icon: "fa-dna",
+                        units: [
+                            {
+                                name: "Botany",
+                                chapters: [
+                                    {
+                                        name: "Genetics",
+                                        notes: [
+                                            { title: "Mendel's Laws", type: "pdf", url: "#", size: "2.3 MB" }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Zoology",
+                                chapters: [
+                                    {
+                                        name: "Human Physiology",
+                                        notes: [
+                                            { title: "Nervous System", type: "pdf", url: "#", size: "2.1 MB" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Navigation State
+        let currentState = {
+            class: null,
+            subject: null,
+            unit: null,
+            chapter: null
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Class selection
+            document.querySelectorAll('.class-select').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    currentState.class = this.getAttribute('data-class');
+                    showSubjects();
+                });
+            });
+            
+            // Back button
+            document.getElementById('backButton').addEventListener('click', function(e) {
+                e.preventDefault();
+                goBack();
+            });
+        });
+
+        function showLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'block' : 'none';
+        }
+
+        function showSubjects() {
+            showLoading(true);
+            
+            setTimeout(() => {
+                // Hide class selection
+                document.getElementById('classSelection').style.display = 'none';
+                
+                // Update breadcrumb
+                document.getElementById('breadcrumb').style.display = 'block';
+                document.getElementById('bc-class').textContent = `Class ${currentState.class}`;
+                document.getElementById('breadcrumb').innerHTML = `
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" id="bc-class">Class ${currentState.class}</a></li>
+                    </ul>
+                `;
+                
+                // Set title
+                document.getElementById('subjectSelectionTitle').innerHTML = `
+                    <i class="fas fa-graduation-cap me-2"></i>Class ${currentState.class} Subjects
+                `;
+                
+                // Load subjects
+                const container = document.getElementById('subjectsContainer');
+                container.innerHTML = '';
+                
+                const subjects = studyData[`class${currentState.class}`].subjects;
+                
+                subjects.forEach(subject => {
+                    const card = document.createElement('div');
+                    card.className = 'col-md-6 mb-3';
+                    card.innerHTML = `
+                        <div class="card nav-card" data-subject="${subject.name}">
+                            <div class="card-header">
+                                <i class="fas ${subject.icon} me-2"></i>
+                                ${subject.name}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+                
+                // Add click handlers
+                document.querySelectorAll('.nav-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        currentState.subject = this.getAttribute('data-subject');
+                        showUnits();
+                    });
+                });
+                
+                // Show subject selection
+                document.getElementById('subjectSelection').style.display = 'block';
+                document.getElementById('backButton').style.display = 'flex';
+                showLoading(false);
+                
+                // Update breadcrumb click handler
+                document.getElementById('bc-class').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    resetToClassSelection();
+                });
+            }, 500);
+        }
+
+        function showUnits() {
+            showLoading(true);
+            
+            setTimeout(() => {
+                // Hide previous views
+                document.getElementById('subjectSelection').style.display = 'none';
+                
+                // Update breadcrumb
+                document.getElementById('breadcrumb').innerHTML = `
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" id="bc-class">Class ${currentState.class}</a></li>
+                        <li class="breadcrumb-item active" id="bc-subject">${currentState.subject}</li>
+                    </ul>
+                `;
+                
+                // Set title
+                document.getElementById('unitSelectionTitle').innerHTML = `
+                    <i class="fas ${getSubjectIcon()} me-2"></i>
+                    ${currentState.subject} Units
+                `;
+                
+                // Load units
+                const container = document.getElementById('unitsContainer');
+                container.innerHTML = '';
+                
+                const subject = studyData[`class${currentState.class}`].subjects.find(
+                    sub => sub.name === currentState.subject
+                );
+                
+                subject.units.forEach(unit => {
+                    const card = document.createElement('div');
+                    card.className = 'card nav-card mb-3';
+                    card.setAttribute('data-unit', unit.name);
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <i class="fas fa-cube me-2"></i>
+                            ${unit.name}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+                
+                // Add click handlers
+                document.querySelectorAll('.nav-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        currentState.unit = this.getAttribute('data-unit');
+                        showChapters();
+                    });
+                });
+                
+                // Show unit selection
+                document.getElementById('unitSelection').style.display = 'block';
+                showLoading(false);
+                
+                // Update breadcrumb click handlers
+                document.getElementById('bc-class').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    resetToSubjectSelection();
+                });
+            }, 500);
+        }
+
+        function showChapters() {
+            showLoading(true);
+            
+            setTimeout(() => {
+                // Hide previous views
+                document.getElementById('unitSelection').style.display = 'none';
+                
+                // Update breadcrumb
+                document.getElementById('breadcrumb').innerHTML = `
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" id="bc-class">Class ${currentState.class}</a></li>
+                        <li class="breadcrumb-item"><a href="#" id="bc-subject">${currentState.subject}</a></li>
+                        <li class="breadcrumb-item active" id="bc-unit">${currentState.unit}</li>
+                    </ul>
+                `;
+                
+                // Set title
+                document.getElementById('chapterSelectionTitle').innerHTML = `
+                    <i class="fas ${getSubjectIcon()} me-2"></i>
+                    ${currentState.unit} Chapters
+                `;
+                
+                // Load chapters
+                const container = document.getElementById('chaptersContainer');
+                container.innerHTML = '';
+                
+                const subject = studyData[`class${currentState.class}`].subjects.find(
+                    sub => sub.name === currentState.subject
+                );
+                
+                const unit = subject.units.find(u => u.name === currentState.unit);
+                
+                unit.chapters.forEach(chapter => {
+                    const card = document.createElement('div');
+                    card.className = 'card nav-card mb-3';
+                    card.setAttribute('data-chapter', chapter.name);
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <i class="fas fa-book-open me-2"></i>
+                            ${chapter.name}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+                
+                // Add click handlers
+                document.querySelectorAll('.nav-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        currentState.chapter = this.getAttribute('data-chapter');
+                        showNotes();
+                    });
+                });
+                
+                // Show chapter selection
+                document.getElementById('chapterSelection').style.display = 'block';
+                showLoading(false);
+                
+                // Update breadcrumb click handlers
+                document.getElementById('bc-class').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    resetToSubjectSelection();
+                });
+                
+                document.getElementById('bc-subject').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    resetToUnitSelection();
+                });
+            }, 500);
+        }
+
+        function showNotes() {
+            showLoading(true);
+            
+            setTimeout(() => {
+                // Hide previous views
+                document.getElementById('chapterSelection').style.display = 'none';
+                
+                // Update breadcrumb
+                document.getElementById('breadcrumb').innerHTML = `
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" id="bc-class">Class ${currentState.class}</a></li>
+                        <li class="breadcrumb-item"><a href="#" id="bc-subject">${currentState.subject}</a></li>
+                        <li class="breadcrumb-item"><a href="#" id="bc-unit">${currentState.unit}</a></li>
+                        <li class="breadcrumb-item active" id="bc-chapter">${currentState.chapter}</li>
+                    </ul>
+                `;
+                
+                // Set title
+                document.getElementById('notesDisplayTitle').innerHTML = `
+                    <i class="fas ${getSubjectIcon()} me-2"></i>
+                    ${currentState.chapter} Notes
+                `;
+                
+                // Load notes
+                const container = document.getElementById('notesContainer');
+                container.innerHTML = '';
+                
+                const subject = studyData[`class${currentState.class}`].subjects.find(
+                    sub => sub.name === currentState.subject
+                );
+                
+                const unit = subject.units.find(u => u.name === currentState.unit);
+                const chapter = unit.chapters.find(c => c.name === currentState.chapter);
+                
+                if (chapter.notes.length === 0) {
+                    container.innerHTML = `
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No notes available for this chapter yet.
+                        </div>
+                    `;
+                } else {
+                    chapter.notes.forEach(note => {
+                        const noteItem = document.createElement('div');
+                        noteItem.className = 'note-item';
+                        noteItem.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas ${note.type === 'pdf' ? 'fa-file-pdf text-danger' : 'fa-video text-primary'} me-3"></i>
+                                    <strong>${note.title}</strong>
+                                    <div class="text-muted small mt-1">
+                                        ${note.type === 'pdf' ? 
+                                            `<i class="fas fa-file-alt me-1"></i> PDF • ${note.size}` : 
+                                            `<i class="fas fa-play-circle me-1"></i> Video • ${note.duration}`}
+                                    </div>
+                                </div>
+                                <a href="${note.url}" class="btn btn-sm ${note.type === 'pdf' ? 'btn-outline-danger' : 'btn-outline-primary'}" target="_blank">
+                                    ${note.type === 'pdf' ? '<i class="fas fa-download me-1"></i>Download' : '<i class="fas fa-play me-1"></i>Watch'}
+                                </a>
+                            </div>
+                        `;
+                        container.appendChild(noteItem);
+                    });
+                }
+                
+                // Show notes display
+                document.getElementById('notesDisplay').style.display = 'block';
+                showLoading(false);
+                
+                // Update breadcrumb click handlers
+                document.getElementById('bc-class').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    resetToSubjectSelection();
+                });
+                
+                document.getElementById('bc-subject').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    resetToUnitSelection();
+                });
+                
+                document.getElementById('bc-unit').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    resetToChapterSelection();
+                });
+            }, 500);
+        }
+
+        function getSubjectIcon() {
+            const subject = studyData[`class${currentState.class}`].subjects.find(
+                sub => sub.name === currentState.subject
+            );
+            return subject ? subject.icon : 'fa-book';
+        }
+
+        // Navigation functions
+        function goBack() {
+            if (currentState.chapter) {
+                resetToChapterSelection();
+            } else if (currentState.unit) {
+                resetToUnitSelection();
+            } else if (currentState.subject) {
+                resetToSubjectSelection();
+            } else if (currentState.class) {
+                resetToClassSelection();
+            }
+        }
+
+        function resetToClassSelection() {
+            currentState = { class: null, subject: null, unit: null, chapter: null };
+            document.getElementById('subjectSelection').style.display = 'none';
+            document.getElementById('unitSelection').style.display = 'none';
+            document.getElementById('chapterSelection').style.display = 'none';
+            document.getElementById('notesDisplay').style.display = 'none';
+            document.getElementById('breadcrumb').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+            document.getElementById('classSelection').style.display = 'block';
+        }
+
+        function resetToSubjectSelection() {
+            currentState.unit = null;
+            currentState.chapter = null;
+            document.getElementById('unitSelection').style.display = 'none';
+            document.getElementById('chapterSelection').style.display = 'none';
+            document.getElementById('notesDisplay').style.display = 'none';
+            document.getElementById('subjectSelection').style.display = 'block';
+        }
+
+        function resetToUnitSelection() {
+            currentState.chapter = null;
+            document.getElementById('chapterSelection').style.display = 'none';
+            document.getElementById('notesDisplay').style.display = 'none';
+            document.getElementById('unitSelection').style.display = 'block';
+        }
+
+        function resetToChapterSelection() {
+            document.getElementById('notesDisplay').style.display = 'none';
+            document.getElementById('chapterSelection').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

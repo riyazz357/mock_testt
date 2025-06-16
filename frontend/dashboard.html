@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - IOE/CEE Prep Nepal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e3c72;
+            --secondary-color: #2a5298;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --dark-bg: #1a1d2a;
+            --dark-text: #e0e0e0;
+            --dark-card: #2a2e3f;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+        
+        [data-theme="dark"] {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        [data-theme="dark"] .navbar-light {
+            background-color: var(--dark-card) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        [data-theme="dark"] .navbar-brand,
+        [data-theme="dark"] .nav-link {
+            color: var(--dark-text) !important;
+        }
+        
+        [data-theme="dark"] .dashboard-card {
+            background-color: var(--dark-card);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        [data-theme="dark"] .progress-circle .bg {
+            stroke: rgba(255,255,255,0.1);
+        }
+        
+        [data-theme="dark"] footer {
+            background-color: var(--dark-bg);
+        }
+        
+        .navbar {
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .navbar-nav .nav-item {
+            margin: 0 0.75rem;
+        }
+        
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 5rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section .lead {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-hero {
+            background-color: white;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .dashboard-section {
+            padding: 5rem 0;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* Profile Dropdown */
+        .profile-dropdown .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 0.5rem;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-pic:hover {
+            box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
+        }
+        
+        .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 250px;
+            padding: 0.5rem 0;
+            background-color: var(--light-color);
+        }
+        
+        [data-theme="dark"] .dropdown-menu {
+            background-color: var(--dark-card);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .dropdown-item {
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+            color: var(--dark-color);
+        }
+        
+        [data-theme="dark"] .dropdown-item {
+            color: var(--dark-text);
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .profile-header {
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .profile-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-stat {
+            font-size: 0.85rem;
+            color: #6c757d;
+            padding: 0.5rem 1.5rem;
+        }
+        
+        [data-theme="dark"] .profile-stat {
+            color: #adb5bd;
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+        }
+        
+        .theme-toggle i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Progress Circles */
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 8;
+        }
+        
+        .progress-circle .bg {
+            stroke: var(--light-color);
+        }
+        
+        .progress-circle .fg {
+            stroke: var(--primary-color);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .progress-circle span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .quick-action {
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-action:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-links h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        /* Edit Profile Modal */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        [data-theme="dark"] .modal-content {
+            background-color: var(--dark-card);
+            color: var(--dark-text);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid rgba(67, 97, 238, 0.2);
+        }
+        
+        [data-theme="dark"] .form-control,
+        [data-theme="dark"] .form-select {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.2);
+        }
+        
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .upload-btn input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section::before {
+                width: 100%;
+                opacity: 0.1;
+            }
+            
+            .navbar-nav .nav-item {
+                margin: 0.25rem 0;
+            }
+            
+            .profile-pic {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .progress-circle {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .dropdown-menu {
+                min-width: 200px;
+            }
+            
+            .profile-header img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .stat-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .subject-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .strength {
+            color: #27ae60;
+        }
+        .weakness {
+            color: #e74c3c;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-graduation-cap me-2"></i>
+                IOE/CEE Prep Nepal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-home me-1"></i>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-book me-1"></i>Mock Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-history me-1"></i>History</a>
+                    </li>
+                </ul>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile" id="userAvatar">
+                    <div>
+                        <div id="userName">Loading...</div>
+                        <small id="userEmail" style="opacity: 0.8;">Loading...</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="loadingSpinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading dashboard data...</p>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardContent" style="display: none;">
+                <!-- Stats Row -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="dashboard-card stat-card">
+                            <i class="fas fa-check-circle"></i>
+                            <h3 id="totalTests">0</h3>
+                            <p>Tests Completed</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card stat-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3 id="averageScore">0%</h3>
+                            <p>Average Score</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card stat-card">
+                            <i class="fas fa-clock"></i>
+                            <h3 id="totalTime">0h</h3>
+                            <p>Time Spent</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card stat-card">
+                            <i class="fas fa-trophy"></i>
+                            <h3 id="bestScore">0%</h3>
+                            <p>Best Score</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="dashboard-card">
+                            <h4>Performance Trend</h4>
+                            <div class="chart-container">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <h4>Subject-wise Performance</h4>
+                            <div class="chart-container">
+                                <canvas id="subjectChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Tests and Start New Test -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="dashboard-card">
+                            <h4>Recent Tests</h4>
+                            <div class="recent-tests" id="recentTests">
+                                <!-- Test items will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <h4>Start New Test</h4>
+                            <p>Ready to challenge yourself? Start a new mock test!</p>
+                            <button class="btn start-test-btn w-100" onclick="startNewTest()">
+                                <i class="fas fa-play me-2"></i>Start Test
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            if (!token || !user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Update user profile
+            document.getElementById('userName').textContent = user.username;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=random`;
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const loadingSpinner = document.getElementById('loadingSpinner');
+                const dashboardContent = document.getElementById('dashboardContent');
+                
+                loadingSpinner.style.display = 'block';
+                dashboardContent.style.display = 'none';
+                
+                // Fetch dashboard statistics
+                const stats = await window.api.dashboard.getStats();
+                updateStats(stats);
+                
+                // Fetch test results
+                const results = await window.api.dashboard.getResults();
+                updateCharts(results);
+                updateRecentTests(results);
+                
+                loadingSpinner.style.display = 'none';
+                dashboardContent.style.display = 'block';
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                alert('Error loading dashboard data. Please try again.');
+            }
+        }
+
+        // Update statistics
+        function updateStats(stats) {
+            document.getElementById('totalTests').textContent = stats.totalTests;
+            document.getElementById('averageScore').textContent = `${stats.averageScore}%`;
+            document.getElementById('totalTime').textContent = `${stats.totalTime}h`;
+            document.getElementById('bestScore').textContent = `${stats.bestScore}%`;
+        }
+
+        // Update charts
+        function updateCharts(results) {
+            // Performance trend chart
+            const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(performanceCtx, {
+                type: 'line',
+                data: {
+                    labels: results.trend.map(r => new Date(r.date).toLocaleDateString()),
+                    datasets: [{
+                        label: 'Score',
+                        data: results.trend.map(r => r.score),
+                        borderColor: '#1e3c72',
+                        tension: 0.4,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Subject-wise performance chart
+            const subjectCtx = document.getElementById('subjectChart').getContext('2d');
+            new Chart(subjectCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(results.subjects),
+                    datasets: [{
+                        data: Object.values(results.subjects),
+                        backgroundColor: [
+                            '#1e3c72',
+                            '#2a5298',
+                            '#4cc9f0',
+                            '#4361ee',
+                            '#3f37c9'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Update recent tests
+        function updateRecentTests(results) {
+            const recentTestsContainer = document.getElementById('recentTests');
+            recentTestsContainer.innerHTML = '';
+            
+            results.recent.forEach(test => {
+                const testItem = document.createElement('div');
+                testItem.className = 'test-item';
+                testItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">${test.subject}</h5>
+                            <div class="test-date">${new Date(test.date).toLocaleDateString()}</div>
+                        </div>
+                        <div class="test-score">${test.score}%</div>
+                    </div>
+                `;
+                recentTestsContainer.appendChild(testItem);
+            });
+        }
+
+        // Start new test
+        async function startNewTest() {
+            try {
+                const response = await window.api.mockTest.startTest();
+                if (response.testId) {
+                    window.location.href = `test.html?id=${response.testId}`;
+                }
+            } catch (error) {
+                console.error('Error starting test:', error);
+                alert('Error starting test. Please try again.');
+            }
+        }
+
+        // Initialize dashboard
+        checkAuth();
+        loadDashboardData();
+    </script>
+</body>
+</html>

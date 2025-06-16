@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOE/CEE Preparation Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            padding-top: 56px;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+            border-radius: 5px;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color) !important;
+            font-weight: 600;
+        }
+        
+        /* Blog specific styles */
+        .blog-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .blog-card-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .blog-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .blog-author {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .blog-author-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 0.75rem;
+        }
+        
+        .blog-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="study-materials.html">Study Materials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Page Content -->
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold mb-3">IOE/CEE Preparation Blog</h1>
+            <p class="lead">Tips, tricks, and insights to help you ace your exams</p>
+        </div>
+        
+        <!-- Blog Categories -->
+        <div class="mb-5 text-center">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active">All</button>
+                <button type="button" class="btn btn-outline-primary">Study Tips</button>
+                <button type="button" class="btn btn-outline-primary">Exam Strategies</button>
+                <button type="button" class="btn btn-outline-primary">Subject Guides</button>
+                <button type="button" class="btn btn-outline-primary">Success Stories</button>
+            </div>
+        </div>
+        
+        <!-- Blog Posts -->
+        <div class="row">
+            <!-- Blog Post 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/600x400/?study" class="blog-card-img w-100" alt="Study Tips">
+                        <span class="blog-category">Study Tips</span>
+                    </div>
+                    <div class="blog-content">
+                        <h4>5 Effective Study Techniques for IOE Entrance</h4>
+                        <p class="text-muted">Discover proven methods to maximize your study efficiency and retention for the upcoming exams...</p>
+                        <div class="blog-author">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" class="blog-author-img" alt="Author">
+                            <div>
+                                <h6 class="mb-0">Sarah Johnson</h6>
+                                <span class="blog-date">May 15, 2023 • 8 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/600x400/?physics" class="blog-card-img w-100" alt="Physics">
+                        <span class="blog-category">Subject Guides</span>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Mastering Physics for CEE: Key Concepts</h4>
+                        <p class="text-muted">A breakdown of the most important physics concepts you need to focus on for the CEE exam...</p>
+                        <div class="blog-author">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" class="blog-author-img" alt="Author">
+                            <div>
+                                <h6 class="mb-0">Rajesh Sharma</h6>
+                                <span class="blog-date">April 28, 2023 • 10 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/600x400/?success" class="blog-card-img w-100" alt="Success">
+                        <span class="blog-category">Success Stories</span>
+                    </div>
+                    <div class="blog-content">
+                        <h4>How I Ranked Top 10 in IOE Entrance</h4>
+                        <p class="text-muted">An inspiring interview with last year's top scorer sharing their preparation journey...</p>
+                        <div class="blog-author">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" class="blog-author-img" alt="Author">
+                            <div>
+                                <h6 class="mb-0">Priya Patel</h6>
+                                <span class="blog-date">April 10, 2023 • 12 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/600x400/?time-management" class="blog-card-img w-100" alt="Time Management">
+                        <span class="blog-category">Exam Strategies</span>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Time Management During the Exam</h4>
+                        <p class="text-muted">Learn how to allocate your time effectively during the IOE/CEE exam to maximize your score...</p>
+                        <div class="blog-author">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" class="blog-author-img" alt="Author">
+                            <div>
+                                <h6 class="mb-0">Amit Chaudhary</h6>
+                                <span class="blog-date">March 29, 2023 • 6 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 5 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/600x400/?mathematics" class="blog-card-img w-100" alt="Mathematics">
+                        <span class="blog-category">Subject Guides</span>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Essential Math Formulas for CEE</h4>
+                        <p class="text-muted">The must-know formulas and shortcuts that will save you time during the mathematics section...</p>
+                        <div class="blog-author">
+                            <img src="https://randomuser.me/api/portraits/women/51.jpg" class="blog-author-img" alt="Author">
+                            <div>
+                                <h6 class="mb-0">Neha Thapa</h6>
+                                <span class="blog-date">March 15, 2023 • 9 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Post 6 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/600x400/?stress" class="blog-card-img w-100" alt="Stress">
+                        <span class="blog-category">Study Tips</span>
+                    </div>
+                    <div class="blog-content">
+                        <h4>Dealing with Exam Stress and Anxiety</h4>
+                        <p class="text-muted">Practical techniques to manage stress and maintain focus during your preparation...</p>
+                        <div class="blog-author">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" class="blog-author-img" alt="Author">
+                            <div>
+                                <h6 class="mb-0">Dr. Sanjay Kumar</h6>
+                                <span class="blog-date">February 28, 2023 • 7 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <nav aria-label="Blog pagination" class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-3"><i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep</h5>
+                    <p>Your complete preparation hub for IOE and CEE entrance examinations.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white">Home</a></li>
+                        <li class="mb-2"><a href="study-materials.html" class="text-white">Study Materials</a></li>
+                        <li class="mb-2"><a href="blog.html" class="text-white">Blog</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-white">About Us</a></li>
+                        <li><a href="contact.html" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Subjects</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white">Physics</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Chemistry</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Mathematics</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">English</a></li>
+                        <li><a href="#" class="text-white">Engineering Aptitude</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="terms.html" class="text-white">Terms of Service</a></li>
+                        <li class="mb-2"><a href="privacy.html" class="text-white">Privacy Policy</a></li>
+                        <li><a href="refund.html" class="text-white">Refund Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2023 IOE/CEE Prep. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end footer-links">
+                    <a href="#" class="me-3">FAQ</a>
+                    <a href="#" class="me-3">Help Center</a>
+                    <a href="#">Feedback</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Activate the current nav link
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // Blog category filter
+            const categoryButtons = document.querySelectorAll('.btn-group button');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    // Here you would filter blog posts by category
+                    console.log('Filter by:', this.textContent.trim());
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOE Mock Tests | IOE/CEE Prep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --unanswered-color: #6c757d;
+            --physics-color: #ff6b6b;
+            --chemistry-color: #4cc9f0;
+            --math-color: #7209b7;
+            --english-color: #f8961e;
+            --dark-bg: #111827;
+            --dark-text: #d1d5db;
+            --dark-card: #1f2937;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7ff;
+            line-height: 1.6;
+            color: var(--dark-color);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+
+        [data-theme="dark"] {
+            background-color: #1e293b;
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .navbar,
+        [data-theme="dark"] .hero-section,
+        [data-theme="dark"] .level-card,
+        [data-theme="dark"] .question-container,
+        [data-theme="dark"] .performance-card,
+        [data-theme="dark"] footer {
+            background: var(--dark-card) !important;
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .option-item,
+        [data-theme="dark"] .chapter-item,
+        [data-theme="dark"] .explanation {
+            background: rgba(255,255,255,0.05) !important;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--light-color);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 1rem 0;
+            transition: background-color 0.3s;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            padding: 0.5rem;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .nav-icon:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        [data-theme="dark"] .nav-icon {
+            color: var(--dark-text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 6rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            filter: blur(5px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .hero-section .lead {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .btn-hero {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            background-color: #3ba8d3;
+        }
+
+        /* Level Selection */
+        .level-selection {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .level-card {
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67,97,238,0.05), rgba(63,55,201,0.05));
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15), 0 0 20px rgba(76,201,240,0.2);
+        }
+
+        .level-card.selected {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(67,97,238,0.1), rgba(63,55,201,0.1));
+            box-shadow: 0 5px 15px rgba(67,97,238,0.3);
+        }
+
+        .level-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .level-card:hover .level-icon {
+            transform: scale(1.2);
+        }
+
+        .level-card h4 {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .level-card p {
+            color: var(--unanswered-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .level-card small {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        /* Test Screen */
+        .question-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .option-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .option-item:hover {
+            background-color: rgba(67,97,238,0.1);
+        }
+
+        .option-item.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .option-item.correct {
+            background: rgba(40,167,69,0.2);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .option-item.incorrect {
+            background: rgba(220,53,69,0.2);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .option-item.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .question-navigator {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .question-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .question-box.unanswered {
+            background: linear-gradient(135deg, var(--unanswered-color), #5a6268);
+        }
+
+        .question-box.answered {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .question-box.correct {
+            background: linear-gradient(135deg, var(--success-color), #218838);
+        }
+
+        .question-box.incorrect {
+            background: linear-gradient(135deg, var(--danger-color), #c82333);
+        }
+
+        .question-box.current {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(67,97,238,0.3);
+        }
+
+        .question-box:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--danger-color), #c82333);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #c82333, var(--danger-color));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(220,53,69,0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Result Screen */
+        .result-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .result-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .score-display {
+            font-size: 4.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1.5rem 0;
+        }
+
+        .result-badge {
+            font-size: 1.3rem;
+            padding: 0.6rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .performance-card {
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.3s ease;
+            background: white;
+        }
+
+        .performance-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .subject-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 1.5rem;
+            color: white;
+        }
+
+        .physics-bg { background: linear-gradient(135deg, var(--physics-color), #ff8e8e); }
+        .chemistry-bg { background: linear-gradient(135deg, var(--chemistry-color), #4895ef); }
+        .math-bg { background: linear-gradient(135deg, var(--math-color), #b5179e); }
+        .english-bg { background: linear-gradient(135deg, var(--english-color), #f9c74f); }
+
+        .progress-thin {
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        .chapter-item {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            background-color: #f8f9fa;
+        }
+
+        .chapter-progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .action-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+        }
+
+        .action-btn-primary:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67,97,238,0.3);
+        }
+
+        .action-btn-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: white;
+        }
+
+        .action-btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .floating-medal {
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .medal-1 { top: 30px; right: 30px; color: gold; }
+        .medal-2 { bottom: 30px; left: 30px; color: silver; }
+
+        .time-badge {
+            background-color: rgba(67,97,238,0.1);
+            color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        .comparison-chart {
+            height: 250px;
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 18px;
+            border-radius: 5px 5px 0 0;
+            transition: height 1s ease;
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -30px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Explanation */
+        .explanation {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: var(--dark-text);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--secondary-color);
+        }
+
+        footer .social-icons a {
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section .lead {
+                font-size: 1.1rem;
+            }
+
+            .hero-section::before {
+                width: 100%;
+                opacity: 0.15;
+            }
+
+            .level-selection {
+                padding: 1.5rem;
+                margin: 2rem 1rem;
+            }
+
+            .level-card {
+                padding: 2rem 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .level-icon {
+                font-size: 2rem;
+            }
+
+            .score-display {
+                font-size: 3rem;
+            }
+
+            .question-box {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .subject-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-icon" href="profile.html" title="Profile">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>Excel in IOE Entrance</h1>
+                    <p class="lead">Prepare with our expertly designed IOE mock tests for engineering entrance exams.</p>
+                    <a href="#levelSelectionScreen" class="btn btn-hero">Start Your IOE Prep Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Level Selection Screen -->
+    <div class="container my-5" id="levelSelectionScreen">
+        <div class="level-selection text-center">
+            <h2 class="mb-4 fw-bold">Choose Your IOE Test Level</h2>
+            <p class="text-muted mb-4">Select the difficulty level for your IOE mock test</p>
+            <div class="row g-2">
+                <div class="col-md-3 col-sm-6">
+                    <div class="level-card text-center" data-level="basic">
+                        <i class="fas fa-star level-icon"></i>
+                        <h4>Basic</h4>
+                        <p>Fundamental Concepts</p>
+                        <small>For Beginners</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="level-card text-center" data-level="intermediate">
+                        <i class="fas fa-bolt level-icon"></i>
+                        <h4>Intermediate</h4>
+                        <p>Mixed Difficulty</p>
+                        <small>For Most Students</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="level-card text-center" data-level="advanced">
+                        <i class="fas fa-rocket level-icon"></i>
+                        <h4>Advanced</h4>
+                        <p>Challenging Problems</p>
+                        <small>For Top Scorers</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="level-card text-center" data-level="full-length">
+                        <i class="fas fa-crown level-icon"></i>
+                        <h4>Full Length</h4>
+                        <p>Complete Exam Simulation</p>
+                        <small>Real Exam Experience</small>
+                    </div>
+                </div>
+            </div>
+            <button id="startTestBtn" class="btn btn-primary mt-5 px-5 py-3" disabled>Start IOE Test</button>
+        </div>
+    </div>
+
+    <!-- Test Screen -->
+    <div class="container my-5 d-none" id="testScreen">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 id="testTitle" class="fw-bold">IOE Mock Test</h2>
+            <div class="timer badge bg-light text-dark p-3">02:00:00</div>
+        </div>
+        <div class="question-navigator" id="questionNavigator"></div>
+        <div class="question-container">
+            <div id="questionContainer"></div>
+            <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-outline-primary px-4" id="prevQuestion">Previous</button>
+                <button class="btn btn-primary px-4" id="nextQuestion">Next</button>
+                <button class="btn submit-btn" id="submitTestBtn" disabled>Submit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="container my-5 d-none" id="resultScreen">
+        <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+            <div class="result-header">
+                <h2 class="fw-bold"><i class="fas fa-trophy me-2"></i>IOE Test Results</h2>
+                <p class="mb-0">Your detailed performance analysis</p>
+                <i class="fas fa-medal floating-medal-1"></i>
+                <i class="fas fa-award floating-medal-2"></i>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-5">
+                    <div class="col-md-6 mx-auto">
+                        <div class="text-center p-4 border rounded bg-light">
+                            <h1 id="scoreDisplay" class="score-display">0/100</h1>
+                            <div id="resultBadge" class="result-badge mb-3">Beginner</div>
+                            <p id="percentageDisplay" class="lead mb-3">0%</p>
+                            <div class="time-badge">
+                                <i class="fas fa-clock me-2"></i>
+                                <span id="timeTaken">Completed in 00:00:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h4 class="mb-4 fw-bold"><i class="fas fa-chart-bar me-2 text-primary"></i>Subject-wise Performance</h4>
+                        <div id="subjectPerformance"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold"><i class="fas fa-chart-pie me-2 text-primary"></i>Performance Summary</h5>
+                                <div class="comparison-chart mt-4" id="comparisonChart"></div>
+                                <div class="mt-4">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <small>Correct Answers</small>
+                                        <small class="text-success" id="correctCount">0</small>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <small>Incorrect Answers</small>
+                                        <small class="text-danger" id="incorrectCount">0</small>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <small>Skipped Questions</small>
+                                        <small class="text-muted" id="skippedCount">0</small>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <small>Accuracy</small>
+                                        <small class="text-primary" id="accuracyDisplay">0%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold"><i class="fas fa-stopwatch me-2 text-primary"></i>Time Management</h5>
+                                <div class="mt-3" id="timeManagement"></div>
+                                <div class="progress mt-3" style="height: 10px;" id="timeProgressBar"></div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="action-btn action-btn-primary" id="reviewTestBtn"><i class="fas fa-search me-2"></i>Review Test</button>
+                            <button class="action-btn action-btn-outline" id="newTestBtn"><i class="fas fa-redo me-2"></i>Take Another Test</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold"><i class="fas fa-lightbulb me-2 text-warning"></i>Study Recommendations</h5>
+                        <div class="row mt-3" id="recommendationsContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="mb-3">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="social-icons mb-3">
+                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="mb-0">© 2025 IOE/CEE Prep. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Dark mode toggle
+        const htmlRoot = document.getElementById('htmlRoot');
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        htmlRoot.setAttribute('data-theme', currentTheme);
+        themeToggle.innerHTML = `<i class="fas fa-${currentTheme === 'dark' ? 'sun' : 'moon'}"></i>`;
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = htmlRoot.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            htmlRoot.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.innerHTML = `<i class="fas fa-${newTheme === 'dark' ? 'sun' : 'moon'}"></i>`;
+        });
+
+        // Supabase client (assumed to be available via external script)
+        const supabase = window.supabase;
+
+        // Test Configuration
+        const testConfig = {
+            ioe: {
+                duration: 7200,
+                totalQuestions: 100,
+                subjects: {
+                    physics: { total: 25, chapters: { mechanics: 8, heat: 5, optics: 6, electricity: 6 } },
+                    chemistry: { total: 25, chapters: { physical: 8, inorganic: 7, organic: 10 } },
+                    math: { total: 25, chapters: { algebra: 10, trigonometry: 7, calculus: 8 } },
+                    english: { total: 25, chapters: { grammar: 10, comprehension: 10, vocabulary: 5 } }
+                }
+            },
+            cee: {
+                duration: 10800,
+                totalQuestions: 100,
+                subjects: {
+                    physics: { total: 25, chapters: { mechanics: 8, heat: 5, optics: 6, electricity: 6 } },
+                    chemistry: { total: 25, chapters: { physical: 8, inorganic: 7, organic: 10 } },
+                    math: { total: 25, chapters: { algebra: 10, trigonometry: 7, calculus: 8 } },
+                    english: { total: 25, chapters: { grammar: 10, comprehension: 10, vocabulary: 5 } }
+                }
+            },
+            levels: {
+                basic: { difficulty: 'easy', numQuestions: 50 },
+                intermediate: { difficulty: 'medium', numQuestions: 75 },
+                advanced: { difficulty: 'hard', numQuestions: 90 },
+                'full-length': { difficulty: 'mixed', numQuestions: 100 }
+            }
+        };
+
+        // Current test state
+        let currentTest = {
+            examType: 'ioe',
+            level: null,
+            questions: [],
+            currentQuestionIndex: 0,
+            answers: {},
+            startTime: null,
+            endTime: null,
+            timerInterval: null,
+            submitted: false,
+            isReviewMode: false
+        };
+
+        // DOM Elements
+        const navbar = document.querySelector('.navbar');
+        const heroSection = document.querySelector('.hero-section');
+        const footer = document.querySelector('footer');
+        const levelSelectionScreen = document.getElementById('levelSelectionScreen');
+        const testScreen = document.getElementById('testScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const levelCards = document.querySelectorAll('.level-card');
+        const startTestBtn = document.getElementById('startTestBtn');
+        const testTitle = document.getElementById('testTitle');
+        const timerDisplay = document.querySelector('.timer');
+        const questionNavigator = document.getElementById('questionNavigator');
+        const questionContainer = document.getElementById('questionContainer');
+        const prevQuestionBtn = document.getElementById('prevQuestion');
+        const nextQuestionBtn = document.getElementById('nextQuestion');
+        const submitTestBtn = document.getElementById('submitTestBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const percentageDisplay = document.getElementById('percentageDisplay');
+        const resultBadge = document.getElementById('resultBadge');
+        const timeTaken = document.getElementById('timeTaken');
+        const subjectPerformance = document.getElementById('subjectPerformance');
+        const correctCount = document.getElementById('correctCount');
+        const incorrectCount = document.getElementById('incorrectCount');
+        const skippedCount = document.getElementById('skippedCount');
+        const accuracyDisplay = document.getElementById('accuracyDisplay');
+        const comparisonChart = document.getElementById('comparisonChart');
+        const timeManagement = document.getElementById('timeManagement');
+        const timeProgressBar = document.getElementById('timeProgressBar');
+        const recommendationsContainer = document.getElementById('recommendationsContainer');
+        const reviewTestBtn = document.getElementById('reviewTestBtn');
+        const newTestBtn = document.getElementById('newTestBtn');
+
+        // Check if user is authorized to access this page
+        // Validate user exam preference
+        async function validateUserExamPreference() {
+            console.log('Validating user exam preference');
+            try {
+                const { data: { user }, error: authError } = await supabase.auth.getUser();
+                if (authError || !user) {
+                    console.error('No user logged in:', authError?.message);
+                    alert('Please log in to access mock tests.');
+                    window.location.href = 'login.html';
+                    return false;
+                }
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('exam_preference')
+                    .eq('id', user.id)
+                    .single();
+                if (error) {
+                    console.error('Error fetching user data:', error.message);
+                    throw error;
+                }
+                if (data.exam_preference !== 'ioe') {
+                    console.log('User registered for CEE, redirecting');
+                    alert('You are registered for CEE. Redirecting to CEE mock tests.');
+                    window.location.href = 'mock_tests_cee.html';
+                    return false;
+                }
+                console.log('User validated for IOE');
+                return true;
+            } catch (error) {
+                console.error('Validation error:', error.message);
+                alert('Error loading mock tests. Please try again or check your Supabase configuration.');
+                return false;
+            }
+        }
+
+        // Event Listeners
+        levelCards.forEach((card, index) => {
+            card.addEventListener('click', function(e) {
+                console.log(`Level card ${index + 1} clicked, level:`, this.dataset.level);
+                try {
+                    levelCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    currentTest.level = this.dataset.level;
+                    if (!currentTest.level) {
+                        console.error('Level not set, dataset:', this.dataset);
+                        throw new Error('Invalid level selection');
+                    }
+                    startTestBtn.disabled = false;
+                    console.log('Start button enabled, currentTest.level:', currentTest.level);
+                } catch (error) {
+                    console.error('Error in level selection:', error.message);
+                    alert('Error selecting test level. Please try again.');
+                }
+            });
+        });
+
+        startTestBtn.addEventListener('click', async () => {
+            console.log('Start Test button clicked, level:', currentTest.level);
+            try {
+                await startTest();
+            } catch (error) {
+                console.error('Error starting test:', error.message);
+                alert('Failed to start test. Please try again.');
+            }
+        });
+
+        prevQuestionBtn.addEventListener('click', showPreviousQuestion);
+        nextQuestionBtn.addEventListener('click', showNextQuestion);
+        submitTestBtn.addEventListener('click', confirmSubmit);
+        reviewTestBtn.addEventListener('click', reviewTest);
+        newTestBtn.addEventListener('click', newTest);
+
+        // Functions
+        async function startTest() {
+            console.log('Starting test, validating user...');
+            if (!(await validateUserExamPreference())) {
+                console.log('Validation failed, test not started');
+                return;
+            }
+            console.log('Test starting:', { examType: currentTest.examType, level: currentTest.level });
+            if (!currentTest.level) {
+                console.error('No level selected');
+                alert('Please select a test level before starting.');
+                return;
+            }
+            try {
+                navbar.classList.add('d-none');
+                heroSection.classList.add('d-none');
+                footer.classList.add('d-none');
+                levelSelectionScreen.classList.add('d-none');
+                currentTest.startTime = new Date();
+                currentTest.questions = generateTestQuestions();
+                currentTest.isReviewMode = false;
+                testTitle.textContent = `IOE Mock Test - ${currentTest.level.charAt(0).toUpperCase() + currentTest.level.slice(1)}`;
+                const duration = testConfig[currentTest.examType].duration;
+                currentTest.timeLeft = duration;
+                updateTimerDisplay();
+                currentTest.timerInterval = setInterval(() => {
+                    currentTest.timeLeft--;
+                    updateTimerDisplay();
+                    if (currentTest.timeLeft <= 0) {
+                        clearInterval(currentTest.timerInterval);
+                        submitTest();
+                    }
+                }, 1000);
+                initializeQuestionNavigator();
+                testScreen.classList.remove('d-none');
+                loadQuestion(currentTest.currentQuestionIndex);
+                console.log('Test screen displayed, question loaded');
+            } catch (error) {
+                console.error('Error during test initialization:', error.message);
+                alert('Error starting test. Please try again.');
+                // Revert UI changes if error occurs
+                navbar.classList.remove('d-none');
+                heroSection.classList.remove('d-none');
+                footer.classList.remove('d-none');
+                levelSelectionScreen.classList.remove('d-none');
+                testScreen.classList.add('d-none');
+            }
+        }
+
+        function generateTestQuestions() {
+            const numQuestions = testConfig.levels[currentTest.level].numQuestions;
+            const questions = [];
+            const examConfig = testConfig[currentTest.examType];
+            for (let i = 0; i < numQuestions; i++) {
+                const subjectInfo = getSubjectAndChapterForQuestion(i, examConfig);
+                questions.push({
+                    id: i + 1,
+                    text: `Sample question ${i + 1} about ${subjectInfo.chapter} (${subjectInfo.subject}, ${currentTest.level} level)`,
+                    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+                    correctAnswer: Math.floor(Math.random() * 4),
+                    explanation: `This is a sample explanation for the correct answer in ${subjectInfo.subject} - ${subjectInfo.chapter}.`,
+                    subject: subjectInfo.subject,
+                    chapter: subjectInfo.chapter
+                });
+            }
+            return questions;
+        }
+
+        function getSubjectAndChapterForQuestion(index, examConfig) {
+            const subjects = Object.keys(examConfig.subjects);
+            let cumulative = 0;
+            for (const subject of subjects) {
+                const subjectTotal = examConfig.subjects[subject].total;
+                if (index < cumulative + subjectTotal) {
+                    const chapters = examConfig.subjects[subject].chapters;
+                    let chapterCumulative = 0;
+                    for (const chapter in chapters) {
+                        if (index - cumulative < chapterCumulative + chapters[chapter]) {
+                            return { subject, chapter };
+                        }
+                        chapterCumulative += chapters[chapter];
+                    }
+                    return { subject, chapter: Object.keys(chapters)[0] };
+                }
+                cumulative += subjectTotal;
+            }
+            return { subject: subjects[0], chapter: 'general' };
+        }
+
+        function initializeQuestionNavigator() {
+            questionNavigator.innerHTML = '';
+            for (let i = 0; i < currentTest.questions.length; i++) {
+                const box = document.createElement('div');
+                box.className = 'question-box unanswered';
+                box.textContent = i + 1;
+                box.dataset.index = i;
+                box.addEventListener('click', () => {
+                    currentTest.currentQuestionIndex = parseInt(box.dataset.index);
+                    loadQuestion(currentTest.currentQuestionIndex);
+                });
+                questionNavigator.appendChild(box);
+            }
+            updateQuestionNavigator();
+        }
+
+        function updateQuestionNavigator() {
+            console.log('Updating navigator:', { answers: currentTest.answers, isReviewMode: currentTest.isReviewMode });
+            const boxes = questionNavigator.querySelectorAll('.question-box');
+            boxes.forEach((box, index) => {
+                box.className = 'question-box';
+                if (currentTest.isReviewMode) {
+                    if (currentTest.answers[index] !== undefined) {
+                        box.classList.add(currentTest.answers[index] === currentTest.questions[index].correctAnswer ? 'correct' : 'incorrect');
+                    } else {
+                        box.classList.add('unanswered');
+                    }
+                } else {
+                    box.classList.add(currentTest.answers[index] !== undefined ? 'answered' : 'unanswered');
+                }
+                if (index === currentTest.currentQuestionIndex) {
+                    box.classList.add('current');
+                }
+            });
+            submitTestBtn.disabled = false;
+            submitTestBtn.textContent = currentTest.isReviewMode ? 'Back to Results' : 'Submit Test';
+        }
+
+        function loadQuestion(index) {
+            console.log('Loading question:', { index, isReviewMode: currentTest.isReviewMode });
+            const question = currentTest.questions[index];
+            const isCorrect = currentTest.isReviewMode && currentTest.answers[index] === question.correctAnswer;
+            const isIncorrect = currentTest.isReviewMode && currentTest.answers[index] !== undefined && currentTest.answers[index] !== question.correctAnswer;
+            questionContainer.innerHTML = `
+                <h4 class="mb-4 fw-bold">Question ${index + 1} of ${currentTest.questions.length}</h4>
+                <div class="question-text mb-4">
+                    <p class="lead">${question.text}</p>
+                    <small class="text-muted">${question.subject.charAt(0).toUpperCase() + question.subject.slice(1)} - ${question.chapter.charAt(0).toUpperCase() + question.chapter.slice(1)}</small>
+                </div>
+                <div class="options-container">
+                    ${question.options.map((option, i) => `
+                        <div class="option-item ${currentTest.answers[index] === i ? 'selected' : ''} ${currentTest.isReviewMode && i === question.correctAnswer ? 'correct' : ''} ${isIncorrect && currentTest.answers[index] === i ? 'incorrect' : ''} ${currentTest.isReviewMode ? 'disabled' : ''}" data-option="${i}">
+                            ${String.fromCharCode(65 + i)}. ${option}
+                        </div>
+                    `).join('')}
+                </div>
+                ${currentTest.isReviewMode && question.explanation ? `
+                    <div class="explanation">
+                        <strong>Explanation:</strong> ${question.explanation}
+                    </div>
+                ` : ''}
+            `;
+            if (!currentTest.isReviewMode) {
+                document.querySelectorAll('.option-item').forEach(option => {
+                    option.addEventListener('click', function() {
+                        selectOption(index, parseInt(this.dataset.option));
+                    });
+                });
+            }
+            prevQuestionBtn.disabled = index === 0;
+            nextQuestionBtn.disabled = index === currentTest.questions.length - 1;
+            updateQuestionNavigator();
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            if (currentTest.isReviewMode) return;
+            console.log('Selecting option:', { questionIndex, optionIndex });
+            currentTest.answers[questionIndex] = optionIndex;
+            document.querySelectorAll('.option-item').forEach((item, i) => {
+                item.classList.toggle('selected', i === optionIndex);
+            });
+            updateQuestionNavigator();
+        }
+
+        function showPreviousQuestion() {
+            if (currentTest.currentQuestionIndex > 0) {
+                currentTest.currentQuestionIndex--;
+                loadQuestion(currentTest.currentQuestionIndex);
+            }
+        }
+
+        function showNextQuestion() {
+            if (currentTest.currentQuestionIndex < currentTest.questions.length - 1) {
+                currentTest.currentQuestionIndex++;
+                loadQuestion(currentTest.currentQuestionIndex);
+            }
+        }
+
+        function updateTimerDisplay() {
+            if (currentTest.isReviewMode) {
+                timerDisplay.textContent = 'Review Mode';
+                return;
+            }
+            const hours = Math.floor(currentTest.timeLeft / 3600);
+            const minutes = Math.floor((currentTest.timeLeft % 3600) / 60);
+            const seconds = currentTest.timeLeft % 60;
+            timerDisplay.textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function confirmSubmit() {
+            console.log('Submit button clicked, isReviewMode:', currentTest.isReviewMode);
+            if (currentTest.isReviewMode) {
+                console.log('Returning to results screen');
+                testScreen.classList.add('d-none');
+                resultScreen.classList.remove('d-none');
+                navbar.classList.remove('d-none');
+                heroSection.classList.remove('d-none');
+                footer.classList.remove('d-none');
+                console.log('Review mode ended, elements restored:', { navbar: navbar.classList, hero: heroSection.classList, footer: footer.classList });
+                return;
+            }
+            if (confirm('Are you sure you want to submit the test? You won\'t be able to change answers after submission.')) {
+                console.log('User confirmed submission');
+                submitTest();
+            }
+        }
+
+        function submitTest() {
+            console.log('Submitting test:', { questions: currentTest.questions, answers: currentTest.answers });
+            clearInterval(currentTest.timerInterval);
+            currentTest.endTime = new Date();
+            currentTest.submitted = true;
+            let score = 0;
+            let correctCountValue = 0;
+            let incorrectCountValue = 0;
+            let skippedCountValue = 0;
+            const subjectScores = {};
+            const chapterScores = {};
+            const timePerSubject = { physics: 0, chemistry: 0, math: 0, english: 0 };
+            for (const subject in testConfig[currentTest.examType].subjects) {
+                subjectScores[subject] = {
+                    correct: 0,
+                    total: testConfig[currentTest.examType].subjects[subject].total,
+                    chapters: {}
+                };
+                for (const chapter in testConfig[currentTest.examType].subjects[subject].chapters) {
+                    subjectScores[subject].chapters[chapter] = {
+                        correct: 0,
+                        total: testConfig[currentTest.examType].subjects[subject].chapters[chapter]
+                    };
+                    chapterScores[chapter] = subjectScores[subject].chapters[chapter];
+                }
+            }
+            currentTest.questions.forEach((question, index) => {
+                const timeSpent = Math.floor(Math.random() * 3) + 1;
+                timePerSubject[question.subject] += timeSpent;
+                if (currentTest.answers[index] === undefined) {
+                    skippedCountValue++;
+                } else if (currentTest.answers[index] === question.correctAnswer) {
+                    score++;
+                    correctCountValue++;
+                    subjectScores[question.subject].correct++;
+                    subjectScores[question.subject].chapters[question.chapter].correct++;
+                } else {
+                    incorrectCountValue++;
+                }
+            });
+            const percentage = Math.round((score / currentTest.questions.length) * 100);
+            const accuracy = correctCountValue > 0 ? Math.round((correctCountValue / (correctCountValue + incorrectCountValue)) * 100) : 0;
+            const timeDiff = (currentTest.endTime - currentTest.startTime) / 1000;
+            const hoursTaken = Math.floor(timeDiff / 3600);
+            const minutesTaken = Math.floor((timeDiff % 3600) / 60);
+            const secondsTaken = Math.floor(timeDiff % 60);
+            scoreDisplay.textContent = `${score}/${currentTest.questions.length}`;
+            percentageDisplay.textContent = `${percentage}%`;
+            correctCount.textContent = correctCountValue;
+            incorrectCount.textContent = incorrectCountValue;
+            skippedCount.textContent = skippedCountValue;
+            accuracyDisplay.textContent = `${accuracy}%`;
+            let badgeClass, badgeText;
+            if (percentage >= 80) {
+                badgeClass = "bg-success";
+                badgeText = "Excellent";
+            } else if (percentage >= 60) {
+                badgeClass = "bg-primary";
+                badgeText = "Good";
+            } else if (percentage >= 40) {
+                badgeClass = "bg-warning";
+                badgeText = "Average";
+            } else {
+                badgeClass = "bg-danger";
+                badgeText = "Needs Improvement";
+            }
+            resultBadge.className = `result-badge ${badgeClass} mb-3`;
+            resultBadge.textContent = badgeText;
+            timeTaken.textContent = `Completed in ${hoursTaken.toString().padStart(2, '0')}:${minutesTaken.toString().padStart(2, '0')}:${secondsTaken.toString().padStart(2, '0')}`;
+            displaySubjectPerformance(subjectScores);
+            generateComparisonChart(subjectScores, percentage);
+            displayTimeManagement(timePerSubject);
+            generateRecommendations(subjectScores);
+            testScreen.classList.add('d-none');
+            resultScreen.classList.remove('d-none');
+            navbar.classList.remove('d-none');
+            heroSection.classList.remove('d-none');
+            footer.classList.remove('d-none');
+            console.log('Test submitted, elements restored:', { navbar: navbar.classList, hero: heroSection.classList, footer: footer.classList });
+            console.log('Result breakdown:', { score, percentage, correctCountValue, incorrectCountValue, skippedCountValue, subjectScores });
+        }
+
+        function displaySubjectPerformance(subjectScores) {
+            subjectPerformance.innerHTML = '';
+            for (const subject in subjectScores) {
+                const subjectData = subjectScores[subject];
+                const subjectPercent = Math.round((subjectData.correct / subjectData.total) * 100);
+                const subjectName = subject.charAt(0).toUpperCase() + subject.slice(1);
+                const subjectIcon = subject === 'physics' ? 'fa-atom' : 
+                                  subject === 'chemistry' ? 'fa-flask' : 
+                                  subject === 'math' ? 'fa-calculator' : 'fa-language';
+                let chaptersHTML = '';
+                for (const chapter in subjectData.chapters) {
+                    const chapterData = subjectData.chapters[chapter];
+                    const chapterPercent = Math.round((chapterData.correct / chapterData.total) * 100);
+                    const chapterName = chapter.charAt(0).toUpperCase() + chapter.slice(1);
+                    chaptersHTML += `
+                        <div class="chapter-item">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>${chapterName}</small>
+                                <small>${chapterData.correct}/${chapterData.total} (${chapterPercent}%)</small>
+                            </div>
+                            <div class="progress chapter-progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: ${chapterPercent}%" 
+                                     aria-valuenow="${chapterPercent}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                const subjectDiv = document.createElement('div');
+                subjectDiv.className = 'performance-card';
+                subjectDiv.innerHTML = `
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="subject-icon ${subject}-bg">
+                            <i class="fas ${subjectIcon}"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="mb-0">${subjectName}</h5>
+                            <small class="text-muted">${Object.keys(subjectData.chapters).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(', ')}</small>
+                        </div>
+                        <div class="text-end">
+                            <h5 class="mb-0">${subjectData.correct}/${subjectData.total}</h5>
+                            <small class="${subjectPercent >= 70 ? 'text-success' : subjectPercent >= 50 ? 'text-warning' : 'text-danger'}">${subjectPercent}%</small>
+                        </div>
+                    </div>
+                    <div class="progress progress-thin">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: ${subjectPercent}%" 
+                             aria-valuenow="${subjectPercent}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="mt-3">
+                        <h6><i class="fas fa-layer-group me-2"></i>Chapter Breakdown</h6>
+                        ${chaptersHTML}
+                    </div>
+                `;
+                subjectPerformance.appendChild(subjectDiv);
+            }
+        }
+
+        function generateComparisonChart(subjectScores, overallPercent) {
+            comparisonChart.innerHTML = '';
+            const subjects = [
+                { name: 'Physics', score: Math.round((subjectScores.physics.correct / subjectScores.physics.total) * 100), color: 'linear-gradient(to top, var(--physics-color), #ff8e8e)' },
+                { name: 'Chemistry', score: Math.round((subjectScores.chemistry.correct / subjectScores.chemistry.total) * 100), color: 'linear-gradient(to top, var(--chemistry-color), #4895ef)' },
+                { name: 'Math', score: Math.round((subjectScores.math.correct / subjectScores.math.total) * 100), color: 'linear-gradient(to top, var(--math-color), #b5179e)' },
+                { name: 'English', score: Math.round((subjectScores.english.correct / subjectScores.english.total) * 100), color: 'linear-gradient(to top, var(--english-color), #f9c74f)' },
+                { name: 'Average', score: 76, color: 'linear-gradient(to top, #6c757d, #adb5bd)' }
+            ];
+            const barWidth = (100 / subjects.length) - 2;
+            subjects.forEach((subject, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.left = `${(index * (100 / subjects.length)) + 1}%`;
+                bar.style.width = `${barWidth}%`;
+                bar.style.height = `${subject.score}%`;
+                bar.style.background = subject.color;
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = subject.name;
+                bar.appendChild(label);
+                comparisonChart.appendChild(bar);
+            });
+        }
+
+        function displayTimeManagement(timePerSubject) {
+            timeManagement.innerHTML = '';
+            timeProgressBar.innerHTML = '';
+            const totalTime = Object.values(timePerSubject).reduce((sum, time) => sum + time, 0);
+            const subjectColors = {
+                physics: 'bg-danger',
+                chemistry: 'bg-info',
+                math: 'bg-warning',
+                english: 'bg-success'
+            };
+            for (const subject in timePerSubject) {
+                const subjectName = subject.charAt(0).toUpperCase() + subject.slice(1);
+                const percent = Math.round((timePerSubject[subject] / totalTime) * 100);
+                timeManagement.innerHTML += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <small>${subjectName}</small>
+                        <small>${timePerSubject[subject]} mins</small>
+                    </div>
+                `;
+                const progressBar = document.createElement('div');
+                progressBar.className = `progress-bar ${subjectColors[subject]}`;
+                progressBar.style.width = `${percent}%`;
+                timeProgressBar.appendChild(progressBar);
+            }
+        }
+
+        function generateRecommendations(subjectScores) {
+            recommendationsContainer.innerHTML = '';
+            let weakAreas = [];
+            let strongAreas = [];
+            for (const subject in subjectScores) {
+                for (const chapter in subjectScores[subject].chapters) {
+                    const chapterData = subjectScores[subject].chapters[chapter];
+                    const percent = Math.round((chapterData.correct / chapterData.total) * 100);
+                    const chapterName = `${subject.charAt(0).toUpperCase() + subject.slice(1)} - ${chapter.charAt(0).toUpperCase() + chapter.slice(1)}`;
+                    if (percent < 70) {
+                        weakAreas.push(`${chapterName} (${percent}%)`);
+                    } else if (percent >= 90) {
+                        strongAreas.push(`${chapterName} (${percent}%)`);
+                    }
+                }
+            }
+            if (weakAreas.length === 0) {
+                const allChapters = [];
+                for (const subject in subjectScores) {
+                    for (const chapter in subjectScores[subject].chapters) {
+                        const chapterData = subjectScores[subject].chapters[chapter];
+                        const percent = Math.round((chapterData.correct / chapterData.total) * 100);
+                        allChapters.push({
+                            name: `${subject.charAt(0).toUpperCase() + subject.slice(1)} - ${chapter.charAt(0).toUpperCase() + chapter.slice(1)}`,
+                            percent: percent
+                        });
+                    }
+                }
+                allChapters.sort((a, b) => a.percent - b.percent);
+                weakAreas = allChapters.slice(0, 3).map(c => `${c.name} (${c.percent}%)`);
+            }
+            if (strongAreas.length === 0) {
+                const allChapters = [];
+                for (const subject in subjectScores) {
+                    for (const chapter in subjectScores[subject].chapters) {
+                        const chapterData = subjectScores[subject].chapters[chapter];
+                        const percent = Math.round((chapterData.correct / chapterData.total) * 100);
+                        allChapters.push({
+                            name: `${subject.charAt(0).toUpperCase() + subject.slice(1)} - ${chapter.charAt(0).toUpperCase() + chapter.slice(1)}`,
+                            percent: percent
+                        });
+                    }
+                }
+                allChapters.sort((a, b) => b.percent - a.percent);
+                strongAreas = allChapters.slice(0, 3).map(c => `${c.name} (${c.percent}%)`);
+            }
+            recommendationsContainer.innerHTML = `
+                <div class="col-md-6">
+                    <div class="alert alert-warning">
+                        <h6><i class="fas fa-exclamation-triangle me-2"></i>Need Improvement</h6>
+                        <ul class="mb-0">
+                            ${weakAreas.slice(0, 3).map(area => `<li>${area}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="alert alert-success">
+                        <h6><i class="fas fa-check-circle me-2"></i>Strengths</h6>
+                        <ul class="mb-0">
+                            ${strongAreas.slice(0, 3).map(area => `<li>${area}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function reviewTest() {
+            console.log('Review Test clicked:', { isReviewMode: currentTest.isReviewMode, answers: currentTest.answers });
+            currentTest.currentQuestionIndex = 0;
+            currentTest.isReviewMode = true;
+            loadQuestion(0);
+            resultScreen.classList.add('d-none');
+            testScreen.classList.remove('d-none');
+            clearInterval(currentTest.timerInterval);
+            timerDisplay.textContent = "Review Mode";
+            updateQuestionNavigator();
+            submitTestBtn.textContent = 'Back to Results';
+            submitTestBtn.disabled = false;
+        }
+
+        function newTest() {
+            console.log('Starting new test');
+            currentTest = {
+                examType: 'ioe',
+                level: null,
+                questions: [],
+                currentQuestionIndex: 0,
+                answers: {},
+                startTime: null,
+                endTime: null,
+                timerInterval: null,
+                submitted: false,
+                isReviewMode: false
+            };
+            resultScreen.classList.add('d-none');
+            levelSelectionScreen.classList.remove('d-none');
+            navbar.classList.remove('d-none');
+            heroSection.classList.remove('d-none');
+            footer.classList.remove('d-none');
+            console.log('New test started, elements restored:', { navbar: navbar.classList, hero: heroSection.classList, footer: footer.classList });
+            levelCards.forEach(c => c.classList.remove('selected'));
+            startTestBtn.disabled = true;
+        }
+
+        // Initialize
+        console.log('Initializing page, validating user...');
+        validateUserExamPreference();
+    </script>
+</body>
+</html>

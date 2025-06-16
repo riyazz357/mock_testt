@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - IOE/CEE Prep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html"><i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-4">Admin Dashboard</h2>
+            <div id="authMessage" class="alert alert-danger alert-dismissible fade show d-none mb-4" role="alert">
+                <span id="authMessageText"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div class="container mt-4">
+                <h2>Admin Dashboard</h2>
+                <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="questions-tab" data-bs-toggle="tab" data-bs-target="#questions" type="button" role="tab">Questions</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials" type="button" role="tab">Study Materials</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="adminTabContent">
+                    <div class="tab-pane fade show active" id="questions" role="tabpanel">
+                        <!-- Add Question Form -->
+                        <div class="card mb-4 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h4 class="mb-4">Add Question</h4>
+                                <div id="questionError" class="alert alert-danger alert-dismissible fade show d-none mb-3" role="alert">
+                                    <span id="questionErrorText"></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <form id="questionForm" novalidate>
+                                    <div class="row g-3">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="questionText">Question</label>
+                                            <textarea id="questionText" class="form-control" rows="3" required></textarea>
+                                            <div class="invalid-feedback">Question is required.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="option1">Option 1</label>
+                                            <input type="text" id="option1" class="form-control" required>
+                                            <div class="invalid-feedback">Option 1 is required.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="option2">Option 2</label>
+                                            <input type="text" id="option2" class="form-control" required>
+                                            <div class="invalid-feedback">Option 2 is required.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="option3">Option 3</label>
+                                            <input type="text" id="option3" class="form-control" required>
+                                            <div class="invalid-feedback">Option 3 is required.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="option4">Option 4</label>
+                                            <input type="text" id="option4" class="form-control" required>
+                                            <div class="invalid-feedback">Option 4 is required.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="correctAnswer">Correct Option (0-3)</label>
+                                            <input type="number" id="correctAnswer" class="form-control" min="0" max="3" required>
+                                            <div class="invalid-feedback">Correct option must be between 0 and 3.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="difficulty">Difficulty</label>
+                                            <select id="difficulty" class="form-select" required>
+                                                <option value="easy">Easy</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="hard">Hard</option>
+                                            </select>
+                                            <div class="invalid-feedback">Difficulty is required.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="subject">Subject</label>
+                                            <select id="subject" class="form-select" required>
+                                                <option value="physics">Physics</option>
+                                                <option value="chemistry">Chemistry</option>
+                                                <option value="mathematics">Mathematics</option>
+                                                <option value="english">English</option>
+                                                <option value="engineering-aptitude">Engineering Aptitude</option>
+                                                <option value="biology">Biology</option>
+                                            </select>
+                                            <div class="invalid-feedback">Subject is required.</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label" for="chapter">Chapter</label>
+                                            <input type="text" id="chapter" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="topic">Topic</label>
+                                            <input type="text" id="topic" class="form-control">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="explanation">Explanation</label>
+                                            <textarea id="explanation" class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button id="addQuestionBtn" type="submit" class="btn btn-primary">Add Question</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="materials" role="tabpanel">
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h4>Upload Study Material</h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="materialForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="class" class="form-label">Class</label>
+                                            <select class="form-select" id="class" required>
+                                                <option value="">Select Class</option>
+                                                <option value="11">Class 11</option>
+                                                <option value="12">Class 12</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="subject" class="form-label">Subject</label>
+                                            <select class="form-select" id="subject" required>
+                                                <option value="">Select Subject</option>
+                                                <option value="physics">Physics</option>
+                                                <option value="chemistry">Chemistry</option>
+                                                <option value="mathematics">Mathematics</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="unit" class="form-label">Unit</label>
+                                            <input type="text" class="form-control" id="unit" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="topic" class="form-label">Topic</label>
+                                            <input type="text" class="form-control" id="topic" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="materialFile" class="form-label">Upload File (PDF/DOC/DOCX)</label>
+                                        <input type="file" class="form-control" id="materialFile" accept=".pdf,.doc,.docx" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Description</label>
+                                        <textarea class="form-control" id="description" rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-upload me-2"></i>Upload Material
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h4>Uploaded Materials</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Class</th>
+                                                <th>Subject</th>
+                                                <th>Unit</th>
+                                                <th>Topic</th>
+                                                <th>Description</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="materialsList">
+                                            <!-- Materials will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-5">
+        <div class="container">
+            <div class="text-center">
+                <p>© 2025 IOE/CEE Prep. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Check authentication
+        async function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            console.log('Checking auth:', { token: !!token, user });
+            
+            if (!token || !user.role) {
+                console.log('No token or user role found, redirecting to login');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            if (user.role !== 'admin') {
+                console.log('User is not an admin, redirecting to dashboard');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            
+            try {
+                // Verify token with backend
+                const response = await window.api.auth.getCurrentUser();
+                console.log('Auth verification response:', response);
+                
+                if (response.role !== 'admin') {
+                    console.log('User is not an admin according to backend, redirecting to dashboard');
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('Auth verification failed:', error);
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to log out?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Form validation
+        function validateForm(form) {
+            form.classList.add('was-validated');
+            return form.checkValidity();
+        }
+
+        // Toggle button loading state
+        function toggleLoading(btn, isLoading) {
+            btn.disabled = isLoading;
+            btn.innerHTML = isLoading 
+                ? '<i class="fas fa-spinner fa-spin me-2"></i>Processing...' 
+                : 'Add Question';
+        }
+
+        // Add Question
+        const questionForm = document.getElementById('questionForm');
+        questionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!validateForm(questionForm)) return;
+
+            const addQuestionBtn = document.getElementById('addQuestionBtn');
+            const questionError = document.getElementById('questionError');
+            const questionErrorText = document.getElementById('questionErrorText');
+
+            toggleLoading(addQuestionBtn, true);
+            try {
+                const question = {
+                    question: document.getElementById('questionText').value.trim(),
+                    options: [
+                        document.getElementById('option1').value.trim(),
+                        document.getElementById('option2').value.trim(),
+                        document.getElementById('option3').value.trim(),
+                        document.getElementById('option4').value.trim()
+                    ],
+                    correctAnswer: parseInt(document.getElementById('correctAnswer').value),
+                    difficulty: document.getElementById('difficulty').value,
+                    topic: document.getElementById('topic').value.trim() || null,
+                    subject: document.getElementById('subject').value,
+                    chapter: document.getElementById('chapter').value.trim() || null,
+                    explanation: document.getElementById('explanation').value.trim() || null,
+                    examType: 'ioe'
+                };
+
+                if (!question.options.every(opt => opt)) {
+                    throw new Error('All options must be filled.');
+                }
+                if (isNaN(question.correctAnswer) || question.correctAnswer < 0 || question.correctAnswer > 3) {
+                    throw new Error('Correct option must be between 0 and 3.');
+                }
+
+                const response = await window.api.questions.create(question);
+                console.log('Question added:', response);
+                alert('Question added successfully!');
+                questionForm.reset();
+                questionForm.classList.remove('was-validated');
+            } catch (error) {
+                console.error('Error adding question:', error);
+                questionErrorText.textContent = error.message || 'Failed to add question. Please try again.';
+                questionError.classList.remove('d-none');
+            } finally {
+                toggleLoading(addQuestionBtn, false);
+            }
+        });
+
+        // Handle study material form submission
+        document.getElementById('materialForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Uploading...';
+            
+            try {
+                const formData = new FormData();
+                formData.append('class', document.getElementById('class').value);
+                formData.append('subject', document.getElementById('subject').value);
+                formData.append('unit', document.getElementById('unit').value);
+                formData.append('topic', document.getElementById('topic').value);
+                formData.append('description', document.getElementById('description').value);
+                formData.append('file', document.getElementById('materialFile').files[0]);
+                
+                const response = await window.api.studyMaterials.upload(formData);
+                console.log('Material uploaded:', response);
+                
+                // Reset form
+                e.target.reset();
+                
+                // Show success message
+                alert('Study material uploaded successfully!');
+                
+                // Refresh materials list
+                loadMaterials();
+            } catch (error) {
+                console.error('Error uploading material:', error);
+                alert('Error uploading material: ' + error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-upload me-2"></i>Upload Material';
+            }
+        });
+
+        // Load study materials
+        async function loadMaterials() {
+            try {
+                const materials = await window.api.studyMaterials.getAll();
+                const materialsList = document.getElementById('materialsList');
+                
+                materialsList.innerHTML = materials.map(material => `
+                    <tr>
+                        <td>Class ${material.class}</td>
+                        <td>${material.subject}</td>
+                        <td>${material.unit}</td>
+                        <td>${material.topic}</td>
+                        <td>${material.description || '-'}</td>
+                        <td>
+                            <a href="${material.fileUrl}" class="btn btn-sm btn-primary" target="_blank">
+                                <i class="fas fa-download"></i>
+                            </a>
+                            <button class="btn btn-sm btn-danger" onclick="deleteMaterial('${material._id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading materials:', error);
+            }
+        }
+
+        // Delete study material
+        async function deleteMaterial(id) {
+            if (!confirm('Are you sure you want to delete this material?')) {
+                return;
+            }
+            
+            try {
+                await window.api.studyMaterials.delete(id);
+                loadMaterials();
+            } catch (error) {
+                console.error('Error deleting material:', error);
+                alert('Error deleting material: ' + error.message);
+            }
+        }
+
+        // Load materials when materials tab is clicked
+        document.getElementById('materials-tab').addEventListener('click', loadMaterials);
+    </script>
+</body>
+</html>

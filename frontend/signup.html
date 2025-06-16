@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - IOE/CEE Prep Nepal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3f37c9;
+            --primary-light: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.05);
+            z-index: -2;
+        }
+
+        /* Formula/Keyword Background */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(0.5px);
+        }
+
+        .formula {
+            position: absolute;
+            font-size: 1.3rem;
+            opacity: 0.35;
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            white-space: nowrap;
+            user-select: none;
+            text-shadow: 0 0 5px rgba(67,97,238,0.3);
+            animation: formulaFadeIn 1.5s ease-out;
+        }
+
+        @keyframes formulaFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 0.35; transform: translateY(0); }
+        }
+
+        .formula.accent {
+            color: var(--primary-light);
+            text-shadow: 0 0 5px rgba(76,201,240,0.3);
+        }
+
+        .signup-card {
+            max-width: 800px;
+            margin: 1.5rem auto;
+            border: 1px solid rgba(67,97,238,0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            z-index: 1;
+            background: rgba(255,255,255,0.95);
+        }
+        
+        .signup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .signup-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .signup-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+        
+        .signup-header h2 {
+            position: relative;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .signup-header p {
+            position: relative;
+            opacity: 0.9;
+        }
+        
+        .signup-body {
+            padding: 2rem;
+        }
+        
+        .profile-upload {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            margin-top: -80px;
+            z-index: 2;
+            background-color: var(--light);
+        }
+        
+        .profile-upload:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .upload-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+        
+        .upload-icon:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .form-floating>label {
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 1rem 1rem;
+            border: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.2);
+        }
+        
+        .form-control.is-invalid:focus, .form-select.is-invalid:focus {
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+        
+        .btn-signup {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .btn-signup:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-signup:active {
+            transform: translateY(0);
+        }
+        
+        .login-link {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .login-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .terms-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .terms-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .invalid-feedback {
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .signup-card {
+                margin: 1rem auto;
+                border-radius: 10px;
+            }
+            
+            .signup-header {
+                padding: 1.25rem;
+            }
+            
+            .signup-body {
+                padding: 1.25rem;
+            }
+            
+            .profile-upload {
+                width: 100px;
+                height: 100px;
+                margin-top: -60px;
+            }
+            
+            .formula {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Overlay for Formulas -->
+    <div class="background-overlay" id="formulaOverlay"></div>
+
+    <div class="container py-4">
+        <div class="card signup-card">
+            <div class="signup-header">
+                <h2><i class="fas fa-user-graduate me-2"></i>Student Registration</h2>
+                <p class="mb-0">Create your account to start preparing</p>
+            </div>
+            
+            <div class="signup-body">
+                <form id="signupForm" class="needs-validation" novalidate>
+                    <div class="text-center mb-4">
+                        <img src="https://via.placeholder.com/120" alt="Profile" class="profile-upload" id="profileImage">
+                        <div class="upload-icon" onclick="document.getElementById('profileInput').click()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <input type="file" id="profileInput" accept="image/*" style="display: none;">
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+                                <label for="name">Full Name</label>
+                                <div class="invalid-feedback">Please enter your full name.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                <label for="email">Email</label>
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <label for="password">Password</label>
+                                <div class="invalid-feedback">Please enter a password.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="examType" name="examType" required>
+                                    <option value="">Select Exam Type</option>
+                                    <option value="ioe">IOE</option>
+                                    <option value="cee">CEE</option>
+                                </select>
+                                <label for="examType">Exam Type</label>
+                                <div class="invalid-feedback">Please select your exam type.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger mt-3" id="errorAlert" style="display: none;"></div>
+                    <div class="alert alert-success mt-3" id="successAlert" style="display: none;"></div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-signup btn-lg" id="signupButton">
+                            <span class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
+                            Create Account
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Already have an account? <a href="login.html" class="text-decoration-none">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Terms & Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="termsModalLabel">Terms & Conditions</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="text-primary">1. Account Registration</h6>
+                    <p>You must provide accurate and complete information when creating an account. You are responsible for maintaining the confidentiality of your account credentials.</p>
+                    
+                    <h6 class="text-primary mt-4">2. Service Usage</h6>
+                    <p>The IOE/CEE Prep platform is intended for personal, non-commercial use by students preparing for engineering entrance exams in Nepal.</p>
+                    
+                    <h6 class="text-primary mt-4">3. Privacy Policy</h6>
+                    <p>We collect and use your personal information as described in our Privacy Policy to provide and improve our services.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verification Modal -->
+    <div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verificationModalLabel">Verify Your Email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>We've sent a verification email to your address. Please check your inbox and click the verification link to complete your registration.</p>
+                    <p>If you don't see the email, please check your spam folder.</p>
+                    <div class="text-center mt-4">
+                        <button id="resendEmailBtn" class="btn btn-primary">
+                            Resend Email
+                            <span class="ms-2" id="countdown">00:30</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Formula/Keyword Background Generation
+        const formulaOverlay = document.getElementById('formulaOverlay');
+        const formulas = [
+            'F=ma', 'v=u+at', 's=ut+½at²', 'E=mc²', 'V=IR', 'q=mcΔT', 'P=F/A',
+            'W=Fd', 'P=mv', 'a=v²/r', 'g=GM/r²', 'F=kx', 'T=2π√(l/g)', 'P=V²/R',
+            'I=q/t', 'E=½mv²', 'PV=nRT', 'pH=-log[H⁺]', 'K=½mv²', 'ΔG=ΔH-TΔS',
+            'q=nF', 'E=hc/λ', 'C=n/V', 'Ksp=[A⁺][B⁻]', 'N=N₀e⁻ᵏᵗ',
+            '2H₂ + O₂ → 2H₂O', 'NaCl → Na⁺ + Cl⁻', 'C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O',
+            'HCl + NaOH → NaCl + H₂O', '2Na + Cl₂ → 2NaCl', 'CH₄ + 2O₂ → CO₂ + 2H₂O',
+            'CaCO₃ → CaO + CO₂', '2KClO₃ → 2KCl + 3O₂', 'Fe + CuSO₄ → FeSO₄ + Cu',
+            '2Al + 6HCl → 2AlCl₃ + 3H₂', 'H₂CO₃ → H₂O + CO₂', 'Zn + H₂SO₄ → ZnSO₄ + H₂',
+            'AgNO₃ + NaCl → AgCl + NaNO₃', 'Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag',
+            'Genetics', 'Ecology', 'Cell Biology', 'Evolution', 'Biochemistry',
+            'Microbiology', 'Botany', 'Zoology', 'Immunology', 'Molecular Biology',
+            'Physiology', 'Anatomy', 'Biotechnology', 'Homeostasis', 'Metabolism'
+        ];
+
+        function generateFormulaBackground() {
+            formulaOverlay.innerHTML = '';
+            const overlayWidth = document.documentElement.scrollWidth;
+            const overlayHeight = document.documentElement.scrollHeight;
+            const cellSize = 100;
+            const cols = Math.floor(overlayWidth / cellSize);
+            const rows = Math.floor(overlayHeight / cellSize);
+            const occupied = new Set();
+            const count = Math.floor(overlayWidth * overlayHeight / 15000);
+
+            for (let i = 0; i < count; i++) {
+                let attempts = 0;
+                let placed = false;
+                while (attempts < 10 && !placed) {
+                    const col = Math.floor(Math.random() * cols);
+                    const row = Math.floor(Math.random() * rows);
+                    const cellKey = `${col},${row}`;
+                    if (!occupied.has(cellKey)) {
+                        occupied.add(cellKey);
+                        const formula = formulas[Math.floor(Math.random() * formulas.length)];
+                        const span = document.createElement('span');
+                        span.className = 'formula';
+                        if (Math.random() > 0.5) span.classList.add('accent');
+                        span.textContent = formula;
+                        const x = (col + 0.5 + (Math.random() - 0.5) * 0.5) * cellSize;
+                        const y = (row + 0.5 + (Math.random() - 0.5) * 0.5) * cellSize;
+                        span.style.left = `${(x / overlayWidth) * 100}%`;
+                        span.style.top = `${(y / overlayHeight) * 100}%`;
+                        span.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+                        formulaOverlay.appendChild(span);
+                        placed = true;
+                    }
+                    attempts++;
+                }
+            }
+            console.log(`Generated ${occupied.size} formulas/reactions/keywords in background`);
+        }
+
+        generateFormulaBackground();
+        window.addEventListener('resize', () => {
+            generateFormulaBackground();
+        });
+
+        // Helper functions for UI state management
+        function showLoading() {
+            const signupButton = document.getElementById('signupButton');
+            const spinner = signupButton.querySelector('.spinner-border');
+            signupButton.disabled = true;
+            spinner.style.display = 'inline-block';
+            hideAlerts();
+        }
+
+        function hideLoading() {
+            const signupButton = document.getElementById('signupButton');
+            const spinner = signupButton.querySelector('.spinner-border');
+            signupButton.disabled = false;
+            spinner.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successAlert = document.getElementById('successAlert');
+            successAlert.textContent = message;
+            successAlert.style.display = 'block';
+        }
+
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            errorAlert.textContent = message;
+            errorAlert.style.display = 'block';
+        }
+
+        function hideAlerts() {
+            document.getElementById('errorAlert').style.display = 'none';
+            document.getElementById('successAlert').style.display = 'none';
+        }
+
+        // Form submission handler
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log('Form submission started');
+
+            const formData = new FormData(e.target);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                examType: formData.get('examType')
+            };
+
+            console.log('Registration request data:', { ...data, password: '[REDACTED]' });
+
+            try {
+                showLoading();
+                const response = await api.auth.register(data);
+                console.log('Registration response:', response);
+
+                if (response.message) {
+                    showSuccess(response.message);
+                    // Store exam type in localStorage
+                    localStorage.setItem('examType', data.examType);
+                    
+                    // Show verification modal
+                    const verificationModal = new bootstrap.Modal(document.getElementById('verificationModal'));
+                    verificationModal.show();
+                    
+                    // Start countdown for resend button
+                    startCountdown();
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError(error.message || 'Error creating account. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // Resend verification email
+        document.getElementById('resendEmailBtn').addEventListener('click', async function() {
+            try {
+                const email = document.getElementById('email').value;
+                showLoading();
+                const response = await api.auth.resendVerification(email);
+                showSuccess(response.message);
+                startCountdown();
+            } catch (error) {
+                console.error('Error resending email:', error);
+                showError(error.message || 'Failed to resend verification email');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        let countdownInterval;
+        function startCountdown() {
+            let timeLeft = 30;
+            const resendBtn = document.getElementById('resendEmailBtn');
+            resendBtn.disabled = true;
+            
+            clearInterval(countdownInterval);
+            
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('countdown').textContent = 
+                    `00:${timeLeft < 10 ? '0' + timeLeft : timeLeft}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    resendBtn.disabled = false;
+                    document.getElementById('countdown').textContent = '00:00';
+                }
+            }, 1000);
+        }
+
+        // Handle verification modal close
+        document.getElementById('verificationModal').addEventListener('hide.bs.modal', function() {
+            window.location.href = 'login.html';
+        });
+
+        // Profile image preview
+        document.getElementById('profileImage').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePreview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOE/CEE Prep Nepal - Engineering Entrance Exam Preparation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f4f7ff;
+        }
+
+        .navbar {
+            padding: 1.5rem 0;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            color: var(--accent-color);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 6rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            filter: blur(5px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .hero-section .lead {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .btn-hero {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            background-color: #3ba8d3;
+        }
+
+        .features-section {
+            padding: 6rem 0;
+            background: linear-gradient(to bottom, #ffffff, #f4f7ff);
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--dark-color), #343a40);
+            color: white;
+            padding: 4rem 0 2rem;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+        }
+
+        .footer-links h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 8px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-option {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-option:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .test-container {
+            padding: 3rem 0;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        .option-label {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-label:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .option-label input:checked + span {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .option-label.correct {
+            background: rgba(40, 167, 69, 0.2);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .option-label.incorrect {
+            background: rgba(220, 53, 69, 0.2);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .option-label input:disabled + span {
+            cursor: not-allowed;
+        }
+
+        .question-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .question-cube {
+            width: 30px;
+            height: 30px;
+            background-color: var(--danger-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .question-cube.answered {
+            background-color: var(--success-color);
+        }
+
+        .question-cube.correct {
+            background-color: var(--success-color);
+        }
+
+        .question-cube.incorrect {
+            background-color: var(--danger-color);
+        }
+
+        .question-cube:hover {
+            transform: scale(1.1);
+        }
+
+        .explanation {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .result-container {
+            padding: 4rem 0;
+            background: linear-gradient(to bottom, #f4f7ff, #e8edf9);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .result-score {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .result-analysis {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .correct-answer {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 5px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 0.75rem 0;
+            border-radius: 10px;
+        }
+
+        .wrong-answer {
+            background: rgba(220, 53, 69, 0.1);
+            border-left: 5px solid var(--danger-color);
+            padding: 1.5rem;
+            margin: 0.75rem 0;
+            border-radius: 10px;
+        }
+
+        .result-chart-container {
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+
+        .subject-breakdown {
+            margin-top: 2rem;
+        }
+
+        .subject-breakdown h5 {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-section::before {
+                width: 100%;
+                opacity: 0.15;
+            }
+
+            .feature-card {
+                margin-bottom: 1.5rem;
+            }
+
+            .result-score {
+                font-size: 3rem;
+            }
+
+            .question-cube {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Chart.js for Result Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">IOE/CEE Prep Nepal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Mock Tests</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Resources</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>Master Your Engineering Entrance Exam</h1>
+                    <p class="lead">Prepare with our comprehensive mock tests and ace your IOE/CEE exams with confidence.</p>
+                    <a href="#mock-tests" class="btn btn-hero">Start Practicing Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mock Tests Section -->
+    <section class="features-section" id="mock-tests">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Take a Mock Test</h2>
+                <p class="text-muted">Practice with our timed mock tests to assess your preparation</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card" data-subject="physics">
+                        <div class="text-center">
+                            <div class="feature-icon"><i class="fas fa-atom"></i></div>
+                            <h3>Physics</h3>
+                            <p class="text-muted">Full subject test covering all chapters</p>
+                            <button class="btn btn-outline-primary start-test" data-subject="physics">Start Test</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card" data-subject="chemistry">
+                        <div class="text-center">
+                            <div class="feature-icon"><i class="fas fa-flask"></i></div>
+                            <h3>Chemistry</h3>
+                            <p class="text-muted">Full subject test covering all chapters</p>
+                            <button class="btn btn-outline-primary start-test" data-subject="chemistry">Start Test</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card" data-subject="mathematics">
+                        <div class="text-center">
+                            <div class="feature-icon"><i class="fas fa-square-root-alt"></i></div>
+                            <h3>Mathematics</h3>
+                            <p class="text-muted">Full subject test covering all chapters</p>
+                            <button class="btn btn-outline-primary start-test" data-subject="mathematics">Start Test</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card" data-subject="engineering-aptitude">
+                        <div class="text-center">
+                            <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                            <h3>Engineering Aptitude</h3>
+                            <p class="text-muted">Full subject test covering all chapters</p>
+                            <button class="btn btn-outline-primary start-test" data-subject="engineering-aptitude">Start Test</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card" data-subject="english">
+                        <div class="text-center">
+                            <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                            <h3>English</h3>
+                            <p class="text-muted">Full subject test covering all chapters</p>
+                            <button class="btn btn-outline-primary start-test" data-subject="english">Start Test</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card" data-subject="biology">
+                        <div class="text-center">
+                            <div class="feature-icon"><i class="fas fa-dna"></i></div>
+                            <h3>Biology</h3>
+                            <p class="text-muted">Full subject test covering all chapters</p>
+                            <button class="btn btn-outline-primary start-test" data-subject="biology">Start Test</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <h4 class="text-center mb-4">Chapter-wise Tests</h4>
+                <div class="row g-4">
+                    <div class="col-md-3 col-6">
+                        <div class="feature-card">
+                            <div class="text-center">
+                                <h5>Physics - Mechanics</h5>
+                                <p class="text-muted small">10 Questions • 15 Minutes</p>
+                                <button class="btn btn-sm btn-outline-primary start-test" data-subject="physics" data-chapter="mechanics">Start Test</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="feature-card">
+                            <div class="text-center">
+                                <h5>Physics - Electromagnetism</h5>
+                                <p class="text-muted small">10 Questions • 15 Minutes</p>
+                                <button class="btn btn-sm btn-outline-primary start-test" data-subject="physics" data-chapter="electromagnetism">Start Test</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Test Options -->
+    <div class="modal fade" id="testOptionsModal" tabindex="-1" aria-labelledby="testOptionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="testOptionsModalLabel">Select Test Type</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-option" data-type="full">Full Subject Test</div>
+                    <div class="modal-option" data-type="class11">Class 11 Syllabus</div>
+                    <div class="modal-option" data-type="class12">Class 12 Syllabus</div>
+                    <div class="modal-option" data-type="unit">Specific Unit</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unit Selection Modal -->
+    <div class="modal fade" id="unitSelectionModal" tabindex="-1" aria-labelledby="unitSelectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="unitSelectionModalLabel">Select Unit</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="unitOptions"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Question Modal -->
+    <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addQuestionModalLabel">Add New Question</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addQuestionForm">
+                        <div class="mb-3">
+                            <label for="questionSubject" class="form-label">Subject</label>
+                            <select id="questionSubject" class="form-select" required>
+                                <option value="">Select Subject</option>
+                                <option value="physics">Physics</option>
+                                <option value="chemistry">Chemistry</option>
+                                <option value="mathematics">Mathematics</option>
+                                <option value="engineering-aptitude">Engineering Aptitude</option>
+                                <option value="english">English</option>
+                                <option value="biology">Biology</option>
+                            </select>
+                            <div id="subjectError" class="error-message">Please select a subject.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="questionClass" class="form-label">Class</label>
+                            <select id="questionClass" class="form-select" required>
+                                <option value="">Select Class</option>
+                                <option value="11">Class 11</option>
+                                <option value="12">Class 12</option>
+                            </select>
+                            <div id="classError" class="error-message">Please select a class.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="questionChapter" class="form-label">Chapter</label>
+                            <input type="text" id="questionChapter" class="form-control" placeholder="e.g., Mechanics" required>
+                            <div id="chapterError" class="error-message">Please enter a chapter name.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="questionText" class="form-label">Question</label>
+                            <textarea id="questionText" class="form-control" rows="4" placeholder="Enter the question" required></textarea>
+                            <div id="questionError" class="error-message">Please enter a question.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Options</label>
+                            <div id="optionsContainer">
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control option-input" placeholder="Option 1" required>
+                                    <div class="error-message option-error">Please enter an option.</div>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control option-input" placeholder="Option 2" required>
+                                    <div class="error-message option-error">Please enter an option.</div>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control option-input" placeholder="Option 3" required>
+                                    <div class="error-message option-error">Please enter an option.</div>
+                                </div>
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control option-input" placeholder="Option 4" required>
+                                    <div class="error-message option-error">Please enter an option.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correctOption" class="form-label">Correct Option</label>
+                            <select id="correctOption" class="form-select" required>
+                                <option value="">Select Correct Option</option>
+                                <option value="0">Option 1</option>
+                                <option value="1">Option 2</option>
+                                <option value="2">Option 3</option>
+                                <option value="3">Option 4</option>
+                            </select>
+                            <div id="correctOptionError" class="error-message">Please select the correct option.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="questionExplanation" class="form-label">Explanation</label>
+                            <textarea id="questionExplanation" class="form-control" rows="4" placeholder="Enter explanation for the correct answer"></textarea>
+                            <div id="explanationError" class="error-message">Please enter an explanation.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Question</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Page Template -->
+    <div id="testPage" class="test-container d-none">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 id="testTitle">Loading Test...</h2>
+                <div>
+                    <span id="timer" class="badge bg-primary">Time: 00:00</span>
+                    <span id="questionCounter" class="badge bg-secondary">0/0</span>
+                </div>
+            </div>
+            <div class="question-nav" id="questionNav"></div>
+            <div id="questionsContainer"></div>
+            <div class="d-flex justify-content-between">
+                <button id="prevQuestion" class="btn btn-outline-primary">Previous</button>
+                <button id="nextQuestion" class="btn btn-outline-primary">Next</button>
+            </div>
+            <button id="submitTest" class="btn btn-primary mt-3" disabled>Submit Test</button>
+        </div>
+    </div>
+
+    <!-- Result Page Template -->
+    <div id="resultPage" class="result-container d-none">
+        <div class="container">
+            <div class="result-card">
+                <h2 class="text-center mb-4">Test Results</h2>
+                <div class="text-center mb-4">
+                    <div class="result-score" id="resultScore"></div>
+                    <p class="text-muted" id="resultSummary"></p>
+                </div>
+                <div class="result-chart-container">
+                    <canvas id="resultChart"></canvas>
+                </div>
+                <div class="subject-breakdown">
+                    <h5>Score Breakdown</h5>
+                    <div id="scoreBreakdown"></div>
+                </div>
+                <div class="result-analysis">
+                    <h4>Performance Analysis</h4>
+                    <p id="resultFeedback"></p>
+                </div>
+                <div id="reviewContainer" class="mt-4"></div>
+                <div class="text-center mt-4">
+                    <button id="reviewTest" class="btn btn-secondary me-2">Review Test</button>
+                    <a href="#" class="btn btn-primary" onclick="location.reload()">Take Another Test</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>IOE/CEE Prep Nepal</h5>
+                    <p>Empowering students to excel in engineering entrance exams with comprehensive preparation resources.</p>
+                </div>
+                <div class="col-md-4 footer-links">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">Mock Tests</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 footer-links">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><a href="mailto:support@ioeprep.com">support@ioeprep.com</a></li>
+                        <li><a href="#">+977-123-456-789</a></li>
+                    </ul>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#addQuestionModal">Add Question</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>© 2025 IOE/CEE Prep Nepal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample Questions with Explanations
+        let sampleQuestions = [
+            {
+                id: 'q1',
+                subject: 'physics',
+                class: '11',
+                chapter: 'mechanics',
+                question: 'What is the acceleration due to gravity on Earth?',
+                options: ['9.8 m/s²', '8.9 m/s²', '10.8 m/s²', '7.8 m/s²'],
+                correctOption: 0,
+                explanation: 'The acceleration due to gravity on Earth is approximately 9.8 m/s².'
+            },
+            {
+                id: 'q2',
+                subject: 'physics',
+                class: '11',
+                chapter: 'mechanics',
+                question: 'What is the formula for kinetic energy?',
+                options: ['KE = mv²', 'KE = ½mv²', 'KE = mv', 'KE = ½m²v'],
+                correctOption: 1,
+                explanation: 'Kinetic energy is given by KE = ½mv².'
+            },
+            {
+                id: 'q3',
+                subject: 'physics',
+                class: '12',
+                chapter: 'electromagnetism',
+                question: 'What is the unit of magnetic flux?',
+                options: ['Tesla', 'Weber', 'Ampere', 'Volt'],
+                correctOption: 1,
+                explanation: 'Magnetic flux is measured in Weber.'
+            },
+            {
+                id: 'q4',
+                subject: 'physics',
+                class: '12',
+                chapter: 'electromagnetism',
+                question: 'What is the direction of induced current in a loop?',
+                options: ['Clockwise', 'Counterclockwise', 'No current', 'Depends on flux change'],
+                correctOption: 3,
+                explanation: 'The direction depends on the change in magnetic flux (Lenz\'s law).'
+            },
+            {
+                id: 'q5',
+                subject: 'chemistry',
+                class: '11',
+                chapter: 'atomic structure',
+                question: 'What is the maximum number of electrons in the n=2 shell?',
+                options: ['2', '8', '18', '32'],
+                correctOption: 1,
+                explanation: 'Maximum electrons in a shell is 2n². For n=2, it is 8.'
+            },
+            {
+                id: 'q6',
+                subject: 'chemistry',
+                class: '12',
+                chapter: 'organic chemistry',
+                question: 'What is the functional group of alcohols?',
+                options: ['-CHO', '-COOH', '-OH', '-NH2'],
+                correctOption: 2,
+                explanation: 'The functional group of alcohols is -OH.'
+            },
+            {
+                id: 'q7',
+                subject: 'mathematics',
+                class: '11',
+                chapter: 'algebra',
+                question: 'What is the solution to x² - 4 = 0?',
+                options: ['x = ±2', 'x = ±4', 'x = 2', 'x = -2'],
+                correctOption: 0,
+                explanation: 'Solving x² - 4 = 0 gives x = ±2.'
+            },
+            {
+                id: 'q8',
+                subject: 'mathematics',
+                class: '12',
+                chapter: 'calculus',
+                question: 'What is the derivative of sin(x)?',
+                options: ['cos(x)', '-sin(x)', 'sin(x)', '-cos(x)'],
+                correctOption: 0,
+                explanation: 'The derivative of sin(x) is cos(x).'
+            },
+            {
+                id: 'q9',
+                subject: 'english',
+                class: '11',
+                chapter: 'grammar',
+                question: 'Which is the correct sentence?',
+                options: ['She go to school.', 'She goes to school.', 'She going to school.', 'She gone to school.'],
+                correctOption: 1,
+                explanation: 'The correct sentence is "She goes to school."'
+            },
+            {
+                id: 'q10',
+                subject: 'biology',
+                class: '12',
+                chapter: 'genetics',
+                question: 'What is the basic unit of heredity?',
+                options: ['Cell', 'Gene', 'Chromosome', 'Nucleus'],
+                correctOption: 1,
+                explanation: 'A gene is the basic unit of heredity.'
+            }
+        ];
+
+        // Initialize Modals
+        const testOptionsModal = new bootstrap.Modal(document.getElementById('testOptionsModal'));
+        const unitSelectionModal = new bootstrap.Modal(document.getElementById('unitSelectionModal'));
+        const addQuestionModal = new bootstrap.Modal(document.getElementById('addQuestionModal'));
+
+        // Test State
+        let selectedSubject = '';
+        let selectedType = '';
+        let selectedUnit = '';
+        let currentQuestionIndex = 0;
+        let questions = [];
+        let userAnswers = [];
+        let isReviewMode = false;
+        let timerInterval = null;
+
+        // Add Question Form Submission
+        document.getElementById('addQuestionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(error => error.style.display = 'none');
+
+            // Get form values
+            const subject = document.getElementById('questionSubject').value;
+            const classLevel = document.getElementById('questionClass').value;
+            const chapter = document.getElementById('questionChapter').value.trim();
+            const questionText = document.getElementById('questionText').value.trim();
+            const options = Array.from(document.querySelectorAll('.option-input')).map(input => input.value.trim());
+            const correctOption = parseInt(document.getElementById('correctOption').value);
+            const explanation = document.getElementById('questionExplanation').value.trim();
+
+            // Validation
+            if (!subject) {
+                document.getElementById('subjectError').style.display = 'block';
+                isValid = false;
+            }
+            if (!classLevel) {
+                document.getElementById('classError').style.display = 'block';
+                isValid = false;
+            }
+            if (!chapter) {
+                document.getElementById('chapterError').style.display = 'block';
+                isValid = false;
+            }
+            if (!questionText) {
+                document.getElementById('questionError').style.display = 'block';
+                isValid = false;
+            }
+            options.forEach((opt, index) => {
+                if (!opt) {
+                    document.querySelectorAll('.option-error')[index].style.display = 'block';
+                    isValid = false;
+                }
+            });
+            if (isNaN(correctOption)) {
+                document.getElementById('correctOptionError').style.display = 'block';
+                isValid = false;
+            }
+            if (!explanation) {
+                document.getElementById('explanationError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Add to sampleQuestions
+            const newQuestion = {
+                id: `q${sampleQuestions.length + 1}`,
+                subject,
+                class: classLevel,
+                chapter,
+                question: questionText,
+                options,
+                correctOption,
+                explanation
+            };
+            sampleQuestions.push(newQuestion);
+            console.log('Added question:', newQuestion);
+            alert('Question added successfully!');
+            addQuestionModal.hide();
+            document.getElementById('addQuestionForm').reset();
+        });
+
+        // Start Test Logic
+        document.querySelectorAll('.start-test').forEach(button => {
+            button.addEventListener('click', (e) => {
+                console.log('Start Test clicked:', e.target.dataset);
+                selectedSubject = e.target.dataset.subject;
+                const chapter = e.target.dataset.chapter;
+                if (chapter) {
+                    selectedType = 'unit';
+                    selectedUnit = chapter;
+                    loadTest(selectedSubject, selectedType, chapter);
+                } else {
+                    document.getElementById('testOptionsModalLabel').textContent = `Select ${selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)} Test Type`;
+                    console.log('Showing test options modal');
+                    testOptionsModal.show();
+                }
+            });
+        });
+
+        document.querySelectorAll('.modal-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                console.log('Modal option clicked:', e.target.dataset.type);
+                selectedType = e.target.dataset.type;
+                testOptionsModal.hide();
+                if (selectedType === 'unit') {
+                    const units = [...new Set(sampleQuestions
+                        .filter(q => q.subject === selectedSubject)
+                        .map(q => q.chapter))];
+                    const unitOptionsContainer = document.getElementById('unitOptions');
+                    unitOptionsContainer.innerHTML = units.length ? units.map(unit => `
+                        <div class="modal-option" data-unit="${unit}">${unit}</div>
+                    `).join('') : '<p>No units available</p>';
+                    document.getElementById('unitSelectionModalLabel').textContent = `Select ${selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)} Unit`;
+                    console.log('Showing unit selection modal');
+                    unitSelectionModal.show();
+                } else {
+                    loadTest(selectedSubject, selectedType);
+                }
+            });
+        });
+
+        document.getElementById('unitOptions').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-option')) {
+                console.log('Unit selected:', e.target.dataset.unit);
+                selectedUnit = e.target.dataset.unit;
+                unitSelectionModal.hide();
+                loadTest(selectedSubject, selectedType, selectedUnit);
+            }
+        });
+
+        function loadTest(subject, type, chapter = null) {
+            console.log('Loading test:', { subject, type, chapter });
+            document.querySelector('.features-section').classList.add('d-none');
+            document.getElementById('testPage').classList.remove('d-none');
+            document.getElementById('testTitle').textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)} Test - ${type === 'full' ? 'Full Syllabus' : type === 'class11' ? 'Class 11' : type === 'class12' ? 'Class 12' : chapter || 'Unit'}`;
+            document.getElementById('questionsContainer').innerHTML = '<p>Loading questions...</p>';
+            isReviewMode = false;
+
+            let filteredQuestions = sampleQuestions.filter(q => q.subject === subject);
+            if (type === 'class11') filteredQuestions = filteredQuestions.filter(q => q.class === '11');
+            if (type === 'class12') filteredQuestions = filteredQuestions.filter(q => q.class === '12');
+            if (type === 'unit' && chapter) filteredQuestions = filteredQuestions.filter(q => q.chapter === chapter);
+
+            questions = filteredQuestions.sort(() => Math.random() - 0.5).slice(0, 10);
+            if (questions.length === 0) {
+                document.getElementById('questionsContainer').innerHTML = '<p class="text-danger">No questions available for the selected criteria.</p>';
+                return;
+            }
+
+            userAnswers = new Array(questions.length).fill(null);
+            currentQuestionIndex = 0;
+
+            renderQuestions();
+            document.getElementById('questionCounter').textContent = `${currentQuestionIndex + 1}/${questions.length}`;
+            startTimer(15 * 60);
+
+            document.getElementById('prevQuestion').onclick = () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    updateQuestionDisplay();
+                    document.getElementById('questionCounter').textContent = `${currentQuestionIndex + 1}/${questions.length}`;
+                }
+            };
+
+            document.getElementById('nextQuestion').onclick = () => {
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex++;
+                    updateQuestionDisplay();
+                    document.getElementById('questionCounter').textContent = `${currentQuestionIndex + 1}/${questions.length}`;
+                }
+            };
+
+            document.getElementById('submitTest').onclick = () => {
+                if (!isReviewMode) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                } else {
+                    document.getElementById('testPage').classList.add('d-none');
+                    document.getElementById('resultPage').classList.remove('d-none');
+                }
+            };
+        }
+
+        function renderQuestions() {
+            console.log('Rendering questions:', { count: questions.length, isReviewMode });
+            const questionsContainer = document.getElementById('questionsContainer');
+            const questionNav = document.getElementById('questionNav');
+            questionsContainer.innerHTML = '';
+            questionNav.innerHTML = '';
+
+            if (questions.length === 0) {
+                questionsContainer.innerHTML = '<p class="text-danger">No questions available.</p>';
+                return;
+            }
+
+            questions.forEach((q, index) => {
+                const isCorrect = isReviewMode && userAnswers[index] === q.correctOption;
+                const isIncorrect = isReviewMode && userAnswers[index] !== null && userAnswers[index] !== q.correctOption;
+                const questionHtml = `
+                    <div class="question-card" data-index="${index}">
+                        <h5>Question ${index + 1}: ${q.question}</h5>
+                        <div class="options">
+                            ${q.options.map((opt, i) => `
+                                <label class="option-label d-block ${isReviewMode && i === q.correctOption ? 'correct' : ''} ${isReviewMode && userAnswers[index] === i && !isCorrect ? 'incorrect' : ''}">
+                                    <input type="radio" name="q${index}" value="${i}" ${userAnswers[index] === i ? 'checked' : ''} ${isReviewMode ? 'disabled' : ''} onchange="updateCube(${index}, ${i})">
+                                    <span>${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        ${isReviewMode && q.explanation ? `
+                            <div class="explanation">
+                                <strong>Explanation:</strong> ${q.explanation}
+                            </div>
+                        ` : ''}
+                    </div>`;
+                questionsContainer.innerHTML += questionHtml;
+
+                const cubeClass = isReviewMode ? (isCorrect ? 'correct' : isIncorrect ? 'incorrect' : '') : userAnswers[index] !== null ? 'answered' : '';
+                const cubeHtml = `<div class="question-cube ${cubeClass}" data-index="${index}" onclick="jumpToQuestion(${index})">${index + 1}</div>`;
+                questionNav.innerHTML += cubeHtml;
+            });
+
+            updateQuestionDisplay();
+            updateSubmitButton();
+        }
+
+        function updateQuestionDisplay() {
+            document.querySelectorAll('.question-card').forEach((card, index) => {
+                card.classList.toggle('active', index === currentQuestionIndex);
+            });
+        }
+
+        function jumpToQuestion(index) {
+            currentQuestionIndex = index;
+            updateQuestionDisplay();
+            document.getElementById('questionCounter').textContent = `${currentQuestionIndex + 1}/${questions.length}`;
+        }
+
+        function updateCube(index, value) {
+            console.log('Updating cube:', { index, value });
+            userAnswers[index] = value;
+            const cube = document.querySelector(`.question-cube[data-index="${index}"]`);
+            if (userAnswers[index] !== null) {
+                cube.classList.add('answered');
+            } else {
+                cube.classList.remove('answered');
+            }
+            updateSubmitButton();
+        }
+
+        function updateSubmitButton() {
+            const allAnswered = userAnswers.every(answer => answer !== null);
+            document.getElementById('submitTest').disabled = (!allAnswered || isReviewMode) && !isReviewMode;
+            document.getElementById('submitTest').textContent = isReviewMode ? 'Back to Results' : 'Submit Test';
+        }
+
+        function startTimer(seconds) {
+            if (isReviewMode) {
+                document.getElementById('timer').textContent = 'Time: Review Mode';
+                return;
+            }
+            let timeLeft = seconds;
+            const timerDisplay = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        function submitTest() {
+            console.log('Submitting test:', { questions, userAnswers });
+            document.getElementById('testPage').classList.add('d-none');
+            document.getElementById('resultPage').classList.remove('d-none');
+
+            let score = 0;
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let unansweredCount = 0;
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            const scoreBySubject = {};
+            const scoreByChapter = {};
+
+            questions.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.correctOption;
+                if (isCorrect) {
+                    score++;
+                    correctCount++;
+                } else if (userAnswers[index] !== null) {
+                    incorrectCount++;
+                } else {
+                    unansweredCount++;
+                }
+
+                const subject = q.subject;
+                const chapter = q.chapter;
+                scoreBySubject[subject] = scoreBySubject[subject] || { correct: 0, total: 0 };
+                scoreBySubject[subject].total++;
+                if (isCorrect) scoreBySubject[subject].correct++;
+
+                if (chapter) {
+                    scoreByChapter[chapter] = scoreByChapter[chapter] || { correct: 0, total: 0 };
+                    scoreByChapter[chapter].total++;
+                    if (isCorrect) scoreByChapter[chapter].correct++;
+                }
+
+                const reviewHtml = `
+                    <div class="${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                        <h6>Question ${index + 1}: ${q.question}</h6>
+                        <p>Your Answer: ${userAnswers[index] !== null ? q.options[userAnswers[index]] : 'Not answered'}</p>
+                        ${!isCorrect ? `<p><strong>Correct Answer:</strong> ${q.options[q.correctOption]}</p>` : ''}
+                        ${q.explanation ? `<p><strong>Explanation:</strong> ${q.explanation}</p>` : ''}
+                    </div>`;
+                reviewContainer.innerHTML += reviewHtml;
+            });
+
+            const percentage = (score / questions.length * 100).toFixed(2);
+            document.getElementById('resultScore').textContent = `${score}/${questions.length}`;
+            document.getElementById('resultSummary').textContent = `You scored ${percentage}%`;
+            document.getElementById('resultFeedback').textContent = `
+                ${percentage >= 80 ? 'Excellent performance! You have a strong grasp of the material.' : 
+                  percentage >= 60 ? 'Good effort! Focus on the incorrect answers to improve.' : 
+                  'More preparation is needed. Review the incorrect answers and try again.'}
+                You answered ${correctCount} questions correctly, ${incorrectCount} incorrectly, and left ${unansweredCount} unanswered.
+            `;
+
+            const scoreBreakdown = document.getElementById('scoreBreakdown');
+            scoreBreakdown.innerHTML = `
+                <h6>By Subject:</h6>
+                ${Object.entries(scoreBySubject).map(([subject, { correct, total }]) => `
+                    <p>${subject.charAt(0).toUpperCase() + subject.slice(1)}: ${correct}/${total} (${((correct / total) * 100).toFixed(2)}%)</p>
+                `).join('')}
+                ${Object.keys(scoreByChapter).length > 0 ? `
+                    <h6>By Chapter:</h6>
+                    ${Object.entries(scoreByChapter).map(([chapter, { correct, total }]) => `
+                        <p>${chapter}: ${correct}/${total} (${((correct / total) * 100).toFixed(2)}%)</p>
+                    `).join('')}
+                ` : ''}
+            `;
+
+            try {
+                const ctx = document.getElementById('resultChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Correct', 'Incorrect', 'Unanswered'],
+                        datasets: [{
+                            data: [correctCount, incorrectCount, unansweredCount],
+                            backgroundColor: ['#28a745', '#dc3545', '#ffc107'],
+                            borderColor: ['#ffffff', '#ffffff', '#ffffff'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14,
+                                        family: "'Poppins', sans-serif"
+                                    },
+                                    color: '#212529'
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Performance Breakdown',
+                                font: {
+                                    size: 18,
+                                    family: "'Poppins', sans-serif"
+                                },
+                                color: '#212529'
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Chart rendering failed:', error);
+            }
+
+            // Ensure Review Test button works
+            const reviewTestButton = document.getElementById('reviewTest');
+            reviewTestButton.onclick = () => {
+                console.log('Review Test clicked:', { isReviewMode, userAnswers });
+                document.getElementById('resultPage').classList.add('d-none');
+                document.getElementById('testPage').classList.remove('d-none');
+                isReviewMode = true;
+                document.getElementById('testTitle').textContent = `Review: ${selectedSubject.charAt(0).toUpperCase() + selectedSubject.slice(1)} Test - ${selectedType === 'full' ? 'Full Syllabus' : selectedType === 'class11' ? 'Class 11' : selectedType === 'class12' ? 'Class 12' : selectedUnit || 'Unit'}`;
+                document.getElementById('timer').textContent = 'Time: Review Mode';
+                document.getElementById('submitTest').textContent = 'Back to Results';
+                renderQuestions();
+                updateSubmitButton();
+            };
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Analysis - IOE/CEE Prep Nepal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --dark-bg: #1a1d2a;
+            --dark-text: #e0e0e0;
+            --dark-card: #2a2e3f;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        [data-theme="dark"] {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .card {
+            background-color: var(--dark-card);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        [data-theme="dark"] .table {
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .table-bordered {
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        [data-theme="dark"] .alert {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .progress {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        [data-theme="dark"] .form-control,
+        [data-theme="dark"] .form-select {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .performance-section {
+            padding: 3rem 0;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .progress {
+            border-radius: 10px;
+            height: 8px;
+            background-color: var(--light-color);
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .chart-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+
+        [data-theme="dark"] .chart-label {
+            color: var(--dark-text);
+        }
+
+        .table-sm td, .table-sm th {
+            padding: 0.75rem;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .alert h5 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert ul {
+            padding-left: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        .alert li {
+            margin-bottom: 0.3rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid rgba(67, 97, 238, 0.2);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.2);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sortable:hover {
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1rem;
+            }
+
+            .chart-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Performance Analysis Section -->
+    <section class="performance-section bg-white">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Your Performance Analysis</h2>
+                <p class="text-muted">Detailed insights to help you excel in IOE/CEE preparation</p>
+            </div>
+            <!-- Filters -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-3">Filter Stats</h5>
+                    <div class="filter-group">
+                        <div>
+                            <label for="subjectFilter" class="form-label">Subject</label>
+                            <select id="subjectFilter" class="form-select">
+                                <option value="all">All Subjects</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="English">English</option>
+                                <option value="Engineering Aptitude">Engineering Aptitude</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dateRange" class="form-label">Date Range</label>
+                            <select id="dateRange" class="form-select">
+                                <option value="all">All Time</option>
+                                <option value="week">Last Week</option>
+                                <option value="month">Last Month</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="questionType" class="form-label">Question Type</label>
+                            <select id="questionType" class="form-select">
+                                <option value="all">All Types</option>
+                                <option value="multiple-choice">Multiple Choice</option>
+                                <option value="numerical">Numerical</option>
+                                <option value="aptitude">Aptitude</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary mt-4" id="exportPdf"><i class="fas fa-file-pdf me-2"></i>Export as PDF</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Overall Performance -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Overall Performance</h4>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="mb-1">Test Completion</h6>
+                                    <span class="text-muted small" id="testCompletionText">0/100 tests</span>
+                                </div>
+                                <div class="bg-primary bg-opacity-10 p-2 rounded">
+                                    <span class="text-primary fw-bold" id="testCompletionPercent">0%</span>
+                                </div>
+                            </div>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-primary" id="testCompletionBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="mb-1">Average Score</h6>
+                                    <span class="text-muted small">Across all subjects</span>
+                                </div>
+                                <div class="bg-success bg-opacity-10 p-2 rounded">
+                                    <span class="text-success fw-bold" id="avgScore">0%</span>
+                                </div>
+                            </div>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-success" id="avgScoreBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="mb-1">Time Management</h6>
+                                    <span class="text-muted small">Avg per question</span>
+                                </div>
+                                <div class="bg-warning bg-opacity-10 p-2 rounded">
+                                    <span class="text-warning fw-bold" id="timePerQuestion">0 min</span>
+                                </div>
+                            </div>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-warning" id="timePerQuestionBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="mb-1">Accuracy Rate</h6>
+                                    <span class="text-muted small">Correct answers</span>
+                                </div>
+                                <div class="bg-info bg-opacity-10 p-2 rounded">
+                                    <span class="text-info fw-bold" id="accuracyRate">0%</span>
+                                </div>
+                            </div>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-info" id="accuracyRateBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Score Trends -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Score Trends Over Time</h4>
+                    <canvas id="scoreTrendChart" height="100"></canvas>
+                </div>
+            </div>
+            <!-- Subject-wise Analysis -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Subject-wise Analysis</h4>
+                    <div class="row">
+                        <div class="col-md-2 mb-4">
+                            <div class="text-center">
+                                <div class="chart-container">
+                                    <canvas id="physicsChart"></canvas>
+                                    <div class="chart-label" id="physicsScore">0%</div>
+                                </div>
+                                <h6>Physics</h6>
+                                <p class="text-muted small" id="physicsRemark">No data</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <div class="text-center">
+                                <div class="chart-container">
+                                    <canvas id="chemistryChart"></canvas>
+                                    <div class="chart-label" id="chemistryScore">0%</div>
+                                </div>
+                                <h6>Chemistry</h6>
+                                <p class="text-muted small" id="chemistryRemark">No data</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <div class="text-center">
+                                <div class="chart-container">
+                                    <canvas id="mathsChart"></canvas>
+                                    <div class="chart-label" id="mathsScore">0%</div>
+                                </div>
+                                <h6>Mathematics</h6>
+                                <p class="text-muted small" id="mathsRemark">No data</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <div class="text-center">
+                                <div class="chart-container">
+                                    <canvas id="englishChart"></canvas>
+                                    <div class="chart-label" id="englishScore">0%</div>
+                                </div>
+                                <h6>English</h6>
+                                <p class="text-muted small" id="englishRemark">No data</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <div class="text-center">
+                                <div class="chart-container">
+                                    <canvas id="aptitudeChart"></canvas>
+                                    <div class="chart-label" id="aptitudeScore">0%</div>
+                                </div>
+                                <h6>Eng. Aptitude</h6>
+                                <p class="text-muted small" id="aptitudeRemark">No data</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Topic-wise Performance -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Topic-wise Performance</h4>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <canvas id="topicAccuracyChart" height="150"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortable" data-sort="topic">Topic <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="subject">Subject <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="score">Score <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="time">Time/Question <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="accuracy">Accuracy <i class="fas fa-sort"></i></th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="topicTable">
+                                        <tr>
+                                            <td colspan="6">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Question Type Performance -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Question Type Performance</h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="chart-container" style="width: 200px; height: 200px;">
+                                <canvas id="questionTypeChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Tests Taken</th>
+                                            <th>Average Score</th>
+                                            <th>Time/Question</th>
+                                            <th>Accuracy</th>
+                                            <th>Tips</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="questionTypeTable">
+                                        <tr>
+                                            <td colspan="6">No data available</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Personalized Recommendations -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Personalized Recommendations</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="alert alert-success">
+                                <h5><i class="fas fa-check-circle me-2"></i>Your Strengths</h5>
+                                <ul id="strengthsList" class="mt-3">
+                                    <li>No strengths identified yet</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-warning">
+                                <h5><i class="fas fa-exclamation-triangle me-2"></i>Areas Needing Improvement</h5>
+                                <ul id="weaknessesList" class="mt-3">
+                                    <li>No weaknesses identified yet</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <h5><i class="fas fa-lightbulb me-2"></i>Study Plan</h5>
+                        <div id="studyPlan" class="mt-3">
+                            <p>No study plan available yet</p>
+                        </div>
+                    </div>
+                    <div class="alert alert-primary mt-3">
+                        <h5><i class="fas fa-bullseye me-2"></i>Progress Goals</h5>
+                        <div id="progressGoals" class="mt-3">
+                            <p>No goals set yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress Tracker -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Progress Tracker</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <h6>Physics Completion</h6>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" id="physicsProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="text-muted small mt-1" id="physicsProgressText">0% complete</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6>Chemistry Completion</h6>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" id="chemistryProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="text-muted small mt-1" id="chemistryProgressText">0% complete</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6>Mathematics Completion</h6>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" id="mathsProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="text-muted small mt-1" id="mathsProgressText">0% complete</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6>English Completion</h6>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" id="englishProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="text-muted small mt-1" id="englishProgressText">0% complete</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h6>Engineering Aptitude Completion</h6>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" id="aptitudeProgress" style="width: 0%"></div>
+                            </div>
+                            <p class="text-muted small mt-1" id="aptitudeProgressText">0% complete</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'YOUR_SUPABASE_URL';
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        const supabase = Supabase.createClient(supabaseUrl, supabaseKey);
+
+        let charts = {};
+        let userId;
+        let currentSort = { column: 'topic', order: 'asc' };
+
+        async function initPerformance() {
+            // Check authentication
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            userId = session.user.id;
+
+            // Initialize charts
+            initCharts();
+
+            // Fetch stats
+            await updateStats();
+
+            // Subscribe to real-time updates
+            supabase
+                .channel('mock_tests_changes')
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mock_tests', filter: `user_id=eq.${userId}` }, updateStats)
+                .subscribe();
+            supabase
+                .channel('progress_changes')
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'progress', filter: `user_id=eq.${userId}` }, updateStats)
+                .subscribe();
+
+            // Theme
+            const htmlRoot = document.getElementById('htmlRoot');
+            const theme = localStorage.getItem('theme') || 'light';
+            htmlRoot.setAttribute('data-theme', theme);
+
+            // Filters
+            document.getElementById('subjectFilter').addEventListener('change', updateStats);
+            document.getElementById('dateRange').addEventListener('change', updateStats);
+            document.getElementById('questionType').addEventListener('change', updateStats);
+
+            // Table sorting
+            document.querySelectorAll('.sortable').forEach(th => {
+                th.addEventListener('click', () => {
+                    const column = th.dataset.sort;
+                    if (currentSort.column === column) {
+                        currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort.column = column;
+                        currentSort.order = 'asc';
+                    }
+                    updateStats();
+                });
+            });
+
+            // Export PDF
+            document.getElementById('exportPdf').addEventListener('click', exportToPdf);
+        }
+
+        function initCharts() {
+            // Subject Doughnut Charts
+            const subjects = ['Physics', 'Chemistry', 'Mathematics', 'English', 'Engineering Aptitude'];
+            subjects.forEach(subject => {
+                const canvasId = subject === 'Engineering Aptitude' ? 'aptitudeChart' : `${subject.toLowerCase()}Chart`;
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                charts[subject] = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [0, 100],
+                            backgroundColor: ['var(--primary-color)', 'rgba(0,0,0,0.1)'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        cutout: 40,
+                        plugins: { legend: false },
+                        animation: { duration: 1000 }
+                    }
+                });
+            });
+
+            // Score Trend Line Chart
+            charts.scoreTrend = new Chart(document.getElementById('scoreTrendChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Average Score',
+                        data: [],
+                        borderColor: 'var(--primary-color)',
+                        fill: false,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 100 },
+                        x: { display: true }
+                    }
+                }
+            });
+
+            // Topic Accuracy Bar Chart
+            charts.topicAccuracy = new Chart(document.getElementById('topicAccuracyChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Accuracy (%)',
+                        data: [],
+                        backgroundColor: 'var(--primary-color)'
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 100 },
+                        x: { display: true }
+                    }
+                }
+            });
+
+            // Question Type Pie Chart
+            charts.questionType = new Chart(document.getElementById('questionTypeChart').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: ['Multiple Choice', 'Numerical', 'Aptitude'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: ['var(--primary-color)', 'var(--secondary-color)', 'var(--accent-color)']
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { enabled: true }
+                    }
+                }
+            });
+        }
+
+        async function updateStats() {
+            let stats = {
+                testsTaken: 0,
+                totalTests: 100,
+                avgScore: 0,
+                timePerQuestion: 0,
+                accuracyRate: 0,
+                subjects: {
+                    Physics: { score: 0, tests: 0, remark: 'No tests yet', completion: 0 },
+                    Chemistry: { score: 0, tests: 0, remark: 'No tests yet', completion: 0 },
+                    Mathematics: { score: 0, tests: 0, remark: 'No tests yet', completion: 0 },
+                    English: { score: 0, tests: 0, remark: 'No tests yet', completion: 0 },
+                    'Engineering Aptitude': { score: 0, tests: 0, remark: 'No tests yet', completion: 0 }
+                },
+                topics: [],
+                questionTypes: {
+                    'multiple-choice': { tests: 0, score: 0, time: 0, accuracy: 0 },
+                    numerical: { tests: 0, score: 0, time: 0, accuracy: 0 },
+                    aptitude: { tests: 0, score: 0, time: 0, accuracy: 0 }
+                },
+                scoreTrends: [],
+                strengths: [],
+                weaknesses: [],
+                studyPlan: [],
+                progressGoals: []
+            };
+
+            try {
+                // Fetch total tests
+                const { data: config, error: configError } = await supabase
+                    .from('tests_config')
+                    .select('subject, total_tests');
+                if (configError) throw configError;
+                stats.totalTests = config.reduce((sum, c) => sum + c.total_tests, 0);
+
+                // Apply filters
+                let testsQuery = supabase
+                    .from('mock_tests')
+                    .select('subject, topic, question_type, score, time_taken, questions_correct, total_questions, date')
+                    .eq('user_id', userId);
+                const subjectFilter = document.getElementById('subjectFilter').value;
+                if (subjectFilter !== 'all') {
+                    testsQuery = testsQuery.eq('subject', subjectFilter);
+                }
+                const dateRange = document.getElementById('dateRange').value;
+                if (dateRange !== 'all') {
+                    const now = new Date();
+                    if (dateRange === 'week') {
+                        testsQuery = testsQuery.gte('date', new Date(now.setDate(now.getDate() - 7)).toISOString());
+                    } else if (dateRange === 'month') {
+                        testsQuery = testsQuery.gte('date', new Date(now.setMonth(now.getMonth() - 1)).toISOString());
+                    }
+                }
+                const questionType = document.getElementById('questionType').value;
+                if (questionType !== 'all') {
+                    testsQuery = testsQuery.eq('question_type', questionType);
+                }
+
+                // Fetch tests
+                const { data: tests, error: testsError } = await testsQuery;
+                if (testsError) throw testsError;
+
+                // Fetch progress
+                const { data: progress, error: progressError } = await supabase
+                    .from('progress')
+                    .select('subject, topic, completion_percentage')
+                    .eq('user_id', userId);
+                if (progressError) throw progressError;
+
+                if (tests.length) {
+                    stats.testsTaken = tests.length;
+                    stats.avgScore = (tests.reduce((sum, t) => sum + t.score, 0) / tests.length).toFixed(1);
+                    const totalQuestions = tests.reduce((sum, t) => sum + t.total_questions, 0);
+                    const totalCorrect = tests.reduce((sum, t) => sum + t.questions_correct, 0);
+                    const totalTime = tests.reduce((sum, t) => sum + t.time_taken, 0);
+                    stats.timePerQuestion = totalQuestions ? (totalTime / totalQuestions / 60).toFixed(2) : 0;
+                    stats.accuracyRate = totalQuestions ? (totalCorrect / totalQuestions * 100).toFixed(1) : 0;
+
+                    // Subject stats
+                    const subjectGroups = {};
+                    tests.forEach(t => {
+                        if (!subjectGroups[t.subject]) {
+                            subjectGroups[t.subject] = { scores: [], tests: 0 };
+                        }
+                        subjectGroups[t.subject].scores.push(t.score);
+                        subjectGroups[t.subject].tests++;
+                    });
+
+                    Object.keys(stats.subjects).forEach(subject => {
+                        if (subjectGroups[subject]) {
+                            const avg = subjectGroups[subject].scores.reduce((sum, s) => sum + s, 0) / subjectGroups[subject].scores.length;
+                            stats.subjects[subject].score = avg.toFixed(1);
+                            stats.subjects[subject].tests = subjectGroups[subject].tests;
+                            stats.subjects[subject].remark = avg >= 80 ? 'Excellent' : avg >= 60 ? 'Good' : 'Needs improvement';
+                        }
+                        const subjectProgress = progress.filter(p => p.subject === subject);
+                        stats.subjects[subject].completion = subjectProgress.length
+                            ? (subjectProgress.reduce((sum, p) => sum + p.completion_percentage, 0) / subjectProgress.length).toFixed(1)
+                            : 0;
+                    });
+
+                    // Topic stats
+                    stats.topics = tests.map(t => ({
+                        topic: t.topic,
+                        subject: t.subject,
+                        score: t.score,
+                        timePerQuestion: (t.time_taken / t.total_questions / 60).toFixed(2),
+                        accuracy: (t.questions_correct / t.total_questions * 100).toFixed(1)
+                    }));
+
+                    // Question type stats
+                    tests.forEach(t => {
+                        const qt = t.question_type;
+                        stats.questionTypes[qt].tests++;
+                        stats.questionTypes[qt].score += t.score;
+                        stats.questionTypes[qt].time += t.time_taken / t.total_questions / 60;
+                        stats.questionTypes[qt].accuracy += t.questions_correct / t.total_questions * 100;
+                    });
+                    Object.keys(stats.questionTypes).forEach(qt => {
+                        if (stats.questionTypes[qt].tests) {
+                            stats.questionTypes[qt].score = (stats.questionTypes[qt].score / stats.questionTypes[qt].tests).toFixed(1);
+                            stats.questionTypes[qt].time = (stats.questionTypes[qt].time / stats.questionTypes[qt].tests).toFixed(2);
+                            stats.questionTypes[qt].accuracy = (stats.questionTypes[qt].accuracy / stats.questionTypes[qt].tests).toFixed(1);
+                        }
+                    });
+
+                    // Score trends
+                    const dates = [...new Set(tests.map(t => new Date(t.date).toLocaleDateString()))].sort();
+                    stats.scoreTrends = dates.map(date => {
+                        const dayTests = tests.filter(t => new Date(t.date).toLocaleDateString() === date);
+                        return dayTests.reduce((sum, t) => sum + t.score, 0) / dayTests.length;
+                    });
+
+                    // Recommendations
+                    Object.keys(stats.subjects).forEach(subject => {
+                        const score = stats.subjects[subject].score;
+                        if (score >= 80) {
+                            stats.strengths.push(`${subject}: ${score}% score - Keep practicing!`);
+                        } else if (score < 60 && score > 0) {
+                            stats.weaknesses.push(`${subject}: ${score}% score - <a href="study-materials.html?subject=${subject.toLowerCase()}">Review ${subject} resources</a>`);
+                        }
+                    });
+
+                    stats.topics.forEach(t => {
+                        if (t.accuracy >= 90) {
+                            stats.strengths.push(`${t.topic} (${t.subject}): ${t.accuracy}% accuracy`);
+                        } else if (t.accuracy < 60) {
+                            stats.weaknesses.push(`${t.topic} (${t.subject}): ${t.accuracy}% accuracy - <a href="study-materials.html?topic=${t.topic.toLowerCase()}">Practice more</a>`);
+                        }
+                    });
+
+                    stats.studyPlan = stats.testsTaken > 0 ? [
+                        `<strong>Week 1:</strong> Focus on ${stats.weaknesses.map(w => w.split(':')[0]).join(', ')} (2 hours daily, <a href="study-materials.html">videos & exercises</a>)`,
+                        `<strong>Week 2:</strong> Practice ${stats.topics[0]?.topic || 'core topics'} (1.5 hours daily, timed tests)`,
+                        `<strong>Week 3:</strong> Full-length mock tests (alternate days, analyze errors)`
+                    ] : ['Complete at least one test to get a study plan'];
+
+                    stats.progressGoals = stats.testsTaken > 0 ? [
+                        `Improve ${stats.weaknesses[0]?.split(':')[0] || 'weakest topic'} to 60% by Week 2`,
+                        `Complete 80% of ${Object.keys(stats.subjects).find(s => stats.subjects[s].completion < 80) || 'a subject'} by Week 3`,
+                        `Reduce time per question to under 1 min in ${Object.keys(stats.questionTypes).find(qt => stats.questionTypes[qt].time > 1) || 'numerical'} questions`
+                    ] : ['Take a test to set goals'];
+                }
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+                alert('Failed to update stats. Using mock data.');
+                stats = {
+                    testsTaken: 7,
+                    totalTests: 100,
+                    avgScore: 68.3,
+                    timePerQuestion: 1.5,
+                    accuracyRate: 74.3,
+                    subjects: {
+                        Physics: { score: 65, tests: 3, remark: 'Needs improvement', completion: 60 },
+                        Chemistry: { score: 70, tests: 1, remark: 'Good', completion: 70 },
+                        Mathematics: { score: 58, tests: 1, remark: 'Needs improvement', completion: 50 },
+                        English: { score: 75, tests: 1, remark: 'Good', completion: 75 },
+                        'Engineering Aptitude': { score: 80, tests: 1, remark: 'Excellent', completion: 80 }
+                    },
+                    topics: [
+                        { topic: 'Mechanics', subject: 'Physics', score: 85, timePerQuestion: 1.1, accuracy: 92 },
+                        { topic: 'Electromagnetism', subject: 'Physics', score: 65, timePerQuestion: 1.5, accuracy: 72 },
+                        { topic: 'Thermodynamics', subject: 'Physics', score: 45, timePerQuestion: 2.2, accuracy: 58 },
+                        { topic: 'Organic Chemistry', subject: 'Chemistry', score: 70, timePerQuestion: 1.3, accuracy: 80 },
+                        { topic: 'Matrix Algebra', subject: 'Mathematics', score: 58, timePerQuestion: 1.8, accuracy: 65 },
+                        { topic: 'Grammar', subject: 'English', score: 75, timePerQuestion: 1.0, accuracy: 85 },
+                        { topic: 'Logical Reasoning', subject: 'Engineering Aptitude', score: 80, timePerQuestion: 1.2, accuracy: 90 }
+                    ],
+                    questionTypes: {
+                        'multiple-choice': { tests: 3, score: 75, time: 1.2, accuracy: 85 },
+                        numerical: { tests: 2, score: 61.5, time: 1.7, accuracy: 68.5 },
+                        aptitude: { tests: 2, score: 80, time: 1.2, accuracy: 90 }
+                    },
+                    scoreTrends: [70, 65, 68, 75, 80, 58, 85],
+                    strengths: ['Mechanics (Physics): 92% accuracy', 'Logical Reasoning: 90% accuracy'],
+                    weaknesses: ['Thermodynamics (Physics): 58% accuracy - <a href="study-materials.html?topic=thermodynamics">Practice more</a>', 'Matrix Algebra (Mathematics): 65% accuracy - <a href="study-materials.html?topic=matrix-algebra">Review resources</a>'],
+                    studyPlan: [
+                        '<strong>Week 1:</strong> Focus on Thermodynamics, Matrix Algebra (2 hours daily, <a href="study-materials.html">videos & exercises</a>)',
+                        '<strong>Week 2:</strong> Practice Mechanics, Logical Reasoning (1.5 hours daily, timed tests)',
+                        '<strong>Week 3:</strong> Full-length mock tests (alternate days, analyze errors)'
+                    ],
+                    progressGoals: [
+                        'Improve Thermodynamics to 60% by Week 2',
+                        'Complete 80% of Mathematics by Week 3',
+                        'Reduce numerical question time to under 1 min'
+                    ]
+                };
+            }
+
+            // Update UI
+            document.getElementById('testCompletionText').textContent = `${stats.testsTaken}/${stats.totalTests} tests taken`;
+            document.getElementById('testCompletionPercent').textContent = `${(stats.testsTaken / stats.totalTests * 100).toFixed(1)}%`;
+            document.getElementById('testCompletionBar').style.width = `${(stats.testsTaken / stats.totalTests * 100)}%`;
+            document.getElementById('avgScore').textContent = `${stats.avgScore}%`;
+            document.getElementById('avgScoreBar').style.width = `${stats.avgScore}%`;
+            document.getElementById('timePerQuestion').textContent = `${stats.timePerQuestion} min`;
+            document.getElementById('timePerQuestionBar').style.width = `${Math.min(stats.timePerQuestion / 2 * 100, 100)}%`;
+            document.getElementById('accuracyRate').textContent = `${stats.accuracyRate}%`;
+            document.getElementById('accuracyRateBar').style.width = `${stats.accuracyRate}%`;
+
+            // Update subject charts
+            Object.keys(stats.subjects).forEach(subject => {
+                const score = stats.subjects[subject].score;
+                charts[subject].data.datasets[0].data = [score, 100 - score];
+                charts[subject].update();
+                const canvasId = subject === 'Engineering Aptitude' ? 'aptitude' : subject.toLowerCase();
+                document.getElementById(`${canvasId}Score`).textContent = `${score}%`;
+                document.getElementById(`${canvasId}Remark`).textContent = stats.subjects[subject].remark;
+            });
+
+            // Update score trend chart
+            charts.scoreTrend.data.labels = Array.from({ length: stats.scoreTrends.length }, (_, i) => `Day ${i + 1}`);
+            charts.scoreTrend.data.datasets[0].data = stats.scoreTrends;
+            charts.scoreTrend.update();
+
+            // Update topic accuracy chart
+            charts.topicAccuracy.data.labels = stats.topics.map(t => t.topic);
+            charts.topicAccuracy.data.datasets[0].data = stats.topics.map(t => t.accuracy);
+            charts.topicAccuracy.update();
+
+            // Update question type chart
+            charts.questionType.data.datasets[0].data = Object.values(stats.questionTypes).map(qt => qt.accuracy);
+            charts.questionType.update();
+
+            // Update topic table
+            let sortedTopics = [...stats.topics];
+            if (currentSort.column) {
+                sortedTopics.sort((a, b) => {
+                    let valA = a[currentSort.column], valB = b[currentSort.column];
+                    if (currentSort.column === 'score' || currentSort.column === 'time' || currentSort.column === 'accuracy') {
+                        valA = parseFloat(valA);
+                        valB = parseFloat(valB);
+                    }
+                    return currentSort.order === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
+                });
+            }
+            document.getElementById('topicTable').innerHTML = sortedTopics.length ? sortedTopics.map(t => `
+                <tr>
+                    <td>${t.topic}</td>
+                    <td>${t.subject}</td>
+                    <td><div class="progress" style="height: 6px;"><div class="progress-bar ${t.score >= 80 ? 'bg-success' : t.score >= 60 ? 'bg-warning' : 'bg-danger'}" style="width: ${t.score}%"></div></div></td>
+                    <td>${t.timePerQuestion} min</td>
+                    <td>${t.accuracy}%</td>
+                    <td><a href="study-materials.html?topic=${t.topic.toLowerCase()}" class="btn btn-sm btn-outline-primary">Practice</a></td>
+                </tr>
+            `).join('') : '<tr><td colspan="6">No data available</td></tr>';
+
+            // Update question type table
+            document.getElementById('questionTypeTable').innerHTML = Object.entries(stats.questionTypes).map(([type, data]) => `
+                <tr>
+                    <td>${type.charAt(0).toUpperCase() + type.slice(1)}</td>
+                    <td>${data.tests}</td>
+                    <td>${data.score}%</td>
+                    <td>${data.time} min</td>
+                    <td>${data.accuracy}%</td>
+                    <td><a href="study-materials.html?type=${type}" class="btn btn-sm btn-outline-info">View Tips</a></td>
+                </tr>
+            `).join('');
+
+            // Update recommendations
+            document.getElementById('strengthsList').innerHTML = stats.strengths.length ? stats.strengths.map(s => `<li>${s}</li>`).join('') : '<li>No strengths identified yet</li>';
+            document.getElementById('weaknessesList').innerHTML = stats.weaknesses.length ? stats.weaknesses.map(w => `<li>${w}</li>`).join('') : '<li>No weaknesses identified yet</li>';
+            document.getElementById('studyPlan').innerHTML = stats.studyPlan.length ? stats.studyPlan.map(p => `<div class="d-flex mb-2">${p}</div>`).join('') : '<p>No study plan available yet</p>';
+            document.getElementById('progressGoals').innerHTML = stats.progressGoals.length ? stats.progressGoals.map(g => `<div class="d-flex mb-2">${g}</div>`).join('') : '<p>No goals set yet</p>';
+
+            // Update progress tracker
+            Object.keys(stats.subjects).forEach(subject => {
+                const completion = stats.subjects[subject].completion;
+                const canvasId = subject === 'Engineering Aptitude' ? 'aptitude' : subject.toLowerCase();
+                document.getElementById(`${canvasId}Progress`).style.width = `${completion}%`;
+                document.getElementById(`${canvasId}ProgressText`).textContent = `${completion}% complete`;
+            });
+        }
+
+        function exportToPdf() {
+            // LaTeX content for PDF export
+            const latexContent = `
+                \\documentclass{article}
+                \\usepackage{geometry}
+                \\geometry{a4paper, margin=1in}
+                \\usepackage{graphicx}
+                \\usepackage{hyperref}
+                \\usepackage{booktabs}
+                \\usepackage{xcolor}
+                \\usepackage{amsmath}
+                \\definecolor{primary}{HTML}{4361EE}
+                \\title{Performance Analysis Report}
+                \\author{IOE/CEE Prep Nepal}
+                \\date{${new Date().toLocaleDateString()}}
+                \\begin{document}
+                \\maketitle
+                \\section{Overall Performance}
+                \\begin{itemize}
+                    \\item \\textbf{Test Completion:} ${document.getElementById('testCompletionText').textContent} (${document.getElementById('testCompletionPercent').textContent})
+                    \\item \\textbf{Average Score:} ${document.getElementById('avgScore').textContent}
+                    \\item \\textbf{Time per Question:} ${document.getElementById('timePerQuestion').textContent}
+                    \\item \\textbf{Accuracy Rate:} ${document.getElementById('accuracyRate').textContent}
+                \\end{itemize}
+                \\section{Subject-wise Analysis}
+                \\begin{itemize}
+                    \\item \\textbf{Physics:} ${document.getElementById('physicsScore').textContent} (${document.getElementById('physicsRemark').textContent})
+                    \\item \\textbf{Chemistry:} ${document.getElementById('chemistryScore').textContent} (${document.getElementById('chemistryRemark').textContent})
+                    \\item \\textbf{Mathematics:} ${document.getElementById('mathsScore').textContent} (${document.getElementById('mathsRemark').textContent})
+                    \\item \\textbf{English:} ${document.getElementById('englishScore').textContent} (${document.getElementById('englishRemark').textContent})
+                    \\item \\textbf{Engineering Aptitude:} ${document.getElementById('aptitudeScore').textContent} (${document.getElementById('aptitudeRemark').textContent})
+                \\end{itemize}
+                \\section{Topic-wise Performance}
+                \\begin{table}[h]
+                    \\centering
+                    \\begin{tabular}{llccc}
+                        \\toprule
+                        \\textbf{Topic} & \\textbf{Subject} & \\textbf{Score} & \\textbf{Time/Question} & \\textbf{Accuracy} \\\\
+                        \\midrule
+                        ${document.querySelectorAll('#topicTable tr').length > 1 ? Array.from(document.querySelectorAll('#topicTable tr')).slice(1).map(row => {
+                            const cells = row.cells;
+                            return `${cells[0].textContent} & ${cells[1].textContent} & ${cells[2].querySelector('.progress-bar').style.width} & ${cells[3].textContent} & ${cells[4].textContent}`;
+                        }).join('\\\\\n') : 'No data available'}
+                        \\bottomrule
+                    \\end{tabular}
+                    \\caption{Topic Performance}
+                \\end{table}
+                \\section{Recommendations}
+                \\subsection{Strengths}
+                \\begin{itemize}
+                    ${document.getElementById('strengthsList').innerHTML.replace(/<li>/g, '\\item ').replace(/<\/li>/g, '')}
+                \\end{itemize}
+                \\subsection{Weaknesses}
+                \\begin{itemize}
+                    ${document.getElementById('weaknessesList').innerHTML.replace(/<li>/g, '\\item ').replace(/<\/li>/g, '')}
+                \\end{itemize}
+                \\subsection{Study Plan}
+                \\begin{itemize}
+                    ${document.getElementById('studyPlan').innerHTML.replace(/<div class="d-flex mb-2">/g, '\\item ').replace(/<\/div>/g, '')}
+                \\end{itemize}
+                \\subsection{Progress Goals}
+                \\begin{itemize}
+                    ${document.getElementById('progressGoals').innerHTML.replace(/<div class="d-flex mb-2">/g, '\\item ').replace(/<\/div>/g, '')}
+                \\end{itemize}
+                \\end{document}
+            `;
+            // Trigger download (assumes LaTeX rendering via latexmk)
+            const blob = new Blob([latexContent], { type: 'text/latex' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'performance_report.tex';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('LaTeX file downloaded. Compile with latexmk to generate PDF.');
+        }
+
+        // Initialize
+        initPerformance();
+    </script>
+</body>
+</html>

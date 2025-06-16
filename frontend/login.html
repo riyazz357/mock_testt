@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - IOE/CEE Prep Nepal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-color);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Formula/Keyword Background */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(0.5px);
+        }
+
+        .formula {
+            position: absolute;
+            font-size: 1.3rem;
+            opacity: 0.3;
+            color: var(--light-color);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            white-space: nowrap;
+            user-select: none;
+            text-shadow: 0 0 5px rgba(67,97,238,0.3);
+        }
+
+        .formula.accent {
+            color: var(--accent-color);
+            text-shadow: 0 0 5px rgba(76,201,240,0.3);
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header i {
+            font-size: 48px;
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn-login {
+            background: #1e3c72;
+            color: white;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background: #2a5298;
+            color: white;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 20px;
+            }
+
+            .login-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .form-control {
+                font-size: 0.95rem;
+                padding: 0.65rem 1rem;
+            }
+
+            .formula {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Overlay for Formulas -->
+    <div class="background-overlay" id="formulaOverlay"></div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <i class="fas fa-graduation-cap"></i>
+            <h2>Welcome Back!</h2>
+            <p class="text-muted">Sign in to continue your learning journey</p>
+        </div>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+            <button type="submit" class="btn btn-login">
+                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+            </button>
+        </form>
+        <div class="register-link">
+            <p>Don't have an account? <a href="signup.html">Register here</a></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const formulaOverlay = document.getElementById('formulaOverlay');
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            
+            try {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing in...';
+                errorMessage.style.display = 'none';
+                
+                console.log('Attempting login with:', { email });
+                
+                // Use the API service for login
+                const response = await window.api.auth.login(email, password);
+                console.log('Login response:', response);
+                
+                if (response.token) {
+                    // Store token and user data
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('user', JSON.stringify(response.user));
+                    
+                    console.log('Stored user data:', response.user);
+                    
+                    // Redirect based on role
+                    if (response.user.role === 'admin') {
+                        console.log('Redirecting to admin dashboard...');
+                        window.location.href = 'admin.html';
+                    } else {
+                        console.log('Redirecting to user dashboard...');
+                        window.location.href = 'dashboard.html';
+                    }
+                } else {
+                    throw new Error(response.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = error.message || 'An error occurred during login';
+                
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Sign In';
+            }
+        });
+
+        // Add formulas to background
+        const formulas = [
+            // Physics Formulas
+            'F=ma', 'v=u+at', 's=ut+½at²', 'E=mc²', 'V=IR', 'q=mcΔT', 'P=F/A',
+            'W=Fd', 'P=mv', 'a=v²/r', 'g=GM/r²', 'F=kx', 'T=2π√(l/g)', 'P=V²/R',
+            'I=q/t', 'E=½mv²',
+            // Chemistry Formulas
+            'PV=nRT', 'pH=-log[H⁺]', 'K=½mv²', 'ΔG=ΔH-TΔS', 'q=nF', 'E=hc/λ',
+            'C=n/V', 'Ksp=[A⁺][B⁻]', 'N=N₀e⁻ᵏᵗ',
+            // Chemical Reactions
+            '2H₂ + O₂ → 2H₂O', 'NaCl → Na⁺ + Cl⁻', 'C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O',
+            'HCl + NaOH → NaCl + H₂O', '2Na + Cl₂ → 2NaCl', 'CH₄ + 2O₂ → CO₂ + 2H₂O',
+            'CaCO₃ → CaO + CO₂', '2KClO₃ → 2KCl + 3O₂', 'Fe + CuSO₄ → FeSO₄ + Cu',
+            '2Al + 6HCl → 2AlCl₃ + 3H₂', 'H₂CO₃ → H₂O + CO₂', 'Zn + H₂SO₄ → ZnSO₄ + H₂',
+            'AgNO₃ + NaCl → AgCl + NaNO₃', 'Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag',
+            // Biology Keywords
+            'Genetics', 'Ecology', 'Cell Biology', 'Evolution', 'Biochemistry',
+            'Microbiology', 'Botany', 'Zoology', 'Immunology', 'Molecular Biology',
+            'Physiology', 'Anatomy', 'Biotechnology', 'Homeostasis', 'Metabolism'
+        ];
+
+        formulas.forEach((formula, index) => {
+            const element = document.createElement('div');
+            element.className = `formula ${index % 3 === 0 ? 'accent' : ''}`;
+            element.textContent = formula;
+            element.style.left = `${Math.random() * 100}%`;
+            element.style.top = `${Math.random() * 100}%`;
+            formulaOverlay.appendChild(element);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - IOE/CEE Prep Nepal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --dark-bg: #1a1d2a;
+            --dark-text: #e0e0e0;
+            --dark-card: #2a2e3f;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        [data-theme="dark"] {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .navbar-light {
+            background-color: var(--dark-card) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        [data-theme="dark"] .navbar-brand,
+        [data-theme="dark"] .nav-link {
+            color: var(--dark-text) !important;
+        }
+
+        [data-theme="dark"] .profile-card,
+        [data-theme="dark"] .stats-card,
+        [data-theme="dark"] .settings-card {
+            background-color: var(--dark-card);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        [data-theme="dark"] .table {
+            color: var(--dark-text);
+        }
+
+        [data-theme="dark"] .table-bordered {
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        [data-theme="dark"] .form-control,
+        [data-theme="dark"] .form-select {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        [data-theme="dark"] footer {
+            background-color: var(--dark-bg);
+        }
+
+        .navbar {
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 0.75rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .profile-section {
+            padding: 5rem 0;
+        }
+
+        .profile-card,
+        .stats-card,
+        .settings-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .profile-card:hover,
+        .stats-card:hover,
+        .settings-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .profile-pic-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic-large:hover {
+            box-shadow: 0 0 15px rgba(67, 97, 238, 0.5);
+        }
+
+        .progress-bar {
+            background-color: var(--primary-color);
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid rgba(67, 97, 238, 0.2);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-danger-soft {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: none;
+        }
+
+        .btn-danger-soft:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .profile-dropdown .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 0.5rem;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
+        }
+
+        .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 250px;
+            padding: 0.5rem 0;
+            background-color: var(--light-color);
+        }
+
+        [data-theme="dark"] .dropdown-menu {
+            background-color: var(--dark-card);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .dropdown-item {
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+            color: var(--dark-color);
+        }
+
+        [data-theme="dark"] .dropdown-item {
+            color: var(--dark-text);
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+
+        .profile-header {
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .profile-header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+        }
+
+        .theme-toggle i {
+            margin-right: 0.5rem;
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .modal-content {
+            background-color: var(--dark-card);
+            color: var(--dark-text);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .upload-btn input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-links h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .profile-pic-large {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-pic {
+                width: 35px;
+                height: 35px;
+            }
+
+            .dropdown-menu {
+                min-width: 200px;
+            }
+
+            .profile-header img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .settings-card .col-md-6 {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap me-2"></i>Padhai Saathi
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="navLinks">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mock-tests.html">Mock Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="study-materials.html">Study Materials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-3 profile-dropdown" id="profileDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <img src="https://cdn.pixabay.com/photo/2017/02/14/08/10/graduate-2045744_1280.png" class="profile-pic" alt="Profile">
+                            <span id="dropdownName">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li class="profile-header">
+                                <img id="dropdownPic" src="https://cdn.pixabay.com/photo/2017/02/14/08/10/graduate-2045744_1280.png" alt="Profile">
+                                <h6 id="dropdownFullName" class="mb-0">User</h6>
+                                <small id="dropdownEmail" class="text-white-50">user@example.com</small>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="dashboard.html"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                            <li><a class="dropdown-item active" href="profile.html"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="mock-tests.html"><i class="fas fa-clock me-2"></i>Mock Tests</a></li>
+                            <li><a class="dropdown-item" href="study-materials.html"><i class="fas fa-book me-2"></i>Study Materials</a></li>
+                            <li><a class="dropdown-item" href="leaderboard.html"><i class="fas fa-trophy me-2"></i>Leaderboard</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle me-2"></i>Ask a Doubt</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editProfileModal"><i class="fas fa-edit me-2"></i>Edit Profile</a></li>
+                            <li class="theme-toggle" id="themeToggle">
+                                <i class="fas fa-moon me-2"></i>Toggle Dark Mode
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="logoutButton"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="row g-4">
+                <!-- User Info -->
+                <div class="col-lg-4">
+                    <div class="profile-card text-center">
+                        <img id="profilePicLarge" src="https://cdn.pixabay.com/photo/2017/02/14/08/10/graduate-2045744_1280.png" class="profile-pic-large mx-auto" alt="Profile">
+                        <h3 id="profileFullName" class="mt-3">User</h3>
+                        <p id="profileEmail" class="text-muted">user@example.com</p>
+                        <p id="profileExamType" class="text-primary">IOE/CEE</p>
+                        <div class="d-flex justify-content-center gap-2 mb-3">
+                            <a id="profileLinkedIn" href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-linkedin"></i></a>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal"><i class="fas fa-edit me-2"></i>Edit Profile</button>
+                        </div>
+                        <hr>
+                        <div class="text-start">
+                            <p><strong>Joined:</strong> <span id="profileJoined">Jan 2025</span></p>
+                            <p><strong>Tests Taken:</strong> <span id="profileTestsTaken">0</span></p>
+                            <p><strong>Leaderboard Rank:</strong> <span id="profileRank">N/A</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats and Settings -->
+                <div class="col-lg-8">
+                    <!-- Stats -->
+                    <div class="stats-card mb-4">
+                        <h3 class="mb-4">Your Statistics</h3>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h5>Mock Tests</h5>
+                                <p><strong>Total Taken:</strong> <span id="statsTestsTaken">0</span></p>
+                                <p><strong>Average Score:</strong> <span id="statsAvgScore">0%</span></p>
+                                <p><strong>Highest Score:</strong> <span id="statsHighScore">0%</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Leaderboard</h5>
+                                <p><strong>Rank:</strong> <span id="statsRank">N/A</span></p>
+                                <p><strong>Points:</strong> <span id="statsPoints">0</span></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5>Study Progress</h5>
+                        <div id="progressBars">
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Physics</span>
+                                    <span id="progressPhysics">0%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <!-- More subjects added via JS -->
+                        </div>
+                        <hr>
+                        <h5>Recent Tests</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Test ID</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentTestsTable">
+                                    <tr>
+                                        <td colspan="3">No tests taken yet.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Settings -->
+                    <div class="settings-card">
+                        <h3 class="mb-4">Settings</h3>
+                        <form id="settingsForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <h5>Notifications</h5>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="notifyEmail" checked>
+                                        <label class="form-check-label" for="notifyEmail">Email Notifications</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="notifyPush" checked>
+                                        <label class="form-check-label" for="notifyPush">Push Notifications</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Privacy</h5>
+                                    <div class="mb-3">
+                                        <label for="profileVisibility" class="form-label">Profile Visibility</label>
+                                        <select class="form-select" id="profileVisibility">
+                                            <option value="public">Public</option>
+                                            <option value="private">Private</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Change Password</h5>
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="currentPassword">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label">New Password</label>
+                                        <input type="password" class="form-control" id="newPassword">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword">
+                                        <div class="invalid-feedback" id="passwordError"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Account</h5>
+                                    <button type="button" class="btn btn-danger-soft" data-bs-toggle="modal" data-bs-target="#deleteAccountModal"><i class="fas fa-trash-alt me-2"></i>Delete Account</button>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary" id="saveSettingsBtn"><i class="fas fa-save me-2"></i>Save Settings</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="editFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="editFirstName" required>
+                                <div class="invalid-feedback">Please provide your first name.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="editLastName" required>
+                                <div class="invalid-feedback">Please provide your last name.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editExamType" class="form-label">Exam Type</label>
+                                <select class="form-select" id="editExamType" required>
+                                    <option value="ioe">IOE Entrance Exam</option>
+                                    <option value="cee">CEE Entrance Exam</option>
+                                    <option value="both">Both IOE & CEE</option>
+                                </select>
+                                <div class="invalid-feedback">Please select an exam type.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editLinkedIn" class="form-label">LinkedIn (Optional)</label>
+                                <input type="url" class="form-control" id="editLinkedIn" placeholder="https://linkedin.com/in/username">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="profileUpload" class="form-label">Profile Picture</label>
+                                <div class="d-flex align-items-center">
+                                    <img id="profilePreviewModal" src="https://cdn.pixabay.com/photo/2017/02/14/08/10/graduate-2045744_1280.png" class="rounded-circle me-3" width="60" height="60" alt="Preview">
+                                    <div class="upload-btn">
+                                        <button type="button" class="btn btn-outline-primary">Choose File</button>
+                                        <input type="file" id="profileUpload" accept="image/*">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary" id="saveProfileBtn"><i class="fas fa-save me-2"></i>Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteAccountModalLabel">Delete Account</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <div class="mb-3">
+                        <label for="deletePassword" class="form-label">Enter Password to Confirm</label>
+                        <input type="password" class="form-control" id="deletePassword" required>
+                        <div class="invalid-feedback" id="deletePasswordError"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash-alt me-2"></i>Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-white mb-4">
+                        <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+                    </h5>
+                    <p>The most comprehensive platform for engineering entrance exam preparation in Nepal.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="mock-tests.html">Mock Tests</a></li>
+                        <li><a href="study-materials.html">Study Materials</a></li>
+                        <li><a href="leaderboard.html">Leaderboard</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Subjects</h5>
+                    <ul>
+                        <li><a href="subject.html?subject=physics">Physics</a></li>
+                        <li><a href="subject.html?subject=chemistry">Chemistry</a></li>
+                        <li><a href="subject.html?subject=mathematics">Mathematics</a></li>
+                        <li><a href="subject.html?subject=english">English</a></li>
+                        <li><a href="subject.html?subject=aptitude">Engineering Aptitude</a></li>
+                        <li><a href="subject.html?subject=Biology">Biology</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Kathmandu, Nepal</li>
+                        <li><i class="fas fa-phone me-2"></i> +977 9841XXXXXX</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@ioeceeprep.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2025 IOE/CEE Prep. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white-50 me-3">Privacy Policy</a>
+                        <a href="#" class="text-white-50">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase configuration
+        const supabaseUrl = 'https://vayanncqbavnwntbcjqw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheWFubmNxYmF2bndudGJjanF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MTEzMDgsImV4cCI6MjA2NTM4NzMwOH0.dRQ1d_UKV-0IcnY3Kp7jMg6Ok5OLF6JlAeGea2uaPho';
+        const supabase = Supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function initProfile() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const { data: userData, error } = await supabase.auth.getUser();
+            if (error) {
+                console.error('Error fetching user:', error);
+                alert(`Error: ${error.message}`);
+                return;
+            }
+
+            const user = userData.user;
+            const metadata = user.user_metadata || {};
+            const firstName = metadata.first_name || 'User';
+            const lastName = metadata.last_name || '';
+            const examType = metadata.exam_type || 'IOE/CEE';
+            const linkedIn = metadata.linkedin || '';
+            const profileUrl = metadata.profile_url || 'https://cdn.pixabay.com/photo/2017/02/14/08/10/graduate-2045744_1280.png';
+            const email = user.email || 'user@example.com';
+            const joinedDate = new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            const testsTaken = metadata.tests_taken || 0;
+
+            // Update profile card
+            document.getElementById('profilePicLarge').src = profileUrl;
+            document.getElementById('profileFullName').textContent = `${firstName} ${lastName}`.trim();
+            document.getElementById('profileEmail').textContent = email;
+            document.getElementById('profileExamType').textContent = examType;
+            document.getElementById('profileLinkedIn').href = linkedIn || '#';
+            document.getElementById('profileJoined').textContent = joinedDate;
+            document.getElementById('profileTestsTaken').textContent = testsTaken;
+
+            // Update dropdown
+            document.getElementById('dropdownName').textContent = firstName;
+            document.getElementById('dropdownPic').src = profileUrl;
+            document.getElementById('dropdownFullName').textContent = `${firstName} ${lastName}`.trim();
+            document.getElementById('dropdownEmail').textContent = email;
+
+            // Populate edit profile modal
+            document.getElementById('editFirstName').value = firstName;
+            document.getElementById('editLastName').value = lastName;
+            document.getElementById('editExamType').value = examType.toLowerCase();
+            document.getElementById('editLinkedIn').value = linkedIn;
+            document.getElementById('profilePreviewModal').src = profileUrl;
+
+            // Fetch stats
+            let stats = {
+                testsTaken: testsTaken,
+                avgScore: 0,
+                highScore: 0,
+                rank: 'N/A',
+                points: 0,
+                recentTests: [],
+                progress: []
+            };
+
+            try {
+                // Mock Tests
+                const { data: tests, error: testsError } = await supabase
+                    .from('mock_tests')
+                    .select('score, date, test_id')
+                    .eq('user_id', user.id)
+                    .order('date', { ascending: false })
+                    .limit(5);
+                if (testsError) throw testsError;
+                if (tests.length) {
+                    stats.testsTaken = tests.length;
+                    stats.avgScore = (tests.reduce((sum, test) => sum + test.score, 0) / tests.length).toFixed(1);
+                    stats.highScore = Math.max(...tests.map(test => test.score));
+                    stats.recentTests = tests;
+                }
+
+                // Progress
+                const { data: progress, error: progressError } = await supabase
+                    .from('progress')
+                    .select('subject, completion_percentage')
+                    .eq('user_id', user.id);
+                if (progressError) throw progressError;
+                stats.progress = progress.length ? progress : [
+                    { subject: 'Physics', completion_percentage: 0 },
+                    { subject: 'Chemistry', completion_percentage: 0 },
+                    { subject: 'Mathematics', completion_percentage: 0 },
+                    { subject: 'English', completion_percentage: 0 },
+                    { subject: 'Engineering Aptitude', completion_percentage: 0 }
+                ];
+
+                // Leaderboard
+                const { data: leaderboard, error: leaderboardError } = await supabase
+                    .from('leaderboard')
+                    .select('rank, points')
+                    .eq('user_id', user.id)
+                    .single();
+                if (leaderboardError && leaderboardError.code !== 'PGRST116') throw leaderboardError;
+                if (leaderboard) {
+                    stats.rank = leaderboard.rank;
+                    stats.points = leaderboard.points;
+                }
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+                alert('Failed to load statistics. Using mock data.');
+            }
+
+            // Update stats UI
+            document.getElementById('statsTestsTaken').textContent = stats.testsTaken;
+            document.getElementById('statsAvgScore').textContent = `${stats.avgScore}%`;
+            document.getElementById('statsHighScore').textContent = `${stats.highScore}%`;
+            document.getElementById('statsRank').textContent = stats.rank;
+            document.getElementById('statsPoints').textContent = stats.points;
+            document.getElementById('profileRank').textContent = stats.rank;
+
+            // Update progress bars
+            const progressBars = document.getElementById('progressBars');
+            progressBars.innerHTML = stats.progress.map(p => `
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>${p.subject}</span>
+                        <span>${p.completion_percentage}%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: ${p.completion_percentage}%"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update recent tests table
+            const recentTestsTable = document.getElementById('recentTestsTable');
+            recentTestsTable.innerHTML = stats.recentTests.length ? stats.recentTests.map(test => `
+                <tr>
+                    <td>${new Date(test.date).toLocaleDateString()}</td>
+                    <td>${test.test_id.slice(0, 8)}</td>
+                    <td>${test.score}%</td>
+                </tr>
+            `).join('') : '<tr><td colspan="3">No tests taken yet.</td></tr>';
+
+            // Fetch settings
+            let settings = {
+                notifications_email: true,
+                notifications_push: true,
+                profile_visibility: 'public',
+                theme: 'light'
+            };
+
+            try {
+                const { data: settingsData, error: settingsError } = await supabase
+                    .from('user_settings')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .single();
+                if (settingsError && settingsError.code !== 'PGRST116') throw settingsError;
+                if (settingsData) settings = settingsData;
+            } catch (error) {
+                console.error('Error fetching settings:', error);
+                alert('Failed to load settings. Using defaults.');
+            }
+
+            // Update settings UI
+            document.getElementById('notifyEmail').checked = settings.notifications_email;
+            document.getElementById('notifyPush').checked = settings.notifications_push;
+            document.getElementById('profileVisibility').value = settings.profile_visibility;
+
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const htmlRoot = document.getElementById('htmlRoot');
+            htmlRoot.setAttribute('data-theme', settings.theme);
+            themeToggle.innerHTML = `<i class="fas ${settings.theme === 'dark' ? 'fa-sun' : 'fa-moon'} me-2"></i>${settings.theme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode'}`;
+
+            themeToggle.addEventListener('click', async () => {
+                const newTheme = htmlRoot.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                htmlRoot.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                themeToggle.innerHTML = `<i class="fas ${newTheme === 'dark' ? 'fa-sun' : 'fa-moon'} me-2"></i>${newTheme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode'}`;
+                try {
+                    await supabase
+                        .from('user_settings')
+                        .upsert({ user_id: user.id, theme: newTheme });
+                } catch (error) {
+                    console.error('Error saving theme:', error);
+                }
+            });
+
+            // Profile picture preview
+            const profileUpload = document.getElementById('profileUpload');
+            const profilePreview = document.getElementById('profilePreviewModal');
+            profileUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => profilePreview.src = event.target.result;
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Edit profile form
+            const editProfileForm = document.getElementById('editProfileForm');
+            const saveProfileBtn = document.getElementById('saveProfileBtn');
+            editProfileForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!editProfileForm.checkValidity()) {
+                    editProfileForm.classList.add('was-validated');
+                    return;
+                }
+
+                saveProfileBtn.disabled = true;
+                saveProfileBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+
+                try {
+                    let newProfileUrl = profileUrl;
+                    if (profileUpload.files[0]) {
+                        const file = profileUpload.files[0];
+                        const filePath = `profiles/${user.id}/${Date.now()}_${file.name}`;
+                        const { error: uploadError } = await supabase.storage
+                            .from('avatars')
+                            .upload(filePath, file);
+                        if (uploadError) throw uploadError;
+                        const { data: urlData } = supabase.storage
+                            .from('avatars')
+                            .getPublicUrl(filePath);
+                        newProfileUrl = urlData.publicUrl;
+                    }
+
+                    const updates = {
+                        first_name: document.getElementById('editFirstName').value,
+                        last_name: document.getElementById('editLastName').value,
+                        exam_type: document.getElementById('editExamType').value,
+                        linkedin: document.getElementById('editLinkedIn').value,
+                        profile_url: newProfileUrl,
+                        tests_taken: testsTaken
+                    };
+
+                    const { error: updateError } = await supabase.auth.updateUser({ data: updates });
+                    if (updateError) throw updateError;
+
+                    alert('Profile updated successfully!');
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                    alert(`Failed to update profile: ${error.message}`);
+                } finally {
+                    saveProfileBtn.disabled = false;
+                    saveProfileBtn.innerHTML = '<i class="fas fa-save me-2"></i>Save Changes';
+                }
+            });
+
+            // Settings form
+            const settingsForm = document.getElementById('settingsForm');
+            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+            settingsForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (newPassword && newPassword !== confirmPassword) {
+                    document.getElementById('passwordError').textContent = 'Passwords do not match.';
+                    document.getElementById('confirmPassword').classList.add('is-invalid');
+                    return;
+                }
+
+                saveSettingsBtn.disabled = true;
+                saveSettingsBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+
+                try {
+                    // Update settings
+                    const settingsUpdates = {
+                        user_id: user.id,
+                        notifications_email: document.getElementById('notifyEmail').checked,
+                        notifications_push: document.getElementById('notifyPush').checked,
+                        profile_visibility: document.getElementById('profileVisibility').value,
+                        theme: htmlRoot.getAttribute('data-theme')
+                    };
+
+                    const { error: settingsError } = await supabase
+                        .from('user_settings')
+                        .upsert(settingsUpdates);
+                    if (settingsError) throw settingsError;
+
+                    // Update password if provided
+                    if (newPassword) {
+                        const { error: passwordError } = await supabase.auth.updateUser({
+                            password: newPassword
+                        });
+                        if (passwordError) throw passwordError;
+                    }
+
+                    alert('Settings updated successfully!');
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error updating settings:', error);
+                    alert(`Failed to update settings: ${error.message}`);
+                } finally {
+                    saveSettingsBtn.disabled = false;
+                    saveSettingsBtn.innerHTML = '<i class="fas fa-save me-2"></i>Save Settings';
+                }
+            });
+
+            // Delete account
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            confirmDeleteBtn.addEventListener('click', async () => {
+                const password = document.getElementById('deletePassword').value;
+                if (!password) {
+                    document.getElementById('deletePasswordError').textContent = 'Please enter your password.';
+                    document.getElementById('deletePassword').classList.add('is-invalid');
+                    return;
+                }
+
+                confirmDeleteBtn.disabled = true;
+                confirmDeleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Deleting...';
+
+                try {
+                    // Re-authenticate (Supabase requires for sensitive actions)
+                    const { error: signInError } = await supabase.auth.signInWithPassword({
+                        email: user.email,
+                        password
+                    });
+                    if (signInError) throw signInError;
+
+                    // Delete related data
+                    await supabase.from('mock_tests').delete().eq('user_id', user.id);
+                    await supabase.from('progress').delete().eq('user_id', user.id);
+                    await supabase.from('leaderboard').delete().eq('user_id', user.id);
+                    await supabase.from('user_settings').delete().eq('user_id', user.id);
+
+                    // Delete user
+                    const { error: deleteError } = await supabase.auth.admin.deleteUser(user.id);
+                    if (deleteError) throw deleteError;
+
+                    alert('Account deleted successfully.');
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Error deleting account:', error);
+                    alert(`Failed to delete account: ${error.message}`);
+                    document.getElementById('deletePasswordError').textContent = error.message;
+                    document.getElementById('deletePassword').classList.add('is-invalid');
+                } finally {
+                    confirmDeleteBtn.disabled = false;
+                    confirmDeleteBtn.innerHTML = '<i class="fas fa-trash-alt me-2"></i>Delete Account';
+                }
+            });
+
+            // Logout
+            document.getElementById('logoutButton').addEventListener('click', async (e) => {
+                e.preventDefault();
+                const { error } = await supabase.auth.signOut();
+                if (error) {
+                    console.error('Logout error:', error);
+                    alert(`Logout failed: ${error.message}`);
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        // Initialize profile
+        initProfile();
+    </script>
+</body>
+</html>

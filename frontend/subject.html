@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Notes - IOE/CEE Prep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+        }
+        
+        .navbar {
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .class-selector {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .subject-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .chapter-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+        
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .chapter-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+        }
+        
+        .chapter-content {
+            padding: 1.5rem;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .note-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            transition: all 0.2s ease;
+        }
+        
+        .note-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .note-item:last-child {
+            border-bottom: none;
+        }
+        
+        .subject-tabs {
+            margin-bottom: 2rem;
+        }
+        
+        .subject-overview {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mock-testt.html">Mock Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="study-materials.html">Study Materials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary" href="login.html">Login/Signup</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Subject Header -->
+    <div class="subject-header">
+        <div class="container">
+            <h1 id="subjectTitle" class="display-4 fw-bold mb-3"></h1>
+            <p class="lead">Complete study materials, formulas, and practice questions</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Subject Tabs -->
+        <ul class="nav nav-tabs subject-tabs" id="subjectTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button">Overview</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="syllabus-tab" data-bs-toggle="tab" data-bs-target="#syllabus" type="button">Syllabus</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="formulas-tab" data-bs-toggle="tab" data-bs-target="#formulas" type="button">Formulas</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="questions-tab" data-bs-toggle="tab" data-bs-target="#questions" type="button">Practice Questions</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pyq-tab" data-bs-toggle="tab" data-bs-target="#pyq" type="button">Previous Year Questions</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="subjectTabContent">
+            <!-- Overview Tab -->
+            <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                <div class="subject-overview">
+                    <h3 class="mb-3" id="overviewTitle"></h3>
+                    <div id="subjectOverviewContent"></div>
+                    <div class="mt-4">
+                        <h5>Preparation Tips</h5>
+                        <div id="preparationTips"></div>
+                    </div>
+                    <div class="mt-4">
+                        <h5>Recommended Books</h5>
+                        <ul id="recommendedBooks" class="list-group list-group-flush"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Syllabus Tab -->
+            <div class="tab-pane fade" id="syllabus" role="tabpanel">
+                <div class="class-selector text-center">
+                    <h3 class="mb-4"><i class="fas fa-graduation-cap me-2"></i>Select Your Class</h3>
+                    <div class="d-grid gap-3">
+                        <button class="btn btn-primary btn-lg py-3 class-select" data-class="11">
+                            <i class="fas fa-arrow-circle-right me-2"></i>Class 11
+                        </button>
+                        <button class="btn btn-primary btn-lg py-3 class-select" data-class="12">
+                            <i class="fas fa-arrow-circle-right me-2"></i>Class 12
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="subjectContent" style="display: none;">
+                    <div class="text-center mb-5">
+                        <h2 id="subjectTitle" class="fw-bold"></h2>
+                        <p id="classIndicator" class="text-muted"></p>
+                    </div>
+                    
+                    <div id="chaptersContainer">
+                        <!-- Chapters will be loaded here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulas Tab -->
+            <div class="tab-pane fade" id="formulas" role="tabpanel">
+                <div class="subject-overview">
+                    <h3 class="mb-4">Important Formulas and Theories</h3>
+                    <div id="formulasContent"></div>
+                </div>
+            </div>
+
+            <!-- Practice Questions Tab -->
+            <div class="tab-pane fade" id="questions" role="tabpanel">
+                <div class="subject-overview">
+                    <h3 class="mb-4">Practice Questions</h3>
+                    <div id="practiceQuestions"></div>
+                </div>
+            </div>
+
+            <!-- Previous Year Questions Tab -->
+            <div class="tab-pane fade" id="pyq" role="tabpanel">
+                <div class="subject-overview">
+                    <h3 class="mb-4">Previous Year Questions</h3>
+                    <div id="previousYearQuestions"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep</h5>
+                    <p>Your complete guide to engineering entrance exams in Nepal.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="mock-testt.html" class="text-white">Mock Tests</a></li>
+                        <li><a href="study-materials.html" class="text-white">Study Materials</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@ioeceeprep.com</li>
+                        <li><i class="fas fa-phone me-2"></i> +977 9841XXXXXX</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 IOE/CEE Prep. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get subject from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject = urlParams.get('subject');
+        
+        // Subject data (in real app, fetch from Firebase/API)
+        const subjectData = {
+            physics: {
+                name: "Physics",
+                overview: {
+                    title: "Physics for IOE/CEE Entrance",
+                    content: "<p>Physics is a fundamental subject for engineering entrance exams. This section covers all topics from Class 11 and 12 physics syllabus that are important for IOE and CEE entrance examinations.</p><p>Focus on understanding concepts, derivations, and applications of physical principles to solve numerical problems efficiently.</p>",
+                    tips: [
+                        "Focus on mechanics and electromagnetism as they carry most weight",
+                        "Practice numerical problems daily",
+                        "Create formula sheets for quick revision",
+                        "Understand concepts rather than memorizing"
+                    ],
+                    books: [
+                        "Principles of Physics (Resnick, Halliday, Walker)",
+                        "Concepts of Physics (H.C. Verma)",
+                        "IOE Entrance Physics (Bhadra and Pradhan)"
+                    ]
+                },
+                formulas: "<div class='row'><div class='col-md-6'><h5>Mechanics</h5><ul class='list-group mb-4'><li class='list-group-item'>F = ma (Newton's Second Law)</li><li class='list-group-item'>v = u + at</li><li class='list-group-item'>s = ut + ½at²</li></ul></div><div class='col-md-6'><h5>Electromagnetism</h5><ul class='list-group mb-4'><li class='list-group-item'>F = qE</li><li class='list-group-item'>V = IR</li><li class='list-group-item'>F = BILsinθ</li></ul></div></div>",
+                questions: "<p>Practice questions will be loaded here...</p>",
+                pyq: "<p>Previous year questions will be loaded here...</p>",
+                class11: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Mechanics",
+                            notes: [
+                                { title: "Introduction to Mechanics", type: "pdf", url: "Enlisted-Online-Media-till-2080-11-14.pdf" },
+                                { title: "Newton's Laws of Motion", type: "video", url: "#" },
+                                { title: "Formula Sheet", type: "pdf", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                },
+                class12: {
+                    chapters: [
+                         {
+                            name: "Mechanics",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Heat and thermodynamics",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: "Wave and optics",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: "Electricity and magnetism",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: " Modern Physics",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                }
+            },
+
+            // chemistry start from here
+            chemistry: {
+                name: "Chemistry",
+                overview: {
+                    title: "Physics for IOE/CEE Entrance",
+                    content: "<p>Physics is a fundamental subject for engineering entrance exams. This section covers all topics from Class 11 and 12 physics syllabus that are important for IOE and CEE entrance examinations.</p><p>Focus on understanding concepts, derivations, and applications of physical principles to solve numerical problems efficiently.</p>",
+                    tips: [
+                        "Focus on mechanics and electromagnetism as they carry most weight",
+                        "Practice numerical problems daily",
+                        "Create formula sheets for quick revision",
+                        "Understand concepts rather than memorizing"
+                    ],
+                    books: [
+                        "Principles of Physics (Resnick, Halliday, Walker)",
+                        "Concepts of Physics (H.C. Verma)",
+                        "IOE Entrance Physics (Bhadra and Pradhan)"
+                    ]
+                },
+                formulas: "<div class='row'><div class='col-md-6'><h5>Mechanics</h5><ul class='list-group mb-4'><li class='list-group-item'>F = ma (Newton's Second Law)</li><li class='list-group-item'>v = u + at</li><li class='list-group-item'>s = ut + ½at²</li></ul></div><div class='col-md-6'><h5>Electromagnetism</h5><ul class='list-group mb-4'><li class='list-group-item'>F = qE</li><li class='list-group-item'>V = IR</li><li class='list-group-item'>F = BILsinθ</li></ul></div></div>",
+                questions: "<p>Practice questions will be loaded here...</p>",
+                pyq: "<p>Previous year questions will be loaded here...</p>",
+                class11: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Mechanics",
+                            notes: [
+                                { title: "Introduction to Mechanics", type: "pdf", url: "#" },
+                                { title: "Newton's Laws of Motion", type: "video", url: "#" },
+                                { title: "Formula Sheet", type: "pdf", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                },
+                class12: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Electromagnetism",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                }
+                // Similar structure for chemistry...
+            },
+
+            // biology start from here
+            Biology: {
+                name: "Biology",
+                overview: {
+                    title: "Physics for IOE/CEE Entrance",
+                    content: "<p>Physics is a fundamental subject for engineering entrance exams. This section covers all topics from Class 11 and 12 physics syllabus that are important for IOE and CEE entrance examinations.</p><p>Focus on understanding concepts, derivations, and applications of physical principles to solve numerical problems efficiently.</p>",
+                    tips: [
+                        "Focus on mechanics and electromagnetism as they carry most weight",
+                        "Practice numerical problems daily",
+                        "Create formula sheets for quick revision",
+                        "Understand concepts rather than memorizing"
+                    ],
+                    books: [
+                        "Principles of Physics (Resnick, Halliday, Walker)",
+                        "Concepts of Physics (H.C. Verma)",
+                        "IOE Entrance Physics (Bhadra and Pradhan)"
+                    ]
+                },
+                formulas: "<div class='row'><div class='col-md-6'><h5>Mechanics</h5><ul class='list-group mb-4'><li class='list-group-item'>F = ma (Newton's Second Law)</li><li class='list-group-item'>v = u + at</li><li class='list-group-item'>s = ut + ½at²</li></ul></div><div class='col-md-6'><h5>Electromagnetism</h5><ul class='list-group mb-4'><li class='list-group-item'>F = qE</li><li class='list-group-item'>V = IR</li><li class='list-group-item'>F = BILsinθ</li></ul></div></div>",
+                questions: "<p>Practice questions will be loaded here...</p>",
+                pyq: "<p>Previous year questions will be loaded here...</p>",
+                class11: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Mechanics",
+                            notes: [
+                                { title: "Introduction to Mechanics", type: "pdf", url: "#" },
+                                { title: "Newton's Laws of Motion", type: "video", url: "#" },
+                                { title: "Formula Sheet", type: "pdf", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                },
+                class12: {
+                    chapters: [
+                         {
+                            name: "Pant Anatomy",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Plant physiology",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: "Genetics",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: "Embryology",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: " Biotechnology",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: " Animal Tissue",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        }, 
+                        {
+                            name: "Development Biology",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: " Human biology",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: " Human population and health disorders",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                         {
+                            name: " Applied Biology",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                }
+            },
+            mathematics: {
+                name: "Mathematics",
+                overview: {
+                    title: "Physics for IOE/CEE Entrance",
+                    content: "<p>Physics is a fundamental subject for engineering entrance exams. This section covers all topics from Class 11 and 12 physics syllabus that are important for IOE and CEE entrance examinations.</p><p>Focus on understanding concepts, derivations, and applications of physical principles to solve numerical problems efficiently.</p>",
+                    tips: [
+                        "Focus on mechanics and electromagnetism as they carry most weight",
+                        "Practice numerical problems daily",
+                        "Create formula sheets for quick revision",
+                        "Understand concepts rather than memorizing"
+                    ],
+                    books: [
+                        "Principles of Physics (Resnick, Halliday, Walker)",
+                        "Concepts of Physics (H.C. Verma)",
+                        "IOE Entrance Physics (Bhadra and Pradhan)"
+                    ]
+                },
+            },
+
+            english: {
+                name: "English",
+                overview: {
+                    title: "Physics for IOE/CEE Entrance",
+                    content: "<p>Physics is a fundamental subject for engineering entrance exams. This section covers all topics from Class 11 and 12 physics syllabus that are important for IOE and CEE entrance examinations.</p><p>Focus on understanding concepts, derivations, and applications of physical principles to solve numerical problems efficiently.</p>",
+                    tips: [
+                        "Focus on mechanics and electromagnetism as they carry most weight",
+                        "Practice numerical problems daily",
+                        "Create formula sheets for quick revision",
+                        "Understand concepts rather than memorizing"
+                    ],
+                    books: [
+                        "Principles of Physics (Resnick, Halliday, Walker)",
+                        "Concepts of Physics (H.C. Verma)",
+                        "IOE Entrance Physics (Bhadra and Pradhan)"
+                    ]
+                },
+                formulas: "<div class='row'><div class='col-md-6'><h5>Mechanics</h5><ul class='list-group mb-4'><li class='list-group-item'>F = ma (Newton's Second Law)</li><li class='list-group-item'>v = u + at</li><li class='list-group-item'>s = ut + ½at²</li></ul></div><div class='col-md-6'><h5>Electromagnetism</h5><ul class='list-group mb-4'><li class='list-group-item'>F = qE</li><li class='list-group-item'>V = IR</li><li class='list-group-item'>F = BILsinθ</li></ul></div></div>",
+                questions: "<p>Practice questions will be loaded here...</p>",
+                pyq: "<p>Previous year questions will be loaded here...</p>",
+                class11: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Mechanics",
+                            notes: [
+                                { title: "Introduction to Mechanics", type: "pdf", url: "#" },
+                                { title: "Newton's Laws of Motion", type: "video", url: "#" },
+                                { title: "Formula Sheet", type: "pdf", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                },
+                class12: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Electromagnetism",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                }
+            },
+            aptitude: {
+                name: "engineering-aptitude",
+                overview: {
+                    title: "Physics for IOE/CEE Entrance",
+                    content: "<p>Physics is a fundamental subject for engineering entrance exams. This section covers all topics from Class 11 and 12 physics syllabus that are important for IOE and CEE entrance examinations.</p><p>Focus on understanding concepts, derivations, and applications of physical principles to solve numerical problems efficiently.</p>",
+                    tips: [
+                        "Focus on mechanics and electromagnetism as they carry most weight",
+                        "Practice numerical problems daily",
+                        "Create formula sheets for quick revision",
+                        "Understand concepts rather than memorizing"
+                    ],
+                    books: [
+                        "Principles of Physics (Resnick, Halliday, Walker)",
+                        "Concepts of Physics (H.C. Verma)",
+                        "IOE Entrance Physics (Bhadra and Pradhan)"
+                    ]
+                },
+                formulas: "<div class='row'><div class='col-md-6'><h5>Mechanics</h5><ul class='list-group mb-4'><li class='list-group-item'>F = ma (Newton's Second Law)</li><li class='list-group-item'>v = u + at</li><li class='list-group-item'>s = ut + ½at²</li></ul></div><div class='col-md-6'><h5>Electromagnetism</h5><ul class='list-group mb-4'><li class='list-group-item'>F = qE</li><li class='list-group-item'>V = IR</li><li class='list-group-item'>F = BILsinθ</li></ul></div></div>",
+                questions: "<p>Practice questions will be loaded here...</p>",
+                pyq: "<p>Previous year questions will be loaded here...</p>",
+                class11: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Mechanics",
+                            notes: [
+                                { title: "Introduction to Mechanics", type: "pdf", url: "#" },
+                                { title: "Newton's Laws of Motion", type: "video", url: "#" },
+                                { title: "Formula Sheet", type: "pdf", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        },
+                        {
+                            name: "Unit 2: Heat and Thermodynamics",
+                            notes: [
+                                { title: "Thermodynamics Concepts", type: "pdf", url: "#" },
+                                { title: "Heat Transfer Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                },
+                class12: {
+                    chapters: [
+                        {
+                            name: "Unit 1: Electromagnetism",
+                            notes: [
+                                { title: "Electrostatics Notes", type: "pdf", url: "#" },
+                                { title: "Magnetism Video Lecture", type: "video", url: "#" }
+                            ]
+                        }
+                    ]
+                }
+            }
+            
+            // Other subjects...
+        };
+        
+        // Initialize page based on subject
+        if (subject && subjectData[subject]) {
+            document.title = `${subjectData[subject].name} - IOE/CEE Prep`;
+            document.getElementById('subjectTitle').textContent = subjectData[subject].name;
+            document.getElementById('overviewTitle').textContent = `${subjectData[subject].name} Overview`;
+            document.getElementById('subjectOverviewContent').innerHTML = subjectData[subject].overview.content;
+            document.getElementById('formulasContent').innerHTML = subjectData[subject].formulas;
+            document.getElementById('practiceQuestions').innerHTML = subjectData[subject].questions;
+            document.getElementById('previousYearQuestions').innerHTML = subjectData[subject].pyq;
+            
+            // Prepare preparation tips
+            const tipsList = subjectData[subject].overview.tips.map(tip => 
+                `<div class="alert alert-primary"><i class="fas fa-lightbulb me-2"></i>${tip}</div>`
+            ).join('');
+            document.getElementById('preparationTips').innerHTML = tipsList;
+            
+            // Prepare recommended books
+            const booksList = subjectData[subject].overview.books.map(book => 
+                `<li class="list-group-item"><i class="fas fa-book me-2"></i>${book}</li>`
+            ).join('');
+            document.getElementById('recommendedBooks').innerHTML = booksList;
+        } else {
+            window.location.href = 'study-materials.html';
+        }
+        
+        // Class selection handler
+        document.querySelectorAll('.class-select').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selectedClass = this.getAttribute('data-class');
+                showSubjectContent(selectedClass);
+            });
+        });
+        
+        function showSubjectContent(selectedClass) {
+            // Hide class selector
+            document.querySelector('.class-selector').style.display = 'none';
+            
+            // Show subject content
+            document.getElementById('subjectContent').style.display = 'block';
+            
+            // Set titles
+            document.getElementById('classIndicator').textContent = `Class ${selectedClass} Syllabus`;
+            
+            // Load chapters
+            const chaptersContainer = document.getElementById('chaptersContainer');
+            chaptersContainer.innerHTML = '';
+            
+            const chapters = subjectData[subject][`class${selectedClass}`].chapters;
+            
+            chapters.forEach(chapter => {
+                const chapterHTML = `
+                    <div class="chapter-card">
+                        <div class="chapter-header" data-bs-toggle="collapse" data-bs-target="#chapter-${chapter.name.replace(/\s+/g, '-')}">
+                            <h5 class="mb-0">
+                                <i class="fas fa-book-open me-2"></i>${chapter.name}
+                            </h5>
+                        </div>
+                        <div class="collapse" id="chapter-${chapter.name.replace(/\s+/g, '-')}">
+                            <div class="chapter-content">
+                                ${chapter.notes.map(note => `
+                                    <div class="note-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas ${note.type === 'pdf' ? 'fa-file-pdf text-danger' : 'fa-video text-primary'} me-2"></i>
+                                                <strong>${note.title}</strong>
+                                            </div>
+                                            <a href="${note.url}" class="btn btn-sm ${note.type === 'pdf' ? 'btn-outline-danger' : 'btn-outline-primary'}" target="_blank">
+                                                ${note.type === 'pdf' ? 'Download' : 'Watch'} <i class="fas fa-arrow-right ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                chaptersContainer.innerHTML += chapterHTML;
+            });
+        }
+    </script>
+</body>
+</html>

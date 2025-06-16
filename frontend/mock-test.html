@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Test - IOE/CEE Prep</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+        }
+        
+        .test-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .test-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .test-card-header {
+            background-color: white;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+        
+        .test-card-body {
+            padding: 1.5rem;
+            background-color: white;
+        }
+        
+        .question-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+        
+        .option-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+        
+        .option-item.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background-color: var(--primary-color);
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap me-2"></i>IOE/CEE Prep
+            </a>
+            <div class="d-flex align-items-center">
+                <div class="timer me-3">00:30:00</div>
+                <button class="btn btn-primary" id="submitTest">Submit Test</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Test Header -->
+    <div class="test-header">
+        <div class="container">
+            <h1 id="testTitle" class="text-center">Mock Test</h1>
+            <p class="text-center mb-0" id="testDescription">Complete the test within the given time</p>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="testProgress"></div>
+
+    <!-- Test Container -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div id="questionsContainer">
+                    <!-- Questions will be loaded here by JavaScript -->
+                </div>
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <button class="btn btn-outline-primary" id="prevQuestion">Previous</button>
+                    <button class="btn btn-primary" id="nextQuestion">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Test Results</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <h3 id="resultScore" class="text-primary">Score: 0/10</h3>
+                        <p id="resultPercentage" class="text-muted">Percentage: 0%</p>
+                    </div>
+                    <div id="resultDetails">
+                        <!-- Result details will be loaded here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="reviewTest">Review Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get test parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject = urlParams.get('subject');
+        const chapter = urlParams.get('chapter');
+        
+        // Sample test data (in real app, fetch from backend)
+        const testData = {
+            physics: {
+                name: "Physics",
+                chapters: {
+                    "mechanics": {
+                        name: "Mechanics",
+                        questions: [
+                            {
+                                id: 1,
+                                text: "What is the SI unit of force?",
+                                options: ["Joule", "Newton", "Watt", "Pascal"],
+                                correctAnswer: 1,
+                                explanation: "The SI unit of force is Newton (N), named after Sir Isaac Newton."
+                            },
+                            {
+                                id: 2,
+                                text: "Which of the following is a scalar quantity?",
+                                options: ["Force", "Velocity", "Speed", "Acceleration"],
+                                correctAnswer: 2,
+                                explanation: "Speed is a scalar quantity as it has only magnitude and no direction."
+                            }
+                        ]
+                    },
+                    "electromagnetism": {
+                        name: "Electromagnetism",
+                        questions: [
+                            // More questions...
+                        ]
+                    }
+                },
+                fullSubjectTest: [
+                    // Questions covering all chapters
+                ]
+            },
+            // Other subjects...
+        };
+        
+        // Current test state
+        let currentTest = {
+            questions: [],
+            currentQuestionIndex: 0,
+            answers: {},
+            timeLeft: 1800, // 30 minutes in seconds
+            timerInterval: null
+        };
+        
+        // Initialize the test
+        function initTest() {
+            // Set test title based on parameters
+            let testTitle = "Mock Test";
+            let testDesc = "Complete the test within the given time";
+            
+            if (subject && chapter) {
+                testTitle = `${testData[subject].name} - ${testData[subject].chapters[chapter].name} Test`;
+                testDesc = `Chapter: ${testData[subject].chapters[chapter].name}`;
+                currentTest.questions = testData[subject].chapters[chapter].questions;
+            } else if (subject) {
+                testTitle = `${testData[subject].name} Full Test`;
+                testDesc = `Complete ${testData[subject].name} mock test`;
+                currentTest.questions = testData[subject].fullSubjectTest;
+            }
+            
+            document.getElementById('testTitle').textContent = testTitle;
+            document.getElementById('testDescription').textContent = testDesc;
+            
+            // Start timer
+            startTimer();
+            
+            // Load first question
+            loadQuestion(currentTest.currentQuestionIndex);
+            
+            // Update progress bar
+            updateProgress();
+        }
+        
+        // Load question
+        function loadQuestion(index) {
+            const question = currentTest.questions[index];
+            const questionsContainer = document.getElementById('questionsContainer');
+            
+            questionsContainer.innerHTML = `
+                <div class="test-card">
+                    <div class="test-card-header">
+                        <h4>Question ${index + 1} of ${currentTest.questions.length}</h4>
+                    </div>
+                    <div class="test-card-body">
+                        <div class="question-item">
+                            <h5>${question.text}</h5>
+                            <div class="options-container mt-3">
+                                ${question.options.map((option, i) => `
+                                    <div class="option-item ${currentTest.answers[index] === i ? 'selected' : ''}" 
+                                         data-option="${i}">
+                                        ${String.fromCharCode(65 + i)}. ${option}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners to options
+            document.querySelectorAll('.option-item').forEach(option => {
+                option.addEventListener('click', function() {
+                    selectOption(index, parseInt(this.dataset.option));
+                });
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevQuestion').disabled = index === 0;
+            document.getElementById('nextQuestion').disabled = index === currentTest.questions.length - 1;
+        }
+        
+        // Select an option
+        function selectOption(questionIndex, optionIndex) {
+            currentTest.answers[questionIndex] = optionIndex;
+            
+            // Update UI
+            document.querySelectorAll('.option-item').forEach((item, i) => {
+                if (i === optionIndex) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+            
+            // Update progress
+            updateProgress();
+        }
+        
+        // Start timer
+        function startTimer() {
+            updateTimerDisplay();
+            
+            currentTest.timerInterval = setInterval(() => {
+                currentTest.timeLeft--;
+                updateTimerDisplay();
+                
+                if (currentTest.timeLeft <= 0) {
+                    clearInterval(currentTest.timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+        
+        // Update timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(currentTest.timeLeft / 60);
+            const seconds = currentTest.timeLeft % 60;
+            document.querySelector('.timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const answeredCount = Object.keys(currentTest.answers).length;
+            const progress = (answeredCount / currentTest.questions.length) * 100;
+            document.getElementById('testProgress').style.width = `${progress}%`;
+        }
+        
+        // Submit test
+        function submitTest() {
+            clearInterval(currentTest.timerInterval);
+            
+            // Calculate score
+            let score = 0;
+            currentTest.questions.forEach((question, index) => {
+                if (currentTest.answers[index] === question.correctAnswer) {
+                    score++;
+                }
+            });
+            
+            const percentage = Math.round((score / currentTest.questions.length) * 100);
+            
+            // Show results
+            document.getElementById('resultScore').textContent = `Score: ${score}/${currentTest.questions.length}`;
+            document.getElementById('resultPercentage').textContent = `Percentage: ${percentage}%`;
+            
+            // Show result details
+            const resultDetails = document.getElementById('resultDetails');
+            resultDetails.innerHTML = currentTest.questions.map((question, index) => {
+                const isCorrect = currentTest.answers[index] === question.correctAnswer;
+                const selectedOption = currentTest.answers[index] !== undefined ? 
+                    String.fromCharCode(65 + currentTest.answers[index]) : 'Not answered';
+                const correctOption = String.fromCharCode(65 + question.correctAnswer);
+                
+                return `
+                    <div class="mb-3 p-3 ${isCorrect ? 'bg-success bg-opacity-10' : 'bg-danger bg-opacity-10'}">
+                        <h6>Q${index + 1}: ${question.text}</h6>
+                        <p class="mb-1">Your answer: ${selectedOption}</p>
+                        <p class="mb-1">Correct answer: ${correctOption}</p>
+                        ${!isCorrect ? `<p class="mb-0 text-muted">Explanation: ${question.explanation}</p>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            // Show modal
+            const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
+            resultModal.show();
+        }
+        
+        // Event listeners
+        document.getElementById('prevQuestion').addEventListener('click', () => {
+            if (currentTest.currentQuestionIndex > 0) {
+                currentTest.currentQuestionIndex--;
+                loadQuestion(currentTest.currentQuestionIndex);
+            }
+        });
+        
+        document.getElementById('nextQuestion').addEventListener('click', () => {
+            if (currentTest.currentQuestionIndex < currentTest.questions.length - 1) {
+                currentTest.currentQuestionIndex++;
+                loadQuestion(currentTest.currentQuestionIndex);
+            }
+        });
+        
+        document.getElementById('submitTest').addEventListener('click', submitTest);
+        
+        document.getElementById('reviewTest').addEventListener('click', () => {
+            // Reset test for review
+            currentTest.currentQuestionIndex = 0;
+            loadQuestion(0);
+            
+            // Close modal
+            const resultModal = bootstrap.Modal.getInstance(document.getElementById('resultModal'));
+            resultModal.hide();
+        });
+        
+        // Initialize the test when page loads
+        window.addEventListener('DOMContentLoaded', initTest);
+    </script>
+</body>
+</html>
